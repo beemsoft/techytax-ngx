@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>TechyTax</title>
+  </head>
+  <body>
+    <app-main>Loading...</app-main>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('dist/main.js').catch(function (err) {
+          console.error(err);
+      });
+    </script>
+  </body>
+</html>
