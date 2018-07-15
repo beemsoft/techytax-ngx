@@ -4,22 +4,11 @@ import { Component } from '@angular/core';
   selector: 'app-main',
   template: `
       <div>
-          <ngx-datatable
-                  [rows]="rows"
-                  [columns]="columns">
-          </ngx-datatable>
-      </div>    
+          <a [routerLink]="['/vat']">btw</a>
+          <a [routerLink]="['/login']">login</a>
+      </div>
+      <router-outlet></router-outlet>
   `
 })
 export class AppComponent {
-  rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' },
-  ];
-  columns = [
-    { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company' }
-  ];
 }

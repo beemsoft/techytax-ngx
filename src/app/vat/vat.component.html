@@ -1,0 +1,48 @@
+<h1>Btw Aangifte berekenen</h1>
+<div *ngIf="transactionsLoaded === 0">
+  <p>
+    Bereken hier je btw. Laad eerst een bestand met transacties die je kunt downloaden van je
+    online bankieren site of van de OV chipkaart site.
+  </p>
+</div>
+<div>
+  <input type="file" (change)="fileChangeEvent($event)" placeholder="Laad transacties..." />
+</div>
+<div *ngIf="transactionsLoaded > 0">
+  <p>Er zijn {{transactionsLoaded}} transacties geladen.</p>
+  <div [ngSwitch]="transactionsUnmatched > 0">
+    <p *ngSwitchCase="false">Alle transacties zijn gematcht. Loop de onderstaande tabel door om te kijken of alle transacties correct zijn gematch.  Je kunt nog een bestand inladen of de fiscale gegevens uploaden met de knop hieronder.</p>
+    <div *ngSwitchCase="true">
+      <p>Er zijn nog {{transactionsUnmatched}} onbekende transacties (zie kolom 'Zakelijk/Prive'). Voeg matches toe m.b.v. het zoekfilter hieronder.</p>
+      <label>Kostensoort:</label>
+
+      <!--<ng-select></ng-select>-->
+
+      <!--<cost-type-selector (select)="costMatch.costType = $event"></cost-type-selector>-->
+      <!--<label>btw type:</label><vat-type-selector *ngIf="displayVatTypeSelector()" (select)="costMatch.vatType = $event"></vat-type-selector>-->
+      <!--<label>Karakter:</label><cost-character-selector (select)="costMatch.costCharacter = $event"></cost-character-selector>-->
+      <label>(Optioneel:) percentage</label><input [(ngModel)]="costMatch.percentage" placeholder="percentage">
+      <label>(Optioneel:) vast bedrag</label><input [(ngModel)]="costMatch.fixedAmount" placeholder="vast bedrag (netto)">
+      <button (click)="addMatch()" [disabled]="addMatchDisabled()">Match toevoegen</button>
+    </div>
+  </div>
+
+  <!--<button (click)="calculateVat()" [disabled]="calculateVatDisabled()">Bereken btw</button>-->
+  <vat-report [vatReport]="vatReport"></vat-report>
+
+  <!--<transaction-table [data]="transactions"-->
+                     <!--[rows]="transactionTable.rows"-->
+                     <!--[length]="transactions.length"-->
+                     <!--(filterChanged)="handleFilterChange($event)"-->
+  <!--&gt;-->
+  <!--</transaction-table>-->
+  <!--<transaction-table></transaction-table>-->
+  <mat-table [dataSource]="transactions">
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{transaction.description}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>
+  </mat-table>
+</div>

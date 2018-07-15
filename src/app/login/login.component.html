@@ -1,0 +1,20 @@
+<div class="login jumbotron center-block" *ngIf="!isHidden()">
+  <h1>Login</h1>
+  <form role="form" (submit)="login($event, username.value, password.value)">
+    <div class="form-group">
+      <label for="username">Gebruikersnaam</label>
+      <input type="text" #username class="form-control" id="username" placeholder="Gebruikersnaam">
+    </div>
+    <div class="form-group">
+      <label for="password">Wachtwoord</label>
+      <input type="password" #password class="form-control" id="password" placeholder="Wachtwoord">
+    </div>
+    <button type="submit" class="btn btn-default">Log in</button>
+    <button type="button" (click)="register()" class="btn">Aanmelden</button>
+  </form>
+</div>
+<!--<div *ngIf="loggedIn">-->
+  <!--<sd-navbar (userChanged)="handleUserChange2($event)"></sd-navbar>-->
+  <!--<router-outlet></router-outlet>-->
+<!--</div>-->
+

@@ -1,0 +1,54 @@
+<!--<input *ngIf="config.filtering" placeholder="Zoekfilter (hoofdlettergevoelig)"-->
+       <!--[ngTableFiltering]="config.filtering"-->
+       <!--(tableChanged)="onChangeTable(config)"/>-->
+
+<!--<ng-table [config]="config.sorting"-->
+          <!--(tableChanged)="onChangeTable(config)"-->
+          <!--[rows]="rows" [columns]="columns">-->
+<!--</ng-table>-->
+<!--&lt;!&ndash; changed to one-way-binding for the ngModel, see: http://stackoverflow.com/questions/34496514/ngmodel-no-value-accessor-for &ndash;&gt;-->
+<!--<pagination *ngIf="config.paging"-->
+            <!--class="pagination-sm"-->
+            <!--(ngModel)="page"-->
+            <!--[totalItems]="length"-->
+            <!--[itemsPerPage]="itemsPerPage"-->
+            <!--[maxSize]="maxSize"-->
+            <!--[boundaryLinks]="true"-->
+            <!--[rotate]="false"-->
+            <!--(pageChanged)="onChangeTable(config, $event)"-->
+            <!--(numPages)="numPages = $event">-->
+<!--</pagination>-->
+<!--<pre *ngIf="config.paging" class="card card-block card-header">Page:  / </pre>-->
+<!--<ng2-smart-table [settings]="settings"></ng2-smart-table>-->
+
+
+
+<!--<mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">-->
+
+    <!--<ng-container matColumnDef="seqNo">-->
+        <!--<mat-header-cell *matHeaderCellDef>#</mat-header-cell>-->
+        <!--<mat-cell *matCellDef="let lesson">{{lesson.seqNo}}</mat-cell>-->
+    <!--</ng-container>-->
+
+    <!--<ng-container matColumnDef="description">-->
+        <!--<mat-header-cell *matHeaderCellDef>Description</mat-header-cell>-->
+        <!--<mat-cell class="description-cell"-->
+                  <!--*matCellDef="let lesson">{{lesson.description}}</mat-cell>-->
+
+    <!--</ng-container>-->
+
+    <!--<ng-container matColumnDef="duration">-->
+        <!--<mat-header-cell *matHeaderCellDef>Duration</mat-header-cell>-->
+        <!--<mat-cell class="duration-cell"-->
+                  <!--*matCellDef="let lesson">{{lesson.duration}}</mat-cell>-->
+    <!--</ng-container>-->
+
+    <!--<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>-->
+
+    <!--<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>-->
+
+<!--</mat-table>-->
+
+
+
+

@@ -5,27 +5,35 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "tsc && concurrently \"tsc -w\" live-server"
+    "start": "tsc && concurrently \"tsc -w\" live-server --port=8181",
+    "html": "cd src && copyfiles app/**/*.html app/**/*.css ../dist"
   },
   "keywords": [],
   "author": "Hans Beemsterboer",
   "license": "ISC",
   "dependencies": {
-    "@angular/common": "^6.0.7",
-    "@angular/compiler": "^6.0.7",
-    "@angular/core": "^6.0.7",
-    "@angular/forms": "^6.0.7",
-    "@angular/platform-browser": "^6.0.7",
-    "@angular/platform-browser-dynamic": "^6.0.7",
-    "@swimlane/ngx-datatable": "^13.0.1",
+    "@angular/animations": "^6.0.9",
+    "@angular/cdk": "^6.3.3",
+    "@angular/common": "^6.0.9",
+    "@angular/compiler": "^6.0.9",
+    "@angular/core": "^6.0.9",
+    "@angular/forms": "^6.0.9",
+    "@angular/material": "^6.3.3",
+    "@angular/platform-browser": "^6.0.9",
+    "@angular/platform-browser-dynamic": "^6.0.9",
+    "@angular/router": "^6.0.9",
     "core-js": "^2.5.7",
+    "moment": "^2.22.2",
     "rxjs": "^6.2.1",
+    "rxjs-compat": "^6.2.1",
     "systemjs": "^0.21.4",
     "systemjs-plugin-babel": "0.0.25",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
+    "@types/node": "^10.5.2",
     "concurrently": "^3.6.0",
+    "copyfiles": "^2.0.0",
     "live-server": "^1.2.0",
     "typescript": "^2.9.2"
   }
