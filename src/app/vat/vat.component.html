@@ -39,8 +39,12 @@
   <!--<transaction-table></transaction-table>-->
   <mat-table [dataSource]="transactions">
     <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-      <mat-cell *matCellDef="let transaction"> {{transaction.description}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef> Description</mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{transaction.description}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="match">
+      <mat-header-cell *matHeaderCellDef> Match</mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{transaction.costMatch?transaction.costMatch.matchString:'no'}}</mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
     <mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></mat-row>

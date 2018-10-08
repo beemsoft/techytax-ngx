@@ -24,7 +24,7 @@ export class VatComponent implements OnInit {
   private transactions: Array<Transaction> = [];
   public costMatch: CostMatch;
   private filterString: string;
-  public columnsToDisplay: string[] = ['description'];
+  public columnsToDisplay: string[] = ['description', 'match'];
 
   constructor(
     private importListService: ImportListService,
@@ -58,7 +58,7 @@ export class VatComponent implements OnInit {
     let latestTransactionDate: moment.Moment = this.transactions[0].date;
     let firstTransactionDate: moment.Moment = this.transactions[0].date;
     for (let i = 0; i < this.transactions.length; i++) {
-      if (this.transactions[i].costCharacter["id"] === CostCharacter.UNKNOWN) {
+      if (this.transactions[i].costCharacter === CostCharacter.UNKNOWN) {
         this.transactionsUnmatched++;
       }
       if (this.transactions[i].date.isAfter(latestTransactionDate)) {
