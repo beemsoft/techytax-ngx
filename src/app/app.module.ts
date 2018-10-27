@@ -8,8 +8,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { LoginComponent } from "./login/login.component";
-import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
-  MatSortModule, MatTableModule } from "@angular/material";
+import {
+    MatIconModule, MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
+    MatSortModule, MatTableModule
+} from "@angular/material";
 
 @NgModule({
   imports: [
@@ -20,6 +22,7 @@ import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatIconModule,
     MatProgressSpinnerModule,
     AppRoutingModule,
     FormsModule,

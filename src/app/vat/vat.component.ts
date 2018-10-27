@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { ImportListService, Transaction, CostCharacter, CostType } from '../shared/services/import-list.service';
 import { CostMatch, CostMatchService } from '../shared/services/cost-match.service';
 import { LabelService } from '../shared/services/label.service';
@@ -6,6 +6,7 @@ import { VatCalculationService, VatReport, FiscalReport } from '../shared/servic
 import { TransactionTableComponent } from './transaction-table.component';
 
 import moment = require('moment');
+import {MatSort, MatTableDataSource} from '@angular/material';
 
 @Component({
   moduleId: module.id,
@@ -24,7 +25,10 @@ export class VatComponent implements OnInit {
   private transactions: Array<Transaction> = [];
   public costMatch: CostMatch;
   private filterString: string;
-  public columnsToDisplay: string[] = ['description', 'match'];
+  public columnsToDisplay: string[] = ['date', 'description', 'matchString', 'costType', 'costCharacter', 'matchPercentage', 'matchFixedAmount', 'vatType', 'amount', 'amountNet', 'vatOut'];
+  dataSource;
+
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private importListService: ImportListService,
@@ -70,6 +74,7 @@ export class VatComponent implements OnInit {
       if (!this.vatReport.accountNumbers.includes(this.transactions[i].accountNumber)) {
         this.vatReport.accountNumbers.push(this.transactions[i].accountNumber);
       }
+      this.transactions[i].costTypeDescription = CostType[this.transactions[i].costType['id']];
     }
     this.vatReport.firstTransactionDate = firstTransactionDate.format('YYYY-MM-DD');
     this.vatReport.latestTransactionDate = latestTransactionDate.format('YYYY-MM-DD');
@@ -129,6 +134,8 @@ export class VatComponent implements OnInit {
       .subscribe(vatReport => {
         this.vatReport = vatReport;
         this.checkTransactions();
+        this.dataSource = new MatTableDataSource(this.transactions);
+        this.dataSource.sort = this.sort;
       });
   }
 }
