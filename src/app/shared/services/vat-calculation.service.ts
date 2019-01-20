@@ -19,7 +19,7 @@ export class FiscalReport  {
 export class VatReport extends FiscalReport {
   totalVatIn: number = 0;
   totalVatOut: number = 0;
-  carVatCorrection: number = 0;
+  vatCorrectionForPrivateUsage: number = 0;
   vatSaldo: number = 0;
   sentInvoices: number = 0;
   totalNetIn: number = 0;
@@ -86,7 +86,7 @@ export class VatCalculationService {
                 case CostType.INVOICE_PAID:
                     transaction.amountNet = 0;
                     transaction.amountVat = 0;
-                    // sentInvoices += transaction.amount;
+                    sentInvoices += transaction.amount;
                     break;
                 default:
                     if (transaction.costMatch != null && transaction.costMatch.vatType != null) {
@@ -137,10 +137,10 @@ export class VatCalculationService {
               });
               vatReport.totalVatIn = Math.round(vatReport.totalVatIn * 100) / 100;
               vatReport.totalNetIn = Math.round(vatReport.totalNetIn * 100) / 100;
-              vatReport.carVatCorrection = carData.vatCorrectionForPrivateUsage;
-              vatReport.totalVatOut = Math.round(totalVatOut * 100) / 100;
-              vatReport.vatSaldo = Math.round(vatReport.totalVatIn - vatReport.totalVatOut + vatReport.carVatCorrection);
-              vatReport.sentInvoices = vatReport.totalNetIn;
+              vatReport.vatCorrectionForPrivateUsage = carData ? carData.vatCorrectionForPrivateUsage: 0;
+              vatReport.totalVatOut = Math.round(totalVatOut);
+              vatReport.vatSaldo = Math.round(vatReport.totalVatIn - vatReport.totalVatOut + vatReport.vatCorrectionForPrivateUsage);
+              vatReport.sentInvoices = vatReport.totalNetIn > 0 ? vatReport.totalNetIn : sentInvoices;
               vatReport.totalOfficeCosts = Math.round(totalOfficeCosts * 100) / 100;
               vatReport.totalCarCosts = Math.round(totalCarCosts * 100) / 100;
               vatReport.totalTransportCosts = Math.round(totalTransportCosts * 100) / 100;

@@ -111,6 +111,7 @@ export class ImportListService {
       if (line.length > 1) {
         transaction = new Transaction();
 
+        // TODO: add Knab: https://github.com/beemsoft/techytax-xbrl/blob/master/techytax-web/src/main/java/org/techytax/importing/helper/KnabTransactionReader.java
         switch (csvType) {
           case CsvType.ING: transaction.date = moment(line[0], 'YYYYMMDD'); break;
           case CsvType.ABN_AMRO: transaction.date = moment(line[2], 'YYYYMMDD'); break;
