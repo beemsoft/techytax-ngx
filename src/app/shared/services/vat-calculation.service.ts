@@ -54,7 +54,7 @@ export class VatCalculationService {
     } else {
       // @ts-ignore
       if (VatType[transaction.costMatch.vatType] === VatType.LOW) {
-        transaction.amountVat = Math.round(fixedAmount * 6) / 100;
+        transaction.amountVat = Math.round(fixedAmount * 9) / 100;
       }
     }
     return transaction;
@@ -68,7 +68,7 @@ export class VatCalculationService {
       if (VatType[transaction.costMatch.vatType] == JSON.stringify(VatType.HIGH)) {
         return VatCalculationService.applyVat(transaction, 21);
       } else if (VatType[transaction.costMatch.vatType] == JSON.stringify(VatType.LOW)) {
-        return VatCalculationService.applyVat(transaction, 6);
+        return VatCalculationService.applyVat(transaction, 9);
       } else {
         return VatCalculationService.applyVat(transaction, 0);
       }
