@@ -1,45 +1,36 @@
 import {throwError as observableThrowError} from 'rxjs';
-import {HttpClient} from "@angular/common/http";
-// import {contentHeaders} from "../../common/headers";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Rx";
 import {Injectable} from "@angular/core";
 import {VatReport} from "./vat-calculation.service";
-import {Config} from "../config/env.config";
-import { catchError, tap } from 'rxjs/operators';
-import { HttpHeaders } from "@angular/common/http";
+import {catchError} from 'rxjs/operators';
 
 @Injectable()
 export class FiscalOverviewService {
   private baseURL: string = 'http://localhost:8080';
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Accept':  'application/json',
+      'Content-Type':  'application/json',
+      'Authorization': localStorage.getItem('jwt')
+    })
+  };
 
   constructor(private http: HttpClient) {}
 
-  // getFiscalOverview(): Observable<any> {
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //   return this.http.get(this.baseURL+'/auth/fiscal-overview', { headers: contentHeaders })
-  //       .catch(this.handleError);
-  // }
+  getFiscalOverview(): Observable<any> {
+    return this.http.get(this.baseURL+'/auth/fiscal-overview', this.httpOptions)
+      .pipe(
+        catchError(this.handleError));
+  }
 
   sendFiscalData(vatReport: VatReport) {
     let body = JSON.stringify(vatReport);
     console.log(vatReport.latestTransactionDate);
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept':  'application/json',
-        'Content-Type':  'application/json',
-        'Authorization': localStorage.getItem('jwt')
-      })
-    };
 
-    this.http.post(this.baseURL+'/auth/fiscal-overview', body, httpOptions)
+    this.http.post(this.baseURL+'/auth/fiscal-overview', body, this.httpOptions)
       .pipe(
-        catchError(this.handleError)).subscribe(
-      response => {
-        // localStorage.setItem('jwt', response["token"]);
-        // this.loggedIn = true;
-        // this.userChanged2.emit(username);
-      }
-    );
+        catchError(this.handleError));
   }
 
   /**

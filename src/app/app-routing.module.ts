@@ -12,6 +12,10 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'fiscal-overview',
+    loadChildren: 'app/fiscal-overview/fiscal-overview.module#FiscalOverviewModule'
+  },
+  {
     path: '',
     redirectTo: '',
     pathMatch: 'full'
