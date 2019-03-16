@@ -5,7 +5,6 @@ import { TransactionTableComponent } from './transaction-table.component';
 import { VatReportComponent } from './vat-report.component';
 import { CostMatchService } from '../shared/services/cost-match.service';
 import { VatCalculationService } from '../shared/services/vat-calculation.service';
-import { VatRoutingModule } from "./vat-routing.module";
 import { ImportListService } from "../shared/services/import-list.service";
 import { CsvParseService } from "../shared/services/csv-parse.service";
 import { LabelService } from "../shared/services/label.service";
@@ -18,7 +17,6 @@ import { MatTableModule } from '@angular/material';
 @NgModule({
   imports: [
     FormsModule,
-    VatRoutingModule,
     CommonModule,
     MatTableModule
   ],

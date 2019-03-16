@@ -7,7 +7,6 @@ import { catchError, tap } from 'rxjs/operators';
 import { HttpHeaders } from "@angular/common/http";
 
 @Component({
-  moduleId: module.id,
   selector: 'login',
   templateUrl: 'login.component.html',
   styleUrls: ['login.css']

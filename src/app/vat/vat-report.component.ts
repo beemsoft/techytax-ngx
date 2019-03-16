@@ -3,7 +3,6 @@ import { VatReport } from '../shared/services/vat-calculation.service';
 import { FiscalOverviewService } from '../shared/services/fiscal-overview.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'vat-report',
   templateUrl: 'vat-report.component.html'
 })

@@ -1,8 +1,6 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {CostCharacter} from '../shared/services/import-list.service';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
-  moduleId: module.id,
   selector: 'transaction-table',
   templateUrl: 'transaction-table.component.html'
 })

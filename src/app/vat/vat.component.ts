@@ -5,11 +5,10 @@ import { LabelService } from '../shared/services/label.service';
 import { VatCalculationService, VatReport, FiscalReport } from '../shared/services/vat-calculation.service';
 import { TransactionTableComponent } from './transaction-table.component';
 
-import moment = require('moment');
 import {MatSort, MatTableDataSource} from '@angular/material';
+import * as moment from 'moment';
 
 @Component({
-  moduleId: module.id,
   selector: 'vat',
   templateUrl: 'vat.component.html',
   styleUrls: ['vat.component.css']

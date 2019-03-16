@@ -3,7 +3,6 @@ import {LabelService} from '../shared/services/label.service';
 import {FiscalOverviewService} from '../shared/services/fiscal-overview.service';
 
 @Component({
-  moduleId: module.id,
   templateUrl: 'fiscal-overview.component.html'
 })
 export class FiscalOverviewComponent implements OnInit {

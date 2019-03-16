@@ -5,13 +5,11 @@ import {InvoiceService} from "../shared/services/invoice.service";
 import {FiscalOverviewService} from "../shared/services/fiscal-overview.service";
 import {FormsModule} from '@angular/forms';
 import {MatTableModule} from '@angular/material';
-import {FiscalOverviewRoutingModule} from './fiscal-overview-routing.module';
 import {FiscalOverviewComponent} from './fiscal-overview.component';
 
 @NgModule({
   imports: [
     FormsModule,
-    FiscalOverviewRoutingModule,
     CommonModule,
     MatTableModule
   ],

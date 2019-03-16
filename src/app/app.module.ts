@@ -12,6 +12,7 @@ import {
     MatIconModule, MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
     MatSortModule, MatTableModule
 } from "@angular/material";
+import {FiscalOverviewModule} from './fiscal-overview/fiscal-overview.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {
     MatProgressSpinnerModule,
     AppRoutingModule,
     FormsModule,
-    VatModule
+    VatModule,
+    FiscalOverviewModule
   ],
   declarations: [
     AppComponent,

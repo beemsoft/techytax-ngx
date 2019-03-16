@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-main',
+  selector: 'app-root',
   template: `
       <div>
           <a [routerLink]="['/vat']">btw</a>

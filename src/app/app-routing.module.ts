@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from "./login/login.component";
+import { Routes, RouterModule } from '@angular/router';
+import {VatComponent} from './vat/vat.component';
+import {LoginComponent} from './login/login.component';
+import {FiscalOverviewComponent} from './fiscal-overview/fiscal-overview.component';
 
 const routes: Routes = [
   {
     path: 'vat',
-    loadChildren: 'app/vat/vat.module#VatModule'
+    component: VatComponent
   },
   {
     path: 'login',
@@ -13,21 +15,12 @@ const routes: Routes = [
   },
   {
     path: 'fiscal-overview',
-    loadChildren: 'app/fiscal-overview/fiscal-overview.module#FiscalOverviewModule'
-  },
-  {
-    path: '',
-    redirectTo: '',
-    pathMatch: 'full'
+    component: FiscalOverviewComponent
   }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes)
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
-
+export class AppRoutingModule { }
