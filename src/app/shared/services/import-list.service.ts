@@ -56,6 +56,10 @@ export class Transaction {
   amountVat: number;
   amountNet: number;
   description: string;
+  matchString: string;
+  vatType: VatType;
+  percentage: number;
+  fixedAmount: number;
   costMatch: CostMatch;
   costType: CostType;
   costTypeDescription: string;

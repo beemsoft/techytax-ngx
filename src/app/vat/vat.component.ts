@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { ImportListService, Transaction, CostCharacter, CostType } from '../shared/services/import-list.service';
-import { CostMatch, CostMatchService } from '../shared/services/cost-match.service';
-import { LabelService } from '../shared/services/label.service';
-import { VatCalculationService, VatReport, FiscalReport } from '../shared/services/vat-calculation.service';
-import { TransactionTableComponent } from './transaction-table.component';
+import {CostCharacter, CostType, ImportListService, Transaction} from '../shared/services/import-list.service';
+import {CostMatch, CostMatchService} from '../shared/services/cost-match.service';
+import {LabelService} from '../shared/services/label.service';
+import {FiscalReport, VatCalculationService, VatReport} from '../shared/services/vat-calculation.service';
+import {TransactionTableComponent} from './transaction-table.component';
 
 import {MatSort, MatTableDataSource} from '@angular/material';
 import * as moment from 'moment';
@@ -22,8 +22,6 @@ export class VatComponent implements OnInit {
   transactionsLoaded: number = 0;
   transactionsUnmatched: number;
   private transactions: Array<Transaction> = [];
-  public costMatch: CostMatch;
-  private filterString: string;
   public columnsToDisplay: string[] = ['date', 'description', 'matchString', 'costType', 'costCharacter', 'matchPercentage', 'matchFixedAmount', 'vatType', 'amount', 'amountNet', 'vatOut'];
   dataSource;
 
@@ -37,7 +35,6 @@ export class VatComponent implements OnInit {
     public transactionTable: TransactionTableComponent
   ) {
     this.uploadedFile = null;
-    this.costMatch = new CostMatch();
   }
 
   ngOnInit() {
@@ -52,8 +49,8 @@ export class VatComponent implements OnInit {
       )
   }
 
-  displayVatTypeSelector() {
-    return this.costMatch.costType != CostType.BUSINESS_FOOD;
+  displayVatTypeSelector(transaction: Transaction) {
+    return transaction.costType != CostType.BUSINESS_FOOD;
   }
 
   private checkTransactions(): void {
@@ -102,30 +99,23 @@ export class VatComponent implements OnInit {
 
   }
 
-  handleFilterChange(filterString: string) {
-    this.filterString = filterString;
-  }
-
-  public addMatch(): void {
-    this.costMatch.matchString = this.filterString;
-    // this.costMatchService.addMatch(this.costMatch);
-    this.costMatches = (<CostMatch[]>this.costMatches).concat(this.costMatch);
+  public addMatch(transaction: Transaction): void {
+    let costMatch = new CostMatch();
+    costMatch.matchString = transaction.matchString;
+    costMatch.costCharacter = transaction.costCharacter;
+    costMatch.costType = transaction.costType;
+    costMatch.vatType = transaction.vatType;
+    costMatch.percentage = transaction.percentage;
+    costMatch.fixedAmount = transaction.fixedAmount;
+    transaction.costMatch = costMatch;
+    this.costMatchService.addMatch(costMatch);
+    this.costMatches = (<CostMatch[]>this.costMatches).concat(transaction.costMatch);
     this.transactions = this.costMatchService.match(this.transactions, this.costMatches);
-
-    for (let i = 0; i < this.transactions.length; i++) {
-      if (this.transactions[i].description.indexOf(this.filterString) > -1) {
-        this.transactions[i].costTypeDescription = this.labelService.get(CostType[this.transactions[i].costType]);
-        this.transactions[i].costCharacterDescription = this.labelService.get(CostCharacter[this.transactions[i].costCharacter]);
-      }
-    }
     this.updateTotalVat();
-
-    // this.transactionTable.config.filtering.filterString = '';
-    // this.transactionTable.onChangeTable(this.transactionTable.config);
   }
 
-  public addMatchDisabled(): boolean {
-    return !this.filterString || this.filterString.length < 2;
+  public addMatchDisabled(transaction: Transaction): boolean {
+    return !transaction.matchString || transaction.matchString.length < 2;
   }
 
   private updateTotalVat(): void {

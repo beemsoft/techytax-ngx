@@ -1,14 +1,9 @@
-import { throwError as observableThrowError } from 'rxjs';
-import { VatType, CostCharacter, CostType, Transaction } from './import-list.service';
-import { HttpClient } from '@angular/common/http';
-// import { contentHeaders } from '../../common/headers';
-// import Collection = _.Collection;
-import { LabelService } from './label.service';
-import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { Config } from '../config/env.config';
-import { catchError, tap } from 'rxjs/operators';
-import { HttpHeaders } from "@angular/common/http";
+import {Observable, throwError as observableThrowError} from 'rxjs';
+import {CostCharacter, CostType, Transaction, VatType} from './import-list.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {LabelService} from './label.service';
+import {Injectable} from '@angular/core';
+import {catchError} from 'rxjs/operators';
 
 export class CostMatch {
   matchString: string;
@@ -20,6 +15,13 @@ export class CostMatch {
   fixedAmount: number;
 }
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Authorization': localStorage.getItem('jwt')
+  })
+};
+
 @Injectable()
 export class CostMatchService {
   private baseURL: string = 'http://localhost:8080';
@@ -27,30 +29,22 @@ export class CostMatchService {
   constructor(private http: HttpClient, private labelService: LabelService) {
   }
 
-  // addMatch(costMatch: CostMatch) {
-  //   let body = JSON.stringify(costMatch);
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //
-  //   this.http.post(this.baseURL + '/auth/match', body, {headers: contentHeaders})
-  //     .subscribe(
-  //       response => {
-  //         // localStorage.setItem('jwt', response.json().id_token);
-  //         // this.router.parent.navigateByUrl('/vat');
-  //       },
-  //       error => {
-  //         alert(error.text());
-  //         console.log(error.text());
-  //       }
-  //     );
-  // }
+  addMatch(costMatch: CostMatch) {
+    let body = JSON.stringify(costMatch);
+    this.http.post(this.baseURL + '/auth/match', body, httpOptions)
+      .subscribe(
+        response => {
+          // localStorage.setItem('jwt', response.json().id_token);
+          // this.router.parent.navigateByUrl('/vat');
+        },
+        error => {
+          alert(error.text());
+          console.log(error.text());
+        }
+      );
+  }
 
   getMatches(): Observable<CostMatch> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': localStorage.getItem('jwt')
-      })
-    };
 
     return this.http.get<CostMatch>(this.baseURL + '/auth/match', httpOptions)
       .pipe(
