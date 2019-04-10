@@ -17,7 +17,6 @@
     </div>
   </div>
 
-  <!--<button (click)="calculateVat()" [disabled]="calculateVatDisabled()">Bereken btw</button>-->
   <vat-report [vatReport]="vatReport"></vat-report>
 
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -32,7 +31,9 @@
     <ng-container matColumnDef="matchString">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Match</th>
       <td mat-cell *matCellDef="let transaction">
-        <div *ngIf="transaction.costMatch">{{transaction.costMatch.matchString}}</div>
+        <div *ngIf="transaction.costMatch">{{transaction.costMatch.matchString}}
+          <button (click)="removeMatch(transaction)">X</button>
+        </div>
         <div *ngIf="!transaction.costMatch">
           <input type="text" placeholder="matchstring" [(ngModel)]="transaction.matchString"/>
           <button (click)="addMatch(transaction)" [disabled]="addMatchDisabled(transaction)">Match toevoegen</button>

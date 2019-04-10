@@ -118,6 +118,16 @@ export class VatComponent implements OnInit {
     return !transaction.matchString || transaction.matchString.length < 2;
   }
 
+  public removeMatch(transaction: Transaction): void {
+    this.costMatchService.deleteMatch(transaction.costMatch);
+    this.costMatches.forEach((item, index) => {
+      if (item.id === transaction.costMatch.id) this.costMatches.splice(index,1);
+    });
+    transaction.costMatch = null;
+    this.transactions = this.costMatchService.match(this.transactions, this.costMatches);
+    this.updateTotalVat();
+  }
+
   private updateTotalVat(): void {
     this.vatCalculationService.calculateTotalVat(this.transactions)
       .subscribe(vatReport => {

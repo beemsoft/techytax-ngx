@@ -6,6 +6,7 @@ import {Injectable} from '@angular/core';
 import {catchError} from 'rxjs/operators';
 
 export class CostMatch {
+  id: number;
   matchString: string;
   costType: CostType = CostType.GENERAL_EXPENSE;
   costTypeDescription: string;
@@ -51,21 +52,19 @@ export class CostMatchService {
         catchError(this.handleError));
   }
 
-  // deleteMatch(costMatch: CostMatch) {
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //
-  //   this.http.delete(this.baseURL + '/auth/match/' + costMatch.id, {headers: contentHeaders})
-  //     .subscribe(
-  //       response => {
-  //         // localStorage.setItem('jwt', response.json().id_token);
-  //         // this.router.parent.navigateByUrl('/vat');
-  //       },
-  //       error => {
-  //         alert(error);
-  //         console.log(error);
-  //       }
-  //     );
-  // }
+  deleteMatch(costMatch: CostMatch) {
+    this.http.delete(this.baseURL + '/auth/match/' + costMatch.id, httpOptions)
+      .subscribe(
+        response => {
+          // localStorage.setItem('jwt', response.json().id_token);
+          // this.router.parent.navigateByUrl('/vat');
+        },
+        error => {
+          alert(error);
+          console.log(error);
+        }
+      );
+  }
   //
   // updateMatch(costMatch: CostMatch) {
   //   let body = JSON.stringify(costMatch);
