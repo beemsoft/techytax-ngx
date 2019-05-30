@@ -114,8 +114,20 @@ export class VatComponent implements OnInit {
     this.updateTotalVat();
   }
 
+  public match(): void {
+    this.transactions = this.costMatchService.match(this.transactions, this.costMatches);
+    this.updateTotalVat();
+  }
+
   public addMatchDisabled(transaction: Transaction): boolean {
     return !transaction.matchString || transaction.matchString.length < 2;
+  }
+
+  public addManualTransaction(): void {
+    let transaction = new Transaction();
+    transaction.date = moment();
+    this.transactions.push(transaction);
+    this.dataSource = new MatTableDataSource(this.transactions);
   }
 
   public removeMatch(transaction: Transaction): void {

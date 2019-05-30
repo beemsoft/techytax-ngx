@@ -18,6 +18,7 @@
   </div>
 
   <vat-report [vatReport]="vatReport"></vat-report>
+  <button (click)="addManualTransaction()">Handmatige match toevoegen</button>
 
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     <ng-container matColumnDef="date">
@@ -26,7 +27,12 @@
     </ng-container>
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Description</th>
-      <td mat-cell *matCellDef="let transaction"> {{transaction.description}}</td>
+      <td mat-cell *matCellDef="let transaction">
+        <input type="text" placeholder="beschrijving" [(ngModel)]="transaction.description"/>
+        <div *ngIf="!transaction.costMatch">
+          <button (click)="match()">Zoek match</button>
+        </div>
+      </td>
     </ng-container>
     <ng-container matColumnDef="matchString">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Match</th>
@@ -79,7 +85,10 @@
     </ng-container>
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header="amountFormatted"> Bedrag bruto</th>
-      <td mat-cell *matCellDef="let transaction"> {{transaction.amountFormatted}}</td>
+      <td mat-cell *matCellDef="let transaction">
+        <div *ngIf="transaction.amount && transaction.costMatch">{{transaction.amountFormatted}}</div>
+        <div *ngIf="!transaction.amount || !transaction.costMatch"><input type="text" placeholder="bedrag" [(ngModel)]="transaction.amount"/></div>
+      </td>
     </ng-container>
     <ng-container matColumnDef="amountNet">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Bedrag netto</th>
