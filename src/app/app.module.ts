@@ -8,10 +8,12 @@ import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { LoginComponent } from "./login/login.component";
-import {
-    MatIconModule, MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
-    MatSortModule, MatTableModule
-} from "@angular/material";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatSortModule } from "@angular/material/sort";
+import { MatTableModule } from "@angular/material/table";
 import {FiscalOverviewModule} from './fiscal-overview/fiscal-overview.module';
 
 @NgModule({

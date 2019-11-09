@@ -5,7 +5,8 @@ import {LabelService} from '../shared/services/label.service';
 import {FiscalReport, VatCalculationService, VatReport} from '../shared/services/vat-calculation.service';
 import {TransactionTableComponent} from './transaction-table.component';
 
-import {MatSort, MatTableDataSource} from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 
 @Component({

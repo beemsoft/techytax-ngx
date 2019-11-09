@@ -4,7 +4,7 @@ import {LabelService} from "../shared/services/label.service";
 import {InvoiceService} from "../shared/services/invoice.service";
 import {FiscalOverviewService} from "../shared/services/fiscal-overview.service";
 import {FormsModule} from '@angular/forms';
-import {MatTableModule} from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
 import {FiscalOverviewComponent} from './fiscal-overview.component';
 
 @NgModule({

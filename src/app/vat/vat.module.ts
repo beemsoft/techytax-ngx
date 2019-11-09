@@ -12,7 +12,7 @@ import {ActivumService} from "../shared/services/activum.service";
 import {InvoiceService} from "../shared/services/invoice.service";
 import {FiscalOverviewService} from "../shared/services/fiscal-overview.service";
 import {FormsModule} from '@angular/forms';
-import {MatTableModule} from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
 import {CostTypeSelector, KeysPipe} from '../shared/selectors/cost-type.selector';
 import {LabelPipe} from '../pipes/label.pipe';
 import {VatTypeSelector} from '../shared/selectors/vat-type.selector';
