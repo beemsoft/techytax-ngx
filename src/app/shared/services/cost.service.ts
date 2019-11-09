@@ -2,9 +2,8 @@ import {throwError as observableThrowError} from 'rxjs';
 import {CostType} from './import-list.service';
 import {HttpClient} from '@angular/common/http';
 // import {contentHeaders} from '../../common/headers';
-import {Observable} from 'rxjs/Rx';
 import {Injectable} from '@angular/core';
-import {Config} from '../config/env.config';
+import {environment} from '../../../environments/environment';
 
 export class Cost {
   id: number;
@@ -19,7 +18,7 @@ export class Cost {
 
 @Injectable()
 export class CostService {
-  private baseURL: string = 'http://localhost:8080';
+  private baseURL = environment.API;
 
   constructor(private http: HttpClient) {}
 

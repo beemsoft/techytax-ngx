@@ -1,11 +1,9 @@
-import {throwError as observableThrowError} from 'rxjs';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, throwError as observableThrowError} from 'rxjs';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import * as moment from "moment/moment";
-import {Config} from '../config/env.config';
-import { catchError, tap } from 'rxjs/operators';
-import { HttpHeaders } from "@angular/common/http";
+import {catchError} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 export enum ActivumType {
   MACHINERY = 1,
@@ -40,7 +38,7 @@ export class Office extends Activum {
 
 @Injectable()
 export class ActivumService {
-  private baseURL: string = 'http://localhost:8080';
+  private baseURL = environment.API;
 
   private httpOptions = {
     headers: new HttpHeaders({

@@ -4,10 +4,12 @@ import {Observable} from "rxjs/Rx";
 import {Injectable} from "@angular/core";
 import {VatReport} from "./vat-calculation.service";
 import {catchError} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 @Injectable()
 export class FiscalOverviewService {
-  private baseURL: string = 'http://localhost:8080';
+  private baseURL = environment.API;
+
   private httpOptions = {
     headers: new HttpHeaders({
       'Accept':  'application/json',

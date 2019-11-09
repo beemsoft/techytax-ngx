@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {LabelService} from './label.service';
 import {Injectable} from '@angular/core';
 import {catchError} from 'rxjs/operators';
+import {environment} from '../../../environments/environment';
 
 export class CostMatch {
   id: number;
@@ -25,7 +26,7 @@ const httpOptions = {
 
 @Injectable()
 export class CostMatchService {
-  private baseURL: string = 'http://localhost:8080';
+  private baseURL = environment.API;
 
   constructor(private http: HttpClient, private labelService: LabelService) {
   }

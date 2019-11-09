@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Output} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
-import { throwError as observableThrowError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { HttpHeaders } from "@angular/common/http";
+import {throwError as observableThrowError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'login',
@@ -13,7 +13,8 @@ import { HttpHeaders } from "@angular/common/http";
 })
 
 export class LoginComponent {
-  private baseURL: string = 'http://localhost:8080';
+  private baseURL = environment.API;
+
   @Output() userChanged2: EventEmitter<string> = new EventEmitter<string>();
   private loggedIn = false;
 
@@ -22,7 +23,6 @@ export class LoginComponent {
   login(event: any, username: string, password: string) {
     event.preventDefault();
     let body = JSON.stringify({ username, password });
-    // contentHeaders.set('Content-Type', 'application/json;charset=UTF-8');
 
     const httpOptions = {
       headers: new HttpHeaders({
