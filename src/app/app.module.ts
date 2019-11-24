@@ -17,6 +17,7 @@ import { MatTableModule } from "@angular/material/table";
 import {FiscalOverviewModule} from './fiscal-overview/fiscal-overview.module';
 import {MatButtonModule} from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
+import {SendInvoiceModule} from './send-invoice/send-invoice.module';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import {MatMenuModule} from '@angular/material/menu';
     AppRoutingModule,
     FormsModule,
     VatModule,
-    FiscalOverviewModule
+    FiscalOverviewModule,
+    SendInvoiceModule
   ],
   declarations: [
     AppComponent,

@@ -1,0 +1,27 @@
+<h1>Send invoice</h1>
+Select a project
+
+<select #sel [ngModel]="invoice" (ngModelChange)="onChangeEvent($event)">
+    <option *ngFor="let item of projects" [ngValue]="item" [selected]="invoice.project && invoice.project.code == item.code">{{item.code}}
+    </option>
+</select>
+<div *ngIf="invoice.project">
+    <table>
+        <tr>
+            <td>Description:</td><td>{{invoice.project.projectDescription}}</td>
+        </tr>
+        <tr>
+            <td>Email invoice to:</td><td>{{invoice.project.customer.emailInvoice}}</td>
+        </tr>
+        <tr>
+            <td>Invoice month:</td><td>{{invoice.month}}</td>
+        </tr>
+        <tr>
+            <td>Invoice number:</td><td>{{invoice.invoiceNumber}}</td>
+        </tr>
+        <tr>
+            <td># Hours:</td><td><input [(ngModel)]="invoice.unitsOfWork"></td>
+        </tr>
+    </table>
+    <button (click)="sendInvoice()">Send invoice</button>
+</div>
