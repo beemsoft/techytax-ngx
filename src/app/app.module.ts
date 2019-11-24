@@ -1,5 +1,5 @@
 import { AppComponent } from './app.component';
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VatModule } from "./vat/vat.module";
@@ -15,12 +15,16 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import {FiscalOverviewModule} from './fiscal-overview/fiscal-overview.module';
+import {MatButtonModule} from '@angular/material/button';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatButtonModule,
+    MatMenuModule,
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
@@ -40,6 +44,7 @@ import {FiscalOverviewModule} from './fiscal-overview/fiscal-overview.module';
     provide: APP_BASE_HREF,
     useValue: '/'
   }],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule {
