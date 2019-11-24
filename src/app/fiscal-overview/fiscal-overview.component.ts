@@ -16,6 +16,7 @@ export class FiscalOverviewComponent implements OnInit {
   ngOnInit() {
     this.fiscalOverViewService.getFiscalOverview()
       .subscribe(
+        () => {},
         error => {
           alert(error);
           console.log(error);
