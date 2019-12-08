@@ -13,6 +13,7 @@ export class Invoice {
   month: string;
   project: any; //  Project = new Project();
   unitsOfWork: number;
+  htmlText: string;
   sent: string; //moment.Moment;
 }
 
@@ -115,7 +116,21 @@ export class InvoiceService {
   //       }
   //     );
   // }
-  //
+
+  sendInvoice(invoice: Invoice) {
+    this.http.post(this.baseURL+'/auth/invoice//send', invoice, this.httpOptions)
+      .subscribe(
+        response => {
+          // localStorage.setItem('jwt', response.json().id_token);
+          // this.router.parent.navigateByUrl('/vat');
+        },
+        error => {
+          alert(error);
+          console.log(error);
+        }
+      );
+  }
+
   // sendReminder(invoice: Invoice, htmlText: string) {
   //   let body = htmlText;
   //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));

@@ -54,6 +54,11 @@ export class ProjectService {
       .pipe(catchError(this.handleError));
   }
 
+  getCurrentProjects(): Observable<Project[]> {
+    return this.http.get<Project[]>(this.baseURL+'/auth/project/current', this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   getProject(id: number): Observable<Project> {
     return this.http.get<Project>(this.baseURL+'/auth/project/'+  id, this.httpOptions)
       .pipe(catchError(this.handleError));
