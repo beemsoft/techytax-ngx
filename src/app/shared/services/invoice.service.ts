@@ -118,7 +118,7 @@ export class InvoiceService {
   // }
 
   sendInvoice(invoice: Invoice) {
-    this.http.post(this.baseURL+'/auth/invoice//send', invoice, this.httpOptions)
+    this.http.post(this.baseURL+'/auth/invoice/send', invoice, this.httpOptions)
       .subscribe(
         response => {
           // localStorage.setItem('jwt', response.json().id_token);
