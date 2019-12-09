@@ -52,6 +52,10 @@ export class SendInvoiceComponent implements OnInit {
     this.selectProject(ev);
   }
 
+  isButtonDisabled() {
+    return this.invoice.unitsOfWork == undefined || this.invoice.unitsOfWork < 1;
+  }
+
   private selectProject(project) {
     this.invoice.project = project;
     this.invoice.htmlText = "Beste " + this.invoice.project.customer.contact + ", <br><br>Hierbij stuur ik je factuur " + this.invoice.invoiceNumber +

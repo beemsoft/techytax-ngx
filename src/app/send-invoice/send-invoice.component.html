@@ -24,6 +24,6 @@
             <td colspan="2"><textarea style="width: 100%;" [(ngModel)]="invoice.htmlText"></textarea></td>
         </tr>
     </table>
-    <button (click)="sendInvoice()">Send invoice</button>
+    <button (click)="sendInvoice()" [disabled]="isButtonDisabled()">Send invoice</button>
     Test email: <input [(ngModel)]="invoice.project.customer.emailInvoice">
 </div>
