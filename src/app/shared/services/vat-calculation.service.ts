@@ -60,11 +60,12 @@ export class VatCalculationService {
     return transaction;
   }
 
-  calculateTotalVat(transactions:Array<Transaction>): Observable<VatReport> {
-    let totalVatOut:number = 0, sentInvoices:number = 0;
-    let totalCarCosts:number = 0, totalTransportCosts:number = 0, totalOfficeCosts:number =0, totalFoodCosts:number = 0, totalOtherCosts:number =0;
+  calculateTotalVat(transactions: Array<Transaction>): Observable<VatReport> {
+    let totalVatOut: number = 0, sentInvoices: number = 0;
+    let totalCarCosts: number = 0, totalTransportCosts: number = 0, totalOfficeCosts: number = 0,
+      totalFoodCosts: number = 0, totalOtherCosts: number = 0;
 
-    function applyVat(transaction:Transaction): Transaction {
+    function applyVat(transaction: Transaction): Transaction {
       if (VatType[transaction.costMatch.vatType] == JSON.stringify(VatType.HIGH)) {
         return VatCalculationService.applyVat(transaction, 21);
       } else if (VatType[transaction.costMatch.vatType] == JSON.stringify(VatType.LOW)) {
@@ -74,51 +75,62 @@ export class VatCalculationService {
       }
     }
 
+    let vatFreeCalculation = true;
     for (let i = 0; i < transactions.length; i++) {
-        let transaction = transactions[i];
-        if (transaction.costCharacter === CostCharacter.BUSINESS || transaction.costCharacter === CostCharacter.BOTH) {
-            let vatOut = 0;
-            switch (transaction.costType['id']) {
-                case CostType.BUSINESS_FOOD:
-                    transaction = VatCalculationService.applyVat(transaction, 0);
-                    totalFoodCosts += transaction.amountNet;
-                    break;
-                case CostType.INVOICE_PAID:
-                    transaction.amountNet = 0;
-                    transaction.amountVat = 0;
-                    sentInvoices += transaction.amount;
-                    break;
-                default:
-                    if (transaction.costMatch != null && transaction.costMatch.vatType != null) {
-                        if (transaction.costMatch.fixedAmount > 0) {
-                            transaction = VatCalculationService.applyFixedAmount(transaction, transaction.costMatch.fixedAmount);
-                        } else {
-                            transaction = applyVat(transaction);
-                            if (transaction.costMatch.percentage > 0) {
-                                transaction = VatCalculationService.applyPercentage(transaction, transaction.costMatch.percentage);
-                            }
-                        }
-                        vatOut = transaction.amountVat;
-                        if (transaction.costType['id'] === CostType.BUSINESS_CAR) {
-                            totalCarCosts += transaction.amountNet;
-                        } else if (transaction.costType['id'] === CostType.TRAVEL_WITH_PUBLIC_TRANSPORT) {
-                            totalTransportCosts += transaction.amountNet;
-                        } else if (transaction.costType['id'] === CostType.OFFICE) {
-                            totalOfficeCosts += transaction.amountNet;
-                        } else if (transaction.costType['id'] === CostType.GENERAL_EXPENSE) {
-                            totalOtherCosts += transaction.amountNet;
-                        }
-                    } else {
-                        transaction.amountNet = 0;
-                        transaction.amountVat = 0;
-                    }
-                    break;
-            }
-            totalVatOut += vatOut;
-        } else {
+      if (transactions[i].costMatch.vatType !== null) {
+        vatFreeCalculation = false;
+      }
+    }
+    console.log('VAT free calculation: ' + vatFreeCalculation);
+
+    for (let i = 0; i < transactions.length; i++) {
+      let transaction = transactions[i];
+      if (transaction.costCharacter === CostCharacter.BUSINESS || transaction.costCharacter === CostCharacter.BOTH) {
+        let vatOut = 0;
+        switch (transaction.costType['id']) {
+          case CostType.BUSINESS_FOOD:
+            transaction = VatCalculationService.applyVat(transaction, 0);
+            totalFoodCosts += transaction.amountNet;
+            break;
+          case CostType.INVOICE_PAID:
             transaction.amountNet = 0;
             transaction.amountVat = 0;
+            sentInvoices += transaction.amount;
+            break;
+          default:
+            if (transaction.costMatch != null && transaction.costMatch.vatType != null) {
+              if (transaction.costMatch.fixedAmount > 0) {
+                transaction = VatCalculationService.applyFixedAmount(transaction, transaction.costMatch.fixedAmount);
+              } else {
+                transaction = applyVat(transaction);
+                if (transaction.costMatch.percentage > 0) {
+                  transaction = VatCalculationService.applyPercentage(transaction, transaction.costMatch.percentage);
+                }
+              }
+              vatOut = transaction.amountVat;
+              if (transaction.costType['id'] === CostType.BUSINESS_CAR) {
+                totalCarCosts += transaction.amountNet;
+              } else if (transaction.costType['id'] === CostType.TRAVEL_WITH_PUBLIC_TRANSPORT) {
+                totalTransportCosts += transaction.amountNet;
+              } else if (transaction.costType['id'] === CostType.OFFICE) {
+                totalOfficeCosts += transaction.amountNet;
+              } else if (transaction.costType['id'] === CostType.GENERAL_EXPENSE) {
+                totalOtherCosts += transaction.amountNet;
+              }
+            } else {
+              if (vatFreeCalculation && transaction.costType['id'] === CostType.GENERAL_EXPENSE) {
+                totalOtherCosts += transaction.amount;
+              }
+              transaction.amountNet = 0;
+              transaction.amountVat = 0;
+            }
+            break;
         }
+        totalVatOut += vatOut;
+      } else {
+        transaction.amountNet = 0;
+        transaction.amountVat = 0;
+      }
     }
 
     return this.activumService.getActivumCar().pipe(
