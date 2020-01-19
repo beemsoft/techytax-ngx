@@ -60,6 +60,7 @@ export class VatComponent implements OnInit {
     let firstTransactionDate: moment.Moment = this.transactions[0].date;
     for (let i = 0; i < this.transactions.length; i++) {
       if (this.transactions[i].costCharacter === CostCharacter.UNKNOWN) {
+        console.log("Unmatched transaction: " + this.transactions[i].description);
         this.transactionsUnmatched++;
       }
       if (this.transactions[i].date.isAfter(latestTransactionDate)) {
