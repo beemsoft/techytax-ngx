@@ -15,7 +15,7 @@
             <td>Invoice month:</td><td>{{invoice.month}}</td>
         </tr>
         <tr>
-            <td>Invoice number:</td><td>{{invoice.invoiceNumber}}</td>
+            <td>Invoice number:</td><input [(ngModel)]="invoice.invoiceNumber"></td>
         </tr>
         <tr>
             <td># Hours:</td><td><input [(ngModel)]="invoice.unitsOfWork"></td>
