@@ -15,10 +15,13 @@
             <td>Invoice month:</td><td>{{invoice.month}}</td>
         </tr>
         <tr>
-            <td>Invoice number:</td><td><input [(ngModel)]="invoice.invoiceNumber"></td>
+            <td>Invoice number:</td><td><input [(ngModel)]="invoice.invoiceNumber" (change)="updateDescription()"></td>
         </tr>
         <tr>
-            <td># Hours:</td><td><input [(ngModel)]="invoice.unitsOfWork"></td>
+            <td># Hours:</td><td><input [(ngModel)]="invoice.unitsOfWork" (change)="checkUnitsOfWork()"></td>
+        </tr>
+        <tr *ngIf="invoice.unitsOfWork && invoice.unitsOfWork < 0">
+            <td>Original invoice number:</td><td><input [(ngModel)]="invoice.originalInvoiceNumber"></td>
         </tr>
         <tr>
             <td colspan="2"><textarea style="width: 100%;" [(ngModel)]="invoice.htmlText"></textarea></td>

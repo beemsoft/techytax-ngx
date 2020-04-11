@@ -2,14 +2,13 @@
 import {Observable, throwError as observableThrowError} from 'rxjs';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-// import {Project} from "./project.service";
-// import * as moment from "moment/moment";
 import {catchError} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 
 export class Invoice {
   id: number;
   invoiceNumber: string;
+  originalInvoiceNumber: string;
   month: string;
   project: any; //  Project = new Project();
   unitsOfWork: number;

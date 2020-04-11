@@ -12,6 +12,7 @@ export class SendInvoiceComponent implements OnInit {
   projects: Project[];
   invoice: Invoice;
   registration: Registration;
+  invoiceType = "factuur";
 
   constructor(
     private invoiceService: InvoiceService,
@@ -53,12 +54,32 @@ export class SendInvoiceComponent implements OnInit {
   }
 
   isButtonDisabled() {
-    return this.invoice.unitsOfWork == undefined || this.invoice.unitsOfWork < 1;
+    return this.invoice.unitsOfWork == undefined
+      || (this.invoiceType == "factuur" && this.invoice.unitsOfWork < 1)
+      || (this.invoiceType == "creditnota" && (this.invoice.unitsOfWork > -1
+       || (this.invoice.originalInvoiceNumber == undefined || this.invoice.originalInvoiceNumber.length < 8)));
+  }
+
+  checkUnitsOfWork() {
+    if (this.invoice.unitsOfWork < 0) {
+      this.invoiceType = "creditnota"
+    } else {
+      this.invoiceType = "factuur"
+    }
+    this.updateHtmlText()
+  }
+
+  updateDescription() {
+    this.updateHtmlText()
   }
 
   private selectProject(project) {
     this.invoice.project = project;
-    this.invoice.htmlText = "Beste " + this.invoice.project.customer.contact + ", <br><br>Hierbij stuur ik je factuur " + this.invoice.invoiceNumber +
+    this.updateHtmlText()
+  }
+
+  updateHtmlText() {
+    this.invoice.htmlText = "Beste " + this.invoice.project.customer.contact + ", <br><br>Hierbij stuur ik je " + this.invoiceType + " " + this.invoice.invoiceNumber +
       ".<br><br>Met vriendelijke groet,<br>" + this.getFullName();
   }
 
