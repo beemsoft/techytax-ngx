@@ -1,9 +1,9 @@
-import {map} from 'rxjs/operators';
-import {CostCharacter, CostType, Transaction, VatType} from "./import-list.service";
-import {Injectable} from "@angular/core";
-import {ActivumService} from "./activum.service";
-import {Observable} from "rxjs";
-import {Invoice, InvoiceService} from "./invoice.service";
+import { map } from 'rxjs/operators';
+import { CostCharacter, CostType, Transaction, VatType } from "./import-list.service";
+import { Injectable } from "@angular/core";
+import { Activum, ActivumService, ActivumType } from "./activum.service";
+import { Observable } from "rxjs";
+import { Invoice, InvoiceService } from "./invoice.service";
 
 export class FiscalReport  {
   firstTransactionDate: string;
@@ -14,6 +14,7 @@ export class FiscalReport  {
   totalOfficeCosts: number = 0;
   totalFoodCosts: number = 0;
   totalOtherCosts: number = 0;
+  investments: Array<Activum>;
 }
 
 export class VatReport extends FiscalReport {
@@ -64,6 +65,7 @@ export class VatCalculationService {
     let totalVatOut: number = 0, sentInvoices: number = 0;
     let totalCarCosts: number = 0, totalTransportCosts: number = 0, totalOfficeCosts: number = 0,
       totalFoodCosts: number = 0, totalOtherCosts: number = 0;
+    let investments = new Array<Activum>();
 
     function applyVat(transaction: Transaction): Transaction {
       if (VatType[transaction.costMatch.vatType] == JSON.stringify(VatType.HIGH)) {
@@ -117,6 +119,15 @@ export class VatCalculationService {
                 totalOfficeCosts += transaction.amountNet;
               } else if (transaction.costType['id'] === CostType.GENERAL_EXPENSE) {
                 totalOtherCosts += transaction.amountNet;
+              } else if (transaction.costType['id'] === CostType.INVESTMENT) {
+                let activum = new Activum();
+                activum.balanceType = ActivumType.MACHINERY;
+                activum.description = transaction.description;
+                activum.startDate = transaction.dateFormatted;
+                activum.nofYearsForDepreciation = 3;
+                activum.purchaseDate = transaction.dateFormatted;
+                activum.purchasePrice = transaction.amountNet;
+                investments.push(activum);
               }
             } else {
               if (vatFreeCalculation && transaction.costType['id'] === CostType.GENERAL_EXPENSE) {
@@ -159,6 +170,7 @@ export class VatCalculationService {
               vatReport.totalTransportCosts = Math.round(totalTransportCosts * 100) / 100;
               vatReport.totalFoodCosts = Math.round(totalFoodCosts * 100) / 100;
               vatReport.totalOtherCosts = Math.round(totalOtherCosts * 100) / 100;
+              vatReport.investments = investments;
             },
             error => {
               alert(error);

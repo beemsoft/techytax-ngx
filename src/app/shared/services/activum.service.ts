@@ -18,9 +18,9 @@ export class Activum {
   purchasePrice: number;
   remainingValue: number;
   nofYearsForDepreciation: number;
-  purchaseDate: moment.Moment;
-  startDate: moment.Moment;
-  endDate: moment.Moment;
+  purchaseDate: string;
+  startDate: string;
+  endDate: string;
 }
 
 export class BusinessCar extends Activum {
