@@ -12,7 +12,7 @@
             <td>Email invoice to:</td><td>{{invoice.project.customer.emailInvoice}}</td>
         </tr>
         <tr>
-            <td>Invoice month:</td><td>{{invoice.month}}</td>
+            <td>Invoice month:</td><td><input [(ngModel)]="invoice.month"></td>
         </tr>
         <tr>
             <td>Invoice number:</td><td><input [(ngModel)]="invoice.invoiceNumber" (change)="updateDescription()"></td>
