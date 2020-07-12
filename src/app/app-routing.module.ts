@@ -4,6 +4,7 @@ import {VatComponent} from './vat/vat.component';
 import {LoginComponent} from './login/login.component';
 import {FiscalOverviewComponent} from './fiscal-overview/fiscal-overview.component';
 import {SendInvoiceComponent} from './send-invoice/send-invoice.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,12 @@ const routes: Routes = [
   {
     path: 'send-invoice',
     component: SendInvoiceComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   }
+
 ];
 
 @NgModule({

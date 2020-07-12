@@ -4,9 +4,7 @@ import {Project, ProjectService} from '../shared/services/project.service';
 import * as moment from 'moment';
 import {RegisterService, Registration} from '../shared/services/register.service';
 
-@Component({
-  templateUrl: 'send-invoice.component.html'
-})
+@Component({ templateUrl: 'send-invoice.component.html' })
 export class SendInvoiceComponent implements OnInit {
 
   projects: Project[];
