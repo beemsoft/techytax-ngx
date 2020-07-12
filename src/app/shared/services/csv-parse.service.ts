@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export class CsvParseService {
 
   // ref: http://stackoverflow.com/a/1293163/2343
