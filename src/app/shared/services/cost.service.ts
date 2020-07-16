@@ -18,7 +18,7 @@ export class Cost {
 
 @Injectable()
 export class CostService {
-  private baseURL = environment.API;
+  private baseURL = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

@@ -36,9 +36,9 @@ export class Office extends Activum {
   terrainValue: number;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ActivumService {
-  private baseURL = environment.API;
+  private baseURL = environment.apiUrl;
 
   private httpOptions = {
     headers: new HttpHeaders({

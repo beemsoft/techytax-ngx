@@ -22,7 +22,7 @@ export class Project {
 
 @Injectable()
 export class ProjectService {
-  private baseURL = environment.API;
+  private baseURL = environment.apiUrl;
 
   private httpOptions = {
     headers: new HttpHeaders({

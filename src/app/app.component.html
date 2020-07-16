@@ -1,8 +1,20 @@
-<button mat-button [matMenuTriggerFor]="menu">Menu</button>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item><a [routerLink]="['/vat']">VAT declaration</a></button>
-    <button mat-menu-item><a [routerLink]="['/fiscal-overview']">Fiscal overview</a></button>
-    <button mat-menu-item><a [routerLink]="['/send-invoice']">Send invoice</a></button>
-    <button mat-menu-item><a [routerLink]="['/login']">Login</a></button>
-</mat-menu>
-<router-outlet></router-outlet>
+<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+<!--        <a class="nav-item nav-link" routerLink="/home2" routerLinkActive="active">Home2</a>-->
+<!--        <a class="nav-item nav-link" routerLink="/users" routerLinkActive="active">Users</a>-->
+        <a class="nav-item nav-link" routerLink="/vat" routerLinkActive="active">btw aangifte</a>
+        <a class="nav-item nav-link" routerLink="/invoice" routerLinkActive="active">Factuur sturen</a>
+        <a class="nav-item nav-link" routerLink="/invoice2" routerLinkActive="active">Factuur sturen</a>
+        <a class="nav-item nav-link" routerLink="/activity" routerLinkActive="active">Werkzaamheden</a>
+        <a class="nav-item nav-link" routerLink="/account" routerLinkActive="active">Mijn gegevens</a>
+        <a class="nav-item nav-link" (click)="logout()">Uitloggen</a>
+    </div>
+</nav>
+
+<!-- main app container -->
+<div class="app-container" [ngClass]="{ 'bg-light': user }">
+    <alert></alert>
+    <router-outlet></router-outlet>
+</div>

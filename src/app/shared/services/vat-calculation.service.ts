@@ -26,7 +26,7 @@ export class VatReport extends FiscalReport {
   totalNetIn: number = 0;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class VatCalculationService {
   private invoices: Invoice[];
 

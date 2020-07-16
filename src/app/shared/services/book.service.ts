@@ -26,7 +26,7 @@ export class BookValue {
 
 @Injectable()
 export class BookService {
-  private baseURL = environment.API;
+  private baseURL = environment.apiUrl;
 
   private httpOptions = {
     headers: new HttpHeaders({

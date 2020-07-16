@@ -42,7 +42,7 @@ class PersonalData {
 
 @Injectable()
 export class RegisterService {
-  private baseURL = environment.API;
+  private baseURL = environment.apiUrl;
 
   private httpOptions = {
     headers: new HttpHeaders({

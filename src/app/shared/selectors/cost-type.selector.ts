@@ -26,8 +26,8 @@ export class KeysPipe implements PipeTransform {
   providers: [LabelService],
   template: `<div>
     <select #sel (change)="select.emit(sel.value)">
-      <option *ngFor="let item of costTypes | keys" [value]="item.key" [selected]="selectedCostTypeId == item.key">{{item.value}}
-      </option>
+<!--      <option *ngFor="let item of costTypes | keys" [value]="item.key" [selected]="selectedCostTypeId == item.key">{{item.value}}-->
+<!--      </option>-->
     </select>
   </div>`
 })

@@ -78,7 +78,7 @@ export class Transaction {
   }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ImportListService {
   transactions: Transaction[] = [];
 

@@ -1,33 +1,26 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {VatComponent} from './vat/vat.component';
-import {LoginComponent} from './login/login.component';
-import {FiscalOverviewComponent} from './fiscal-overview/fiscal-overview.component';
-import {SendInvoiceComponent} from './send-invoice/send-invoice.component';
-import { RegisterComponent } from './register/register.component';
+
+import { HomeComponent } from './home';
+import { AuthGuard } from './_helpers';
+import { Home2Component } from '@app/home2';
+import { VatComponent } from '@app/vat';
+import { SendInvoiceComponent } from '@app/send-invoice/send-invoice.component';
+
+const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
+const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
+const vatModule = () => import('./vat/vat.module').then(x => x.VatModule);
 
 const routes: Routes = [
-  {
-    path: 'vat',
-    component: VatComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'fiscal-overview',
-    component: FiscalOverviewComponent
-  },
-  {
-    path: 'send-invoice',
-    component: SendInvoiceComponent
-  },
-  {
-    path: 'register',
-    component: RegisterComponent
-  }
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home2', component: Home2Component, canActivate: [AuthGuard] },
+  { path: 'users', loadChildren: usersModule, canActivate: [AuthGuard] },
+  { path: 'vat', component: VatComponent, canActivate: [AuthGuard] },
+  { path: 'invoice', component: SendInvoiceComponent, canActivate: [AuthGuard] },
+  { path: 'account', loadChildren: accountModule },
 
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

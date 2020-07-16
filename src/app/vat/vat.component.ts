@@ -1,19 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {CostCharacter, CostType, ImportListService, Transaction} from '../shared/services/import-list.service';
-import {CostMatch, CostMatchService} from '../shared/services/cost-match.service';
-import {LabelService} from '../shared/services/label.service';
-import {FiscalReport, VatCalculationService, VatReport} from '../shared/services/vat-calculation.service';
-import {TransactionTableComponent} from './transaction-table.component';
-
-import { MatSort } from '@angular/material/sort';
+import { Component, OnInit } from '@angular/core';
+import { CostCharacter, CostType, ImportListService, Transaction } from '../shared/services/import-list.service';
+import { CostMatch, CostMatchService } from '../shared/services/cost-match.service';
+import { LabelService } from '../shared/services/label.service';
+import { FiscalReport, VatCalculationService, VatReport } from '../shared/services/vat-calculation.service';
+import { TransactionTableComponent } from './transaction-table.component';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 
-@Component({
-  selector: 'vat',
-  templateUrl: 'vat.component.html',
-  styleUrls: ['vat.component.css']
-})
+@Component({ templateUrl: 'vat.component.html'})
 export class VatComponent implements OnInit {
   uploadedFile: File;
   importedText: string;
@@ -25,8 +19,6 @@ export class VatComponent implements OnInit {
   private transactions: Array<Transaction> = [];
   public columnsToDisplay: string[] = ['date', 'description', 'matchString', 'costType', 'costCharacter', 'matchPercentage', 'matchFixedAmount', 'vatType', 'amount', 'amountNet', 'vatOut'];
   dataSource;
-
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private importListService: ImportListService,
@@ -148,7 +140,7 @@ export class VatComponent implements OnInit {
         this.vatReport = vatReport;
         this.checkTransactions();
         this.dataSource = new MatTableDataSource(this.transactions);
-        this.dataSource.sort = this.sort;
+        // this.dataSource.sort = this.sort;
       });
   }
 }

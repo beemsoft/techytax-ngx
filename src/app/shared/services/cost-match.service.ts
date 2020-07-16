@@ -17,27 +17,18 @@ export class CostMatch {
   fixedAmount: number;
 }
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Authorization': localStorage.getItem('jwt')
-  })
-};
-
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CostMatchService {
-  private baseURL = environment.API;
+  private baseURL = environment.apiUrl;
 
   constructor(private http: HttpClient, private labelService: LabelService) {
   }
 
   addMatch(costMatch: CostMatch) {
     let body = JSON.stringify(costMatch);
-    this.http.post(this.baseURL + '/auth/match', body, httpOptions)
+    this.http.post(this.baseURL + '/auth/match', body)
       .subscribe(
         response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
         },
         error => {
           alert(error.text());
@@ -48,17 +39,15 @@ export class CostMatchService {
 
   getMatches(): Observable<CostMatch> {
 
-    return this.http.get<CostMatch>(this.baseURL + '/auth/match', httpOptions)
+    return this.http.get<CostMatch>(this.baseURL + '/auth/match')
       .pipe(
         catchError(this.handleError));
   }
 
   deleteMatch(costMatch: CostMatch) {
-    this.http.delete(this.baseURL + '/auth/match/' + costMatch.id, httpOptions)
+    this.http.delete(this.baseURL + '/auth/match/' + costMatch.id)
       .subscribe(
         response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
         },
         error => {
           alert(error);

@@ -1,9 +1,8 @@
-// import {contentHeaders} from "../../common/headers";
-import {Observable, throwError as observableThrowError} from 'rxjs';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {catchError} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
+import { Observable, throwError as observableThrowError } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 export class Invoice {
   id: number;
@@ -16,16 +15,9 @@ export class Invoice {
   sent: string; //moment.Moment;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class InvoiceService {
-  private baseURL = environment.API;
-
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': localStorage.getItem('jwt')
-    })
-  };
+  private baseURL = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -53,7 +45,7 @@ export class InvoiceService {
   // }
 
   getIncomeForLatestPeriod(): Observable<Invoice[]> {
-    return this.http.get<Invoice[]>(this.baseURL+'/auth/invoice/latest-period', this.httpOptions)
+    return this.http.get<Invoice[]>(this.baseURL+'/auth/invoice/latest-period')
       .pipe(
         catchError(this.handleError));
   }
@@ -117,11 +109,9 @@ export class InvoiceService {
   // }
 
   sendInvoice(invoice: Invoice) {
-    this.http.post(this.baseURL+'/auth/invoice/send', invoice, this.httpOptions)
+    this.http.post(this.baseURL+'/auth/invoice/send', invoice)
       .subscribe(
         response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
         },
         error => {
           alert(error);

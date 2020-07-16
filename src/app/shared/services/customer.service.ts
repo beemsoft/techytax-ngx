@@ -14,7 +14,7 @@ export class Customer {
 
 @Injectable()
 export class CustomerService {
-  private baseURL = environment.API;
+  private baseURL = environment.apiUrl;
 
   private httpOptions = {
     headers: new HttpHeaders({

@@ -5,8 +5,8 @@ import {VatType} from "../services/import-list.service";
   selector: 'vat-type-selector',
   template: `<div>
     <select #sel (change)="select.emit(sel.value)">
-      <option *ngFor="let item of vatTypes | keys" [value]="item.key" [selected]="selectedVatType && vatTypes[selectedVatType] == item.key">{{item.value}}
-      </option>
+<!--      <option *ngFor="let item of vatTypes | keys" [value]="item.key" [selected]="selectedVatType && vatTypes[selectedVatType] == item.key">{{item.value}}-->
+<!--      </option>-->
     </select>
   </div>`
 })

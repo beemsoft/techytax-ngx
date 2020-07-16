@@ -5,8 +5,8 @@ import {CostCharacter} from "../services/import-list.service";
   selector: 'cost-character-selector',
   template: `<div>
     <select #sel (change)="select.emit(sel.value)">
-      <option *ngFor="let item of costCharacters | keys" [value]="item.key" [selected]="selectedCostCharacter == item.key">{{item.value}}
-      </option>
+<!--      <option *ngFor="let item of costCharacters | keys" [value]="item.key" [selected]="selectedCostCharacter == item.key">{{item.value}}-->
+<!--      </option>-->
     </select>
   </div>`
 })

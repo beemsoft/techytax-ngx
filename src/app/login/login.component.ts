@@ -13,7 +13,7 @@ import {environment} from '../../environments/environment';
 })
 
 export class LoginComponent {
-  private baseURL = environment.API;
+  private baseURL = environment.apiUrl;
 
   @Output() userChanged2: EventEmitter<string> = new EventEmitter<string>();
   private loggedIn = false;
