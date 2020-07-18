@@ -1,1 +1,101 @@
-<h1>Registreren</h1>
+<div class="p-4">
+  <div class="container">
+    <h1>Mijn gegevens</h1>
+    De onderstaande gegevens zijn nodig om een factuur te kunnen versturen.
+    <div class="checkbox">
+      <input type="checkbox" (change)="acceptedTermsAndConditions = !acceptedTermsAndConditions">Ik accepteer de
+      <button (click)="showTermsAndConditions()">Algemene Voorwaarden</button>
+    </div>
+    <div *ngIf="acceptedTermsAndConditions">
+      <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <div class="form-row">
+          <div class="form-group col">
+            <label>KvK nummer</label>
+            <input type="text" class="form-control" formControlName="kvkNummer"
+                   [ngClass]="{ 'is-invalid': f.kvkNummer.errors }">
+            <div *ngIf="f.kvkNummer.errors" class="invalid-feedback">
+              <div *ngIf="f.kvkNummer.errors.required">KvK nummer is verplicht, het wordt op de factuur vermeld</div>
+              <div *ngIf="f.kvkNummer.errors.pattern">KvK nummer bestaat uit 8 cijfers</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label>Voorletters</label>
+            <input type="text" class="form-control" formControlName="firstName"
+                   [ngClass]="{ 'is-invalid': f.firstName.errors }">
+            <div *ngIf="f.kvkNummer.errors" class="invalid-feedback">
+              <div *ngIf="f.firstName.errors.required">Initialen zijn verplicht</div>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>Tussenvoegsel(s)</label>
+            <input type="text" class="form-control" formControlName="prefix">
+          </div>
+          <div class="form-group col">
+            <label>Achternaam</label>
+            <input type="text" class="form-control" formControlName="lastName"
+                   [ngClass]="{ 'is-invalid': f.firstName.errors }">
+            <div *ngIf="f.kvkNummer.errors" class="invalid-feedback">
+              <div *ngIf="f.lastName.errors.required">Achternaam is verplicht</div>
+              <div *ngIf="f.lastName.errors.pattern">Achternaam moet uit minstens 2 letters bestaan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col">
+            <label>Email</label>
+            <input type="email" class="form-control" formControlName="email"
+                   [ngClass]="{ 'is-invalid': f.email.errors }">
+            <div *ngIf="f.kvkNummer.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is verplicht</div>
+              <div *ngIf="f.email.errors.pattern">Email is niet correct</div>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>Telefoonnummer</label>
+            <input class="form-control" formControlName="phoneNumber"
+                   [ngClass]="{ 'is-invalid': f.phoneNumber.errors }">
+            <div *ngIf="f.phoneNumber.errors" class="invalid-feedback">
+              <div *ngIf="f.phoneNumber.errors.required">Telefoonnummer is verplicht</div>
+              <div *ngIf="f.phoneNumber.errors.pattern">Telefoonnummer is niet correct</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col">
+            <label>Gebruikersnaam
+              <em>(Kan niet gewijzigd worden)</em>
+            </label>
+          </div>
+          <div class="form-group col">
+            <label>Password
+              <em>(Laat leeg als je het niet wilt wijzigen)</em>
+            </label>
+            <input type="password" class="form-control" formControlName="password"
+                   [ngClass]="{ 'is-invalid': f.firstName.errors }">
+            <div *ngIf="f.phoneNumber.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Wachtwoord is verplicht</div>
+              <div *ngIf="f.password.errors.minlength">Wachtwoord moet 6 karakters lang zijn, we hebben nog
+                {{f.password.errors.minlength.requiredLength - f.password.errors.minlength.actualLength}} karakters
+                nodig
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Opslaan
+          </button>
+          <a routerLink="../login" class="btn btn-link">Cancel</a>
+        </div>
+      </form>
+    </div>
+    <p>Deze clouddienst wordt aangeboden door de eenmanszaak Beemsterboer Software, welke sinds 2006 is ingeschreven bij
+      de Kamer van Koophandel te Utrecht onder nummer 30216247. Het btw nummer is NL001969552B79.</p>
+  </div>
+</div>

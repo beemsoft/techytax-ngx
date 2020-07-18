@@ -1,12 +1,13 @@
-import {Observable} from "rxjs/Rx";
-import {Injectable} from "@angular/core";
+import { Observable } from "rxjs/Rx";
+import { Injectable } from "@angular/core";
 import * as moment from "moment/moment";
-import {environment} from '../../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError} from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 export class Registration {
   user: string;
+  password: string;
   registrationDate: moment.Moment;
   personalData: PersonalData = new PersonalData();
   companyData: CompanyData = new CompanyData();
@@ -37,24 +38,24 @@ class PersonalData {
   prefix: string;
   surname: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RegisterService {
   private baseURL = environment.apiUrl;
-
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': localStorage.getItem('jwt')
-    })
-  };
 
   constructor(private http: HttpClient) {}
 
   getRegistration(): Observable<Registration> {
-    return this.http.get<Registration>(this.baseURL+'/auth/register', this.httpOptions)
+    return this.http.get<Registration>(this.baseURL+'/auth/register')
+      .pipe(catchError(this.handleError));
+  }
+
+  updateRegistration(registration: Registration) {
+    let body = JSON.stringify(registration);
+    let url = this.baseURL+'/auth/register';
+    return this.http.put(url, body)
       .pipe(catchError(this.handleError));
   }
 
