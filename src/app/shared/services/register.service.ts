@@ -21,6 +21,7 @@ class CompanyData {
   city: string;
   accountNumber: string;
   chamberOfCommerceNumber: number;
+  jobsInIndividualHealthcareNumber: number;
 }
 
 class FiscalData {

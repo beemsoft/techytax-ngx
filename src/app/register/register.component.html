@@ -1,13 +1,42 @@
 <div class="p-4">
   <div class="container">
     <h1>Mijn gegevens</h1>
-    De onderstaande gegevens zijn nodig om een factuur te kunnen versturen.
+    TechyTax heeft je gegevens nodig om names jou een factuur te kunnen versturen.
     <div class="checkbox">
-      <input type="checkbox" (change)="acceptedTermsAndConditions = !acceptedTermsAndConditions">Ik accepteer de
-      <button (click)="showTermsAndConditions()">Algemene Voorwaarden</button>
+      <input type="checkbox" (change)="acceptedTermsAndConditions = !acceptedTermsAndConditions"> Ik geef toestemming voor het opslaan van mijn gegevens.
     </div>
     <div *ngIf="acceptedTermsAndConditions">
       <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <div class="form-row">
+          <div class="form-group col">
+            <label>Bedrijfsnaam</label>
+            <input type="text" class="form-control" formControlName="companyName" [ngClass]="{ 'is-invalid': f.companyName.errors }">
+            <div *ngIf="f.companyName.errors" class="invalid-feedback">
+              <div *ngIf="f.companyName.errors.required">Bedrijfsnaam is verplicht, het wordt op de factuur vermeld</div>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>Adres</label>
+            <input type="text" class="form-control" formControlName="address" [ngClass]="{ 'is-invalid': f.address.errors }">
+            <div *ngIf="f.address.errors" class="invalid-feedback">
+              <div *ngIf="f.address.errors.required">Adres is verplicht, het wordt op de factuur vermeld</div>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>Postcode</label>
+            <input type="text" class="form-control" formControlName="zipCode" [ngClass]="{ 'is-invalid': f.zipCode.errors }">
+            <div *ngIf="f.zipCode.errors" class="invalid-feedback">
+              <div *ngIf="f.zipCode.errors.required">Postcode is verplicht, het wordt op de factuur vermeld</div>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>Plaats</label>
+            <input type="text" class="form-control" formControlName="city" [ngClass]="{ 'is-invalid': f.city.errors }">
+            <div *ngIf="f.city.errors" class="invalid-feedback">
+              <div *ngIf="f.city.errors.required">Plaatsnaam is verplicht, het wordt op de factuur vermeld</div>
+            </div>
+          </div>
+        </div>
         <div class="form-row">
           <div class="form-group col">
             <label>KvK nummer</label>
@@ -17,6 +46,27 @@
               <div *ngIf="f.kvkNummer.errors.required">KvK nummer is verplicht, het wordt op de factuur vermeld</div>
               <div *ngIf="f.kvkNummer.errors.pattern">KvK nummer bestaat uit 8 cijfers</div>
             </div>
+          </div>
+          <div class="form-group col">
+            <label>BIG nummer</label>
+            <input type="text" class="form-control" formControlName="bigNummer"
+                   [ngClass]="{ 'is-invalid': f.bigNummer.errors }">
+            <div *ngIf="f.bigNummer.errors" class="invalid-feedback">
+              <div *ngIf="f.bigNummer.errors.pattern">BIG nummer bestaat uit 11 cijfers</div>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>IBAN nummer</label>
+            <input type="text" class="form-control" formControlName="ibanNummer"
+                   [ngClass]="{ 'is-invalid': f.ibanNummer.errors }">
+            <div *ngIf="f.ibanNummer.errors" class="invalid-feedback">
+              <div *ngIf="f.ibanNummer.errors.required">IBAN nummer is verplicht, het wordt op de factuur vermeld</div>
+              <div *ngIf="f.ibanNummer.errors.pattern">IBAN nummer niet correct</div>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>btw nummer</label>
+            <input type="text" class="form-control" formControlName="btwNummer" [ngClass]="{ 'is-invalid': f.btwNummer.errors }">
           </div>
         </div>
         <div class="form-row">
