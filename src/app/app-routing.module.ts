@@ -11,6 +11,7 @@ import { RegisterComponent } from '@app/register/register.component';
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
 const vatModule = () => import('./vat/vat.module').then(x => x.VatModule);
+const customerModule = () => import('./customer/customer.module').then(x => x.CustomerModule);
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'vat', component: VatComponent, canActivate: [AuthGuard] },
   { path: 'invoice', component: SendInvoiceComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
+  { path: 'customer', loadChildren: customerModule },
   { path: 'account', loadChildren: accountModule },
 
   // otherwise redirect to home

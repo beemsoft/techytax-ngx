@@ -24,6 +24,7 @@ import { HomeComponent } from '@app/home';
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 import { RegisterModule } from '@app/register/register.module';
+import { CustomerModule } from '@app/customer/customer.module';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import { RegisterModule } from '@app/register/register.module';
     VatModule,
     FiscalOverviewModule,
     SendInvoiceModule,
-    RegisterModule
+    RegisterModule,
+    CustomerModule,
   ],
   declarations: [
     AppComponent,

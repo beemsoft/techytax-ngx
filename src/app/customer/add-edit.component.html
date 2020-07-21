@@ -1,0 +1,43 @@
+﻿<h1 *ngIf="isAddMode">Klant toevoegen</h1>
+<h1 *ngIf="!isAddMode">Klant wijzigen</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Naam</label>
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label>Adres</label>
+            <input type="text" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                <div *ngIf="f.address.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Factuur email</label>
+            <input type="text" formControlName="invoiceEmail" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.invoiceEmail.errors }" />
+            <div *ngIf="submitted && f.invoiceEmail.errors" class="invalid-feedback">
+                <div *ngIf="f.invoiceEmail.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label>Contactpersoon</label>
+            <input type="text" formControlName="contact" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contact.errors }" />
+            <div *ngIf="submitted && f.contact.errors" class="invalid-feedback">
+                <div *ngIf="f.contact.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+        <a routerLink="/customer" class="btn btn-link">Cancel</a>
+    </div>
+</form>

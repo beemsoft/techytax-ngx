@@ -12,74 +12,38 @@ export class Customer {
   contact: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CustomerService {
   private baseURL = environment.apiUrl;
-
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': localStorage.getItem('jwt')
-    })
-  };
 
   constructor(private http: HttpClient) {}
 
   addCustomer(customer: Customer) {
     let body = JSON.stringify(customer);
-
-    this.http.post(this.baseURL+'/auth/customer', body, this.httpOptions)
-      .subscribe(
-        response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
-        },
-        error => {
-          alert(error.text());
-          console.log(error.text());
-        }
-      );
+    return this.http.post(this.baseURL+'/auth/customer', body)
+      .pipe(catchError(this.handleError));
   }
 
   getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.baseURL+'/auth/customer', this.httpOptions)
+    return this.http.get<Customer[]>(this.baseURL+'/auth/customer')
       .pipe(catchError(this.handleError));
   }
 
-  getCustomer(id: number): Observable<Customer> {
-    return this.http.get<Customer>(this.baseURL+'/auth/customer/'+  id, this.httpOptions)
+  getCustomer(id: string): Observable<Customer> {
+    return this.http.get<Customer>(this.baseURL+'/auth/customer/'+  id)
       .pipe(catchError(this.handleError));
   }
 
-  deleteCustomer(customer: Customer) {
-
-    this.http.delete(this.baseURL+'/auth/customer/'+customer.id, this.httpOptions)
-      .subscribe(
-        response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
-        },
-        error => {
-          alert(error);
-          console.log(error);
-        }
-      );
+  deleteCustomer(id: string) {
+    return this.http.delete(this.baseURL+'/auth/customer/'+id)
+      .pipe(catchError(this.handleError));
   }
 
-  updateCustomer(customer: Customer) {
+  updateCustomer(id: string, customer: Customer) {
     let body = JSON.stringify(customer);
     let url = this.baseURL+'/auth/customer';
-    this.http.put(url, body, this.httpOptions)
-      .subscribe(
-        response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
-        },
-        error => {
-          alert(error);
-          console.log(error);
-        }
-      );
+    return this.http.put(url, body)
+      .pipe(catchError(this.handleError));
   }
 
   /**
