@@ -1,11 +1,11 @@
-import {VatType} from "./import-list.service";
-import {Observable} from "rxjs/Rx";
-import {Injectable} from "@angular/core";
-import {Customer} from "./customer.service";
+import { VatType } from "./import-list.service";
+import { Observable } from "rxjs/Rx";
+import { Injectable } from "@angular/core";
+import { Customer } from "./customer.service";
 import * as moment from "moment/moment";
-import {environment} from '../../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError} from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 export class Project {
   id: number;
@@ -24,74 +24,39 @@ export class Project {
 export class ProjectService {
   private baseURL = environment.apiUrl;
 
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': localStorage.getItem('jwt')
-    })
-  };
-
   constructor(private http: HttpClient) {}
 
   addProject(project: Project) {
     let body = JSON.stringify(project);
-
-    this.http.post(this.baseURL+'/auth/project', body, this.httpOptions)
-      .subscribe(
-        response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
-        },
-        error => {
-          alert(error.text());
-          console.log(error.text());
-        }
-      );
+    return this.http.post(this.baseURL+'/auth/project', body )
+      .pipe(catchError(this.handleError));
   }
 
-  getProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.baseURL+'/auth/project', this.httpOptions)
+  getAll(): Observable<Project[]> {
+    return this.http.get<Project[]>(this.baseURL+'/auth/project')
       .pipe(catchError(this.handleError));
   }
 
   getCurrentProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.baseURL+'/auth/project/current', this.httpOptions)
+    return this.http.get<Project[]>(this.baseURL+'/auth/project/current')
       .pipe(catchError(this.handleError));
   }
 
-  getProject(id: number): Observable<Project> {
-    return this.http.get<Project>(this.baseURL+'/auth/project/'+  id, this.httpOptions)
+  getById(id: string): Observable<Project> {
+    return this.http.get<Project>(this.baseURL+'/auth/project/'+  id)
       .pipe(catchError(this.handleError));
   }
 
-  deleteProject(project: Project) {
-    this.http.delete(this.baseURL+'/auth/project/'+project.id, this.httpOptions)
-      .subscribe(
-        response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
-        },
-        error => {
-          alert(error);
-          console.log(error);
-        }
-      );
+  deleteById(id: string) {
+    return this.http.delete(this.baseURL+'/auth/project/'+id)
+      .pipe(catchError(this.handleError));
   }
 
   updateProject(project: Project) {
     let body = JSON.stringify(project);
     let url = this.baseURL+'/auth/project';
-    this.http.put(url, body, this.httpOptions)
-      .subscribe(
-        response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
-        },
-        error => {
-          alert(error);
-          console.log(error);
-        }
-      );
+    return this.http.put(url, body)
+      .pipe(catchError(this.handleError));
   }
 
   /**

@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { AlertService } from '@app/_services';
 import { CustomerService } from '@app/shared/services/customer.service';
+import { ProjectService } from '@app/shared/services/project.service';
 
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
@@ -13,11 +14,13 @@ export class AddEditComponent implements OnInit {
     isAddMode: boolean;
     loading = false;
     submitted = false;
+    customers = [];
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
+        private projectService: ProjectService,
         private customerService: CustomerService,
         private alertService: AlertService
     ) {}
@@ -27,20 +30,28 @@ export class AddEditComponent implements OnInit {
         this.isAddMode = !this.id;
 
         this.form = this.formBuilder.group({
-            name: ['', Validators.required],
-            address: ['', Validators.required],
-            invoiceEmail: ['', [Validators.required, Validators.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$") ]],
-            contact: ['', Validators.required]
+            customers: [''],
+            code: ['', Validators.required],
+            projectDescription: ['', Validators.required],
+            activityDescription: ['', Validators.required],
+            rate: ['', Validators.required],
+            paymentTermDays: ['', Validators.required]
         });
+        this.customerService.getCustomers()
+          .subscribe(customers => {
+            this.customers = customers;
+          })
 
         if (!this.isAddMode) {
-            this.customerService.getCustomer(this.id)
+            this.projectService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
-                    this.f.name.setValue(x.name);
-                    this.f.address.setValue(x.address);
-                    this.f.invoiceEmail.setValue(x.emailInvoice);
-                    this.f.contact.setValue(x.contact);
+                    this.f.code.setValue(x.code);
+                    this.f.projectDescription.setValue(x.projectDescription);
+                    this.f.activityDescription.setValue(x.activityDescription);
+                    this.f.rate.setValue(x.rate);
+                    this.f.paymentTermDays.setValue(x.paymentTermDays);
+                    this.f.customers.patchValue(x.customer.id)
                 });
         }
     }
@@ -61,14 +72,14 @@ export class AddEditComponent implements OnInit {
 
         this.loading = true;
         if (this.isAddMode) {
-            this.createCustomer();
+            this.createProject();
         } else {
-            this.updateCustomer();
+            this.updateProject();
         }
     }
 
-    private createCustomer() {
-        this.customerService.addCustomer(this.form.value)
+    private createProject() {
+        this.projectService.addProject(this.form.value)
             .pipe(first())
             .subscribe(
                 data => {
@@ -81,8 +92,8 @@ export class AddEditComponent implements OnInit {
                 });
     }
 
-    private updateCustomer() {
-        this.customerService.updateCustomer(this.form.value)
+    private updateProject() {
+        this.projectService.updateProject(this.form.value)
             .pipe(first())
             .subscribe(
                 data => {

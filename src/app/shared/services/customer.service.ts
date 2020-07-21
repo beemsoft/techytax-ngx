@@ -39,7 +39,7 @@ export class CustomerService {
       .pipe(catchError(this.handleError));
   }
 
-  updateCustomer(id: string, customer: Customer) {
+  updateCustomer(customer: Customer) {
     let body = JSON.stringify(customer);
     let url = this.baseURL+'/auth/customer';
     return this.http.put(url, body)
