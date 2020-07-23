@@ -4,7 +4,7 @@
     <div class="form-row">
         <div class="form-group">
             <label>Klant</label>
-            <select formControlName="customers" id="customers">
+            <select formControlName="customer" id="customers">
                 <option *ngFor="let customer of customers; let i = index" [value]="customers[i].id">
                     {{customers[i].name}}
                 </option>
@@ -52,6 +52,23 @@
                    [ngClass]="{ 'is-invalid': submitted && f.paymentTermDays.errors }"/>
             <div *ngIf="submitted && f.paymentTermDays.errors" class="invalid-feedback">
                 <div *ngIf="f.paymentTermDays.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Startdatum</label>
+            <input type="date" formControlName="startDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }"/>
+            <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
+                <div *ngIf="f.startDate.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label>Einddatum</label>
+            <input type="date" formControlName="endDate" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && f.endDate.errors }"/>
+            <div *ngIf="submitted && f.endDate.errors" class="invalid-feedback">
+                <div *ngIf="f.endDate.errors.required">Veld is verplicht</div>
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home';
 import { AuthGuard } from './_helpers';
@@ -10,9 +10,9 @@ import { RegisterComponent } from '@app/register/register.component';
 
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const usersModule = () => import('./users/users.module').then(x => x.UsersModule);
-const vatModule = () => import('./vat/vat.module').then(x => x.VatModule);
 const customerModule = () => import('./customer/customer.module').then(x => x.CustomerModule);
 const projectModule = () => import('./project/project.module').then(x => x.ProjectModule);
+const activityModule = () => import('./activity/activity.module').then(x => x.ActivityModule);
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -23,6 +23,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'customer', loadChildren: customerModule },
   { path: 'project', loadChildren: projectModule },
+  { path: 'activity', loadChildren: activityModule },
   { path: 'account', loadChildren: accountModule },
 
   // otherwise redirect to home

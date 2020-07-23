@@ -29,7 +29,7 @@ export class CustomerService {
       .pipe(catchError(this.handleError));
   }
 
-  getCustomer(id: string): Observable<Customer> {
+  getCustomer(id: number): Observable<Customer> {
     return this.http.get<Customer>(this.baseURL+'/auth/customer/'+  id)
       .pipe(catchError(this.handleError));
   }

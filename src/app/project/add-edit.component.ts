@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { AlertService } from '@app/_services';
 import { CustomerService } from '@app/shared/services/customer.service';
 import { ProjectService } from '@app/shared/services/project.service';
+import { formatDate } from '@angular/common';
 
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
@@ -30,13 +31,16 @@ export class AddEditComponent implements OnInit {
         this.isAddMode = !this.id;
 
         this.form = this.formBuilder.group({
-            customers: [''],
+            customer: [''],
             code: ['', Validators.required],
             projectDescription: ['', Validators.required],
             activityDescription: ['', Validators.required],
             rate: ['', Validators.required],
-            paymentTermDays: ['', Validators.required]
+            paymentTermDays: ['', Validators.required],
+            startDate: ['', Validators.required],
+            endDate: ['']
         });
+        this.form.value.id = this.id;
         this.customerService.getCustomers()
           .subscribe(customers => {
             this.customers = customers;
@@ -44,15 +48,17 @@ export class AddEditComponent implements OnInit {
 
         if (!this.isAddMode) {
             this.projectService.getById(this.id)
-                .pipe(first())
-                .subscribe(x => {
-                    this.f.code.setValue(x.code);
-                    this.f.projectDescription.setValue(x.projectDescription);
-                    this.f.activityDescription.setValue(x.activityDescription);
-                    this.f.rate.setValue(x.rate);
-                    this.f.paymentTermDays.setValue(x.paymentTermDays);
-                    this.f.customers.patchValue(x.customer.id)
-                });
+              .pipe(first())
+              .subscribe(project => {
+                  this.f.code.setValue(project.code);
+                  this.f.projectDescription.setValue(project.projectDescription);
+                  this.f.activityDescription.setValue(project.activityDescription);
+                  this.f.rate.setValue(project.rate);
+                  this.f.paymentTermDays.setValue(project.paymentTermDays);
+                  this.f.customer.patchValue(project.customer.id);
+                  this.f.startDate.setValue(project.startDate != null ? formatDate(project.startDate, 'yyyy-MM-dd', 'en') : null);
+                  this.f.endDate.setValue(project.endDate != null ? formatDate(project.endDate, 'yyyy-MM-dd', 'en') : null);
+              });
         }
     }
 
@@ -79,30 +85,39 @@ export class AddEditComponent implements OnInit {
     }
 
     private createProject() {
-        this.projectService.addProject(this.form.value)
+      this.customerService.getCustomer(this.form.value.customer)
+        .subscribe(customer => {
+          this.form.value.customer = customer;
+          this.projectService.addProject(this.form.value)
             .pipe(first())
             .subscribe(
-                data => {
-                    this.alertService.success('Toevoegen gelukt', { keepAfterRouteChange: true });
-                    this.router.navigate(['.', { relativeTo: this.route }]);
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                });
+              data => {
+                this.alertService.success('Toevoegen gelukt', {keepAfterRouteChange: true});
+                this.router.navigate(['.', {relativeTo: this.route}]);
+              },
+              error => {
+                this.alertService.error(error);
+                this.loading = false;
+              });
+        });
     }
 
     private updateProject() {
-        this.projectService.updateProject(this.form.value)
+      this.customerService.getCustomer(this.form.value.customer)
+        .subscribe(customer => {
+          this.form.value.customer = customer;
+          this.form.value.id = this.id;
+          this.projectService.updateProject(this.form.value)
             .pipe(first())
             .subscribe(
-                data => {
-                    this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
-                    this.router.navigate(['..', { relativeTo: this.route }]);
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                });
+              data => {
+                this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
+                this.router.navigate(['..', { relativeTo: this.route }]);
+              },
+              error => {
+                this.alertService.error(error);
+                this.loading = false;
+              });
+        })
     }
 }

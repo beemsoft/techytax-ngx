@@ -2,18 +2,16 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
     <div class="navbar-nav">
         <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-<!--        <a class="nav-item nav-link" routerLink="/home2" routerLinkActive="active">Home2</a>-->
-<!--        <a class="nav-item nav-link" routerLink="/users" routerLinkActive="active">Users</a>-->
-        <a class="nav-item nav-link" routerLink="/vat" routerLinkActive="active">btw aangifte</a>
-        <a class="nav-item nav-link" routerLink="/invoice" routerLinkActive="active">Factuur sturen</a>
-        <a class="nav-item nav-link" routerLink="/invoice2" routerLinkActive="active">Factuur sturen</a>
-        <a class="nav-item nav-link" routerLink="/activity" routerLinkActive="active">Werkzaamheden</a>
+        <a class="nav-item nav-link" (click)="logout()">Uitloggen</a>
+        <a class="nav-item nav-link" routerLink="/register" routerLinkActive="active">Mijn gegevens</a>
         <a class="nav-item nav-link" routerLink="/customer" routerLinkActive="active">Klanten</a>
         <a class="nav-item nav-link" routerLink="/project" routerLinkActive="active">Projecten</a>
-        <a class="nav-item nav-link" routerLink="/register" routerLinkActive="active">Mijn gegevens</a>
-        <a class="nav-item nav-link" (click)="logout()">Uitloggen</a>
+        <a class="nav-item nav-link" routerLink="/activity" routerLinkActive="active">Uren</a>
+        <a class="nav-item nav-link" routerLink="/invoice" routerLinkActive="active">Factuur sturen</a>
+        <a class="nav-item nav-link" routerLink="/vat" routerLinkActive="active">btw aangifte</a>
         <a class="nav-item nav-link" routerLink="/book" routerLinkActive="active">Boekwaardes</a>
         <a class="nav-item nav-link" routerLink="/activa" routerLinkActive="active">Activa</a>
+        <a class="nav-item nav-link" routerLink="/fiscal-overview" routerLinkActive="active">Fiscaal overzicht</a>
     </div>
 </nav>
 

@@ -1,59 +1,48 @@
-import { VatType } from "./import-list.service";
 import { Observable } from "rxjs/Rx";
 import { Injectable } from "@angular/core";
-import { Customer } from "./customer.service";
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { Project } from '@app/shared/services/project.service';
 
-export class Project {
+export class Activity {
   id: number;
-  customer: Customer = new Customer();
-  code: string;
-  projectDescription: string;
+  project: Project = new Project();
+  activityDate: Date
+  hours: number;
   activityDescription: string;
-  startDate: Date;
-  endDate: Date;
-  rate: number;
-  paymentTermDays: number;
-  vatType: VatType;
 }
 
-@Injectable()
-export class ProjectService {
+@Injectable({ providedIn: 'root' })
+export class ActivityService {
   private baseURL = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
-  addProject(project: Project) {
-    let body = JSON.stringify(project);
-    return this.http.post(this.baseURL+'/auth/project', body )
+  addActivity(activity: Activity) {
+    let body = JSON.stringify(activity);
+    return this.http.post(this.baseURL+'/auth/activity', body )
       .pipe(catchError(this.handleError));
   }
 
-  getAll(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.baseURL+'/auth/project')
+  getAll(): Observable<Activity[]> {
+    return this.http.get<Activity[]>(this.baseURL+'/auth/activity')
       .pipe(catchError(this.handleError));
   }
 
-  getCurrentProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.baseURL+'/auth/project/current')
+  getById(id: number): Observable<Activity> {
+    return this.http.get<Activity>(this.baseURL+'/auth/activity/'+  id)
       .pipe(catchError(this.handleError));
   }
 
-  getById(id: string): Observable<Project> {
-    return this.http.get<Project>(this.baseURL+'/auth/project/'+  id)
+  deleteById(id: number) {
+    return this.http.delete(this.baseURL+'/auth/activity/'+id)
       .pipe(catchError(this.handleError));
   }
 
-  deleteById(id: string) {
-    return this.http.delete(this.baseURL+'/auth/project/'+id)
-      .pipe(catchError(this.handleError));
-  }
-
-  updateProject(project: Project) {
-    let body = JSON.stringify(project);
-    let url = this.baseURL+'/auth/project';
+  updateActivity(activity: Activity) {
+    let body = JSON.stringify(activity);
+    let url = this.baseURL+'/auth/activity';
     return this.http.put(url, body)
       .pipe(catchError(this.handleError));
   }

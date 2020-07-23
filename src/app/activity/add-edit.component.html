@@ -1,0 +1,46 @@
+﻿<h1 *ngIf="isAddMode">Uren toevoegen</h1>
+<h1 *ngIf="!isAddMode">Uren wijzigen</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="form-group">
+            <label>Project&nbsp;</label>
+            <select formControlName="project" id="projects">
+                <option *ngFor="let project of projects; let i = index" [value]="projects[i].id">
+                    {{projects[i].code}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Datum</label>
+            <input type="date" formControlName="activityDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.activityDate.errors }"/>
+            <div *ngIf="submitted && f.activityDate.errors" class="invalid-feedback">
+                <div *ngIf="f.activityDate.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label>Uren</label>
+            <input type="text" formControlName="hours" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && f.hours.errors }"/>
+            <div *ngIf="submitted && f.hours.errors" class="invalid-feedback">
+                <div *ngIf="f.hours.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label>Omschrijving</label>
+            <input type="text" formControlName="activityDescription" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && f.activityDescription.errors }"/>
+            <div *ngIf="submitted && f.activityDescription.errors" class="invalid-feedback">
+                <div *ngIf="f.activityDescription.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Opslaan
+        </button>
+        <a routerLink="/activity" class="btn btn-link">Annuleren</a>
+    </div>
+</form>

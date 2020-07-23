@@ -9,7 +9,7 @@ import { CustomerService } from '@app/shared/services/customer.service';
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
     form: FormGroup;
-    id: string;
+    id: number;
     isAddMode: boolean;
     loading = false;
     submitted = false;
