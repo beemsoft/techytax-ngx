@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {Invoice, InvoiceService} from '../shared/services/invoice.service';
-import {Project, ProjectService} from '../shared/services/project.service';
+import { Component, OnInit } from '@angular/core';
+import { Invoice, InvoiceService } from '../shared/services/invoice.service';
+import { Project, ProjectService } from '../shared/services/project.service';
 import * as moment from 'moment';
-import {RegisterService, Registration} from '../shared/services/register.service';
+import { RegisterService, Registration } from '../shared/services/register.service';
 import { ActivityService } from '@app/shared/services/activity.service';
-import { CustomerService } from '@app/shared/services/customer.service';
+import { AlertService } from '@app/_services';
+import { first } from 'rxjs/operators';
 
 @Component({ templateUrl: 'send-invoice.component.html' })
 export class SendInvoiceComponent implements OnInit {
@@ -21,9 +22,9 @@ export class SendInvoiceComponent implements OnInit {
     private projectService: ProjectService,
     private registerService: RegisterService,
     private activityService: ActivityService,
-    private customerService: CustomerService
+    private alertService: AlertService
 ) {
-    this.invoice = new Invoice();
+  this.invoice = new Invoice();
     let invoiceMonth = moment().locale('nl').subtract(1, 'months');
     this.invoice.month = invoiceMonth.format("MMMM");
     let prefix = "";
@@ -34,23 +35,25 @@ export class SendInvoiceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.registerService.getRegistration().subscribe((registration) => {
-      this.registration = registration;
-      this.projectService.getCurrentProjects()
-        .subscribe(
-          (projects) => {
-            this.projects = projects;
-            if (this.projects.length === 1) {
-              this.selectProject(this.projects[0])
-            }
-          },
-          error => {
-            alert(error);
-            console.log(error);
-          },
-          () => console.log('Projects retrieved')
-        )
-    });
+    this.registerService.getRegistration()
+      .subscribe((registration) => {
+          this.registration = registration;
+          this.projectService.getCurrentProjects()
+            .pipe(first())
+            .subscribe(
+              (projects) => {
+                this.projects = projects;
+                if (this.projects.length === 1) {
+                  this.selectProject(this.projects[0])
+                }
+              },
+              error => {
+                this.alertService.error(error);
+              });
+        },
+        error => {
+          this.alertService.error(error);
+        });
   }
 
   onChangeEvent(ev) {

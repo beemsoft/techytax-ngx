@@ -50,7 +50,6 @@ export class RegisterService {
 
   getRegistration(): Observable<Registration> {
     return this.http.get<Registration>(this.baseURL+'/auth/register')
-      .pipe(catchError(this.handleError));
   }
 
   updateRegistration(registration: Registration) {
