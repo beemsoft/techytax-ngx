@@ -9,10 +9,10 @@ export class Invoice {
   invoiceNumber: string;
   originalInvoiceNumber: string;
   month: string;
-  project: any; //  Project = new Project();
+  project: any;
   unitsOfWork: number;
+  revenue: number;
   htmlText: string;
-  sent: string; //moment.Moment;
 }
 
 @Injectable({ providedIn: 'root' })

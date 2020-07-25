@@ -3,20 +3,26 @@ import {Invoice, InvoiceService} from '../shared/services/invoice.service';
 import {Project, ProjectService} from '../shared/services/project.service';
 import * as moment from 'moment';
 import {RegisterService, Registration} from '../shared/services/register.service';
+import { ActivityService } from '@app/shared/services/activity.service';
+import { CustomerService } from '@app/shared/services/customer.service';
 
 @Component({ templateUrl: 'send-invoice.component.html' })
 export class SendInvoiceComponent implements OnInit {
 
   projects: Project[];
   invoice: Invoice;
+  subTotal: number;
   registration: Registration;
   invoiceType = "factuur";
+  approveInvoice: boolean = false;
 
   constructor(
     private invoiceService: InvoiceService,
     private projectService: ProjectService,
-    private registerService: RegisterService
-  ) {
+    private registerService: RegisterService,
+    private activityService: ActivityService,
+    private customerService: CustomerService
+) {
     this.invoice = new Invoice();
     let invoiceMonth = moment().locale('nl').subtract(1, 'months');
     this.invoice.month = invoiceMonth.format("MMMM");
@@ -52,7 +58,8 @@ export class SendInvoiceComponent implements OnInit {
   }
 
   isButtonDisabled() {
-    return this.invoice.unitsOfWork == undefined
+    return !this.approveInvoice
+      || this.invoice.unitsOfWork == undefined
       || (this.invoiceType == "factuur" && this.invoice.unitsOfWork < 1)
       || (this.invoiceType == "creditnota" && (this.invoice.unitsOfWork > -1
        || (this.invoice.originalInvoiceNumber == undefined || this.invoice.originalInvoiceNumber.length < 8)));
@@ -74,6 +81,18 @@ export class SendInvoiceComponent implements OnInit {
   private selectProject(project) {
     this.invoice.project = project;
     this.updateHtmlText()
+    this.activityService.getActivitiesForPreviousMonth(project.id)
+      .subscribe(activities => {
+        console.log(JSON.stringify(activities));
+        let totalHours = 0;
+        activities.forEach(activity => {
+          totalHours += activity.hours;
+        })
+        this.invoice.unitsOfWork = totalHours;
+        this.checkUnitsOfWork();
+        this.subTotal = totalHours * this.invoice.project.rate;
+        this.invoice.revenue = this.subTotal * (this.invoice.project.revenuePerc ? this.invoice.project.revenuePerc / 100 : 1);
+      })
   }
 
   updateHtmlText() {

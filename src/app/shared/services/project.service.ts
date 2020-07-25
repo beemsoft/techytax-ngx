@@ -15,6 +15,7 @@ export class Project {
   startDate: Date;
   endDate: Date;
   rate: number;
+  revenuePerc: number;
   paymentTermDays: number;
   vatType: VatType;
 }

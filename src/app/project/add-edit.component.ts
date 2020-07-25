@@ -36,6 +36,7 @@ export class AddEditComponent implements OnInit {
             projectDescription: ['', Validators.required],
             activityDescription: ['', Validators.required],
             rate: ['', Validators.required],
+            revenuePerc: ['', Validators.pattern("\\d{1,3}(\\.\\d{0,2})?")],
             paymentTermDays: ['', Validators.required],
             startDate: ['', Validators.required],
             endDate: ['']
@@ -54,6 +55,7 @@ export class AddEditComponent implements OnInit {
                   this.f.projectDescription.setValue(project.projectDescription);
                   this.f.activityDescription.setValue(project.activityDescription);
                   this.f.rate.setValue(project.rate);
+                  this.f.revenuePerc.setValue(project.revenuePerc);
                   this.f.paymentTermDays.setValue(project.paymentTermDays);
                   this.f.customer.patchValue(project.customer.id);
                   this.f.startDate.setValue(project.startDate != null ? formatDate(project.startDate, 'yyyy-MM-dd', 'en') : null);

@@ -30,6 +30,11 @@ export class ActivityService {
       .pipe(catchError(this.handleError));
   }
 
+  getActivitiesForPreviousMonth(projectId: number): Observable<Activity[]> {
+    return this.http.get<Activity[]>(this.baseURL+'/auth/activity/project/' + projectId)
+      .pipe(catchError(this.handleError));
+  }
+
   getById(id: number): Observable<Activity> {
     return this.http.get<Activity>(this.baseURL+'/auth/activity/'+  id)
       .pipe(catchError(this.handleError));

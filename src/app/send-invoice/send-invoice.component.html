@@ -9,34 +9,45 @@
         <div *ngIf="invoice.project">
             <table width="100%">
                 <tr>
-                    <td>Description:</td>
+                    <td>Project:</td>
                     <td>{{invoice.project.projectDescription}}</td>
                 </tr>
                 <tr>
-                    <td>Email invoice to:</td>
+                    <td>Factuur email:</td>
                     <td>{{invoice.project.customer.emailInvoice}}</td>
                 </tr>
                 <tr>
-                    <td>Invoice month:</td>
+                    <td>Factuur maand:</td>
                     <td><input [(ngModel)]="invoice.month"></td>
                 </tr>
                 <tr>
-                    <td>Invoice number:</td>
+                    <td>Factuur nummer:</td>
                     <td><input [(ngModel)]="invoice.invoiceNumber" (change)="updateDescription()"></td>
                 </tr>
                 <tr>
-                    <td># Hours:</td>
-                    <td><input [(ngModel)]="invoice.unitsOfWork" (change)="checkUnitsOfWork()"></td>
+                    <td># Uren:</td>
+                    <td>{{invoice.unitsOfWork}}</td>
                 </tr>
                 <tr *ngIf="invoice.unitsOfWork && invoice.unitsOfWork < 0">
-                    <td>Original invoice number:</td>
+                    <td>Oorspronkelijke factuur nummer:</td>
                     <td><input [(ngModel)]="invoice.originalInvoiceNumber"></td>
+                </tr>
+                <tr>
+                    <td>Omzet (subtotaal):</td>
+                    <td>{{subTotal}}</td>
+                </tr>
+                <tr>
+                    <td>Omzet (totaal):</td>
+                    <td>{{invoice.revenue}}</td>
                 </tr>
                 <tr>
                     <td colspan="2"><textarea style="width: 100%;" [(ngModel)]="invoice.htmlText"></textarea></td>
                 </tr>
             </table>
-            <button (click)="sendInvoice()" [disabled]="isButtonDisabled()">Send invoice</button>
+            <div class="checkbox">
+                <input type="checkbox" (change)="approveInvoice = !approveInvoice"> Ik geef toestemming voor het opslaan van mijn gegevens.
+            </div>
+            <button (click)="sendInvoice()" [disabled]="isButtonDisabled()">Stuur factuur</button>
             Test email: <input [(ngModel)]="invoice.project.customer.emailInvoice">
         </div>
     </div>
