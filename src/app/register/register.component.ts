@@ -22,26 +22,25 @@ export class RegisterComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.registerService.getRegistration().subscribe((registration) => {
+        this.form = this.formBuilder.group({
+            companyName: ['', [ Validators.required ]],
+            address: ['', [ Validators.required ]],
+            zipCode: ['', [ Validators.required ]],
+            city: ['', [ Validators.required ]],
+            firstName: ['', [ Validators.required, Validators.pattern("([A-Z].?)+") ]],
+            prefix: ['', []],
+            lastName: ['', [ Validators.required, Validators.pattern("[a-zA-Z][a-zA-Z]+") ]],
+            email: ['', [ Validators.required, Validators.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$") ]],
+            phoneNumber: ['', [ Validators.required, Validators.pattern("\\d{10}") ]],
+            password: ['', [ Validators.minLength(6) ]],
+            kvkNummer: ['', [ Validators.required, Validators.pattern("\\d{8}") ]],
+            bigNummer: ['', [ Validators.pattern("\\d{11}") ]],
+            ibanNummer: ['', [ Validators.required, Validators.pattern("[a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{4}[0-9]{7}([a-zA-Z0-9]?){0,16}") ]],
+            btwNummer: ['', []],
+        });
+        this.registerService.getRegistration()
+          .subscribe((registration) => {
             this.registration = registration
-            const passwordValidators = [Validators.minLength(6)];
-            passwordValidators.push(Validators.required);
-            this.form = this.formBuilder.group({
-                companyName: ['', []],
-                address: ['', []],
-                zipCode: ['', []],
-                city: ['', []],
-                firstName: ['', [ Validators.required, Validators.pattern("([A-Z].?)+") ]],
-                prefix: ['', []],
-                lastName: ['', [ Validators.required, Validators.pattern("[a-zA-Z][a-zA-Z]+") ]],
-                email: ['', [ Validators.required, Validators.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$") ]],
-                phoneNumber: ['', [ Validators.required, Validators.pattern("\\d{10}") ]],
-                password: ['', [ Validators.minLength(6) ]],
-                kvkNummer: ['', [ Validators.required, Validators.pattern("\\d{8}") ]],
-                bigNummer: ['', [ Validators.pattern("\\d{11}") ]],
-                ibanNummer: ['', [ Validators.required, Validators.pattern("[a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{4}[0-9]{7}([a-zA-Z0-9]?){0,16}") ]],
-                btwNummer: ['', []],
-            });
             this.f.companyName.setValue(registration.companyData.companyName);
             this.f.address.setValue(registration.companyData.address);
             this.f.zipCode.setValue(registration.companyData.zipCode);
@@ -61,7 +60,6 @@ export class RegisterComponent implements OnInit {
     get f() { return this.form.controls; }
 
     onSubmit() {
-        console.log('Submit!');
         this.submitted = true;
         // reset alerts on submit
         this.alertService.clear();

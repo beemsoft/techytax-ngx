@@ -124,11 +124,10 @@
             <label>Password
               <em>(Laat leeg als je het niet wilt wijzigen)</em>
             </label>
-            <input type="password" class="form-control" formControlName="password"
-                   [ngClass]="{ 'is-invalid': f.firstName.errors }">
-            <div *ngIf="f.phoneNumber.errors" class="invalid-feedback">
-              <div *ngIf="f.password.errors.required">Wachtwoord is verplicht</div>
-              <div *ngIf="f.password.errors.minlength">Wachtwoord moet 6 karakters lang zijn, we hebben nog
+            <input type="password" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+            <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+              <div *ngIf="submitted && f.password.errors.required">Wachtwoord is verplicht</div>
+              <div *ngIf="submitted && f.password.errors.minlength">Wachtwoord moet 6 karakters lang zijn, we hebben nog
                 {{f.password.errors.minlength.requiredLength - f.password.errors.minlength.actualLength}} karakters
                 nodig
               </div>
