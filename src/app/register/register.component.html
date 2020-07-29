@@ -85,7 +85,7 @@
           <div class="form-group col">
             <label>Achternaam</label>
             <input type="text" class="form-control" formControlName="lastName"
-                   [ngClass]="{ 'is-invalid': f.firstName.errors }">
+                   [ngClass]="{ 'is-invalid': f.lastName.errors }">
             <div *ngIf="f.kvkNummer.errors" class="invalid-feedback">
               <div *ngIf="f.lastName.errors.required">Achternaam is verplicht</div>
               <div *ngIf="f.lastName.errors.pattern">Achternaam moet uit minstens 2 letters bestaan</div>

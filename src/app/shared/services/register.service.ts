@@ -1,6 +1,5 @@
 import { Observable } from "rxjs/Rx";
 import { Injectable } from "@angular/core";
-import * as moment from "moment/moment";
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
@@ -8,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 export class Registration {
   user: string;
   password: string;
-  registrationDate: moment.Moment;
+  registrationDate: Date
   personalData: PersonalData = new PersonalData();
   companyData: CompanyData = new CompanyData();
   fiscalData: FiscalData = new FiscalData();
