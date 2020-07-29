@@ -74,7 +74,7 @@
             <label>Voorletters</label>
             <input type="text" class="form-control" formControlName="firstName"
                    [ngClass]="{ 'is-invalid': f.firstName.errors }">
-            <div *ngIf="f.kvkNummer.errors" class="invalid-feedback">
+            <div *ngIf="f.firstName.errors" class="invalid-feedback">
               <div *ngIf="f.firstName.errors.required">Initialen zijn verplicht</div>
             </div>
           </div>
@@ -86,7 +86,7 @@
             <label>Achternaam</label>
             <input type="text" class="form-control" formControlName="lastName"
                    [ngClass]="{ 'is-invalid': f.lastName.errors }">
-            <div *ngIf="f.kvkNummer.errors" class="invalid-feedback">
+            <div *ngIf="f.lastName.errors" class="invalid-feedback">
               <div *ngIf="f.lastName.errors.required">Achternaam is verplicht</div>
               <div *ngIf="f.lastName.errors.pattern">Achternaam moet uit minstens 2 letters bestaan</div>
             </div>
@@ -98,7 +98,7 @@
             <label>Email</label>
             <input type="email" class="form-control" formControlName="email"
                    [ngClass]="{ 'is-invalid': f.email.errors }">
-            <div *ngIf="f.kvkNummer.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors" class="invalid-feedback">
               <div *ngIf="f.email.errors.required">Email is verplicht</div>
               <div *ngIf="f.email.errors.pattern">Email is niet correct</div>
             </div>
