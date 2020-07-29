@@ -3,10 +3,11 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th style="width: 20%">Dag</th>
-            <th style="width: 20%">Uren</th>
+            <th style="width: 10%">Dag</th>
+            <th style="width: 10%">Uren</th>
+            <th style="width: 20%">Omzet</th>
             <th style="width: 30%">Omschrijving</th>
-            <th style="width: 20%">Project</th>
+            <th style="width: 10%">Project</th>
             <th style="width: 10%"></th>
         </tr>
     </thead>
@@ -14,6 +15,7 @@
         <tr *ngFor="let activity of activities">
             <td>{{activity.activityDate | date : 'dd-MM-yyyy' }}</td>
             <td>{{activity.hours}}</td>
+            <td>{{activity.revenue}}</td>
             <td>{{activity.activityDescription}}</td>
             <td>{{activity.project.code}}</td>
             <td style="white-space: nowrap">

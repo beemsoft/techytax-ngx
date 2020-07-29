@@ -21,11 +21,11 @@
         </div>
         <div class="form-group col">
             <label>Uren</label>
-            <input type="text" formControlName="hours" class="form-control"
-                   [ngClass]="{ 'is-invalid': submitted && f.hours.errors }"/>
-            <div *ngIf="submitted && f.hours.errors" class="invalid-feedback">
-                <div *ngIf="f.hours.errors.required">Veld is verplicht</div>
-            </div>
+            <input type="text" formControlName="hours" class="form-control"/>
+        </div>
+        <div class="form-group col">
+            <label>Omzet</label>
+            <input type="text" formControlName="revenue" class="form-control"/>
         </div>
         <div class="form-group col">
             <label>Omschrijving</label>

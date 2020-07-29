@@ -34,7 +34,8 @@ export class AddEditComponent implements OnInit {
     this.form = this.formBuilder.group({
       project: [''],
       activityDate: ['', Validators.required],
-      hours: ['', Validators.required],
+      hours: [''],
+      revenue: [''],
       activityDescription: ['', Validators.required]
     });
     this.form.value.id = this.id;
@@ -49,6 +50,7 @@ export class AddEditComponent implements OnInit {
           this.f.activityDate.setValue(activity.activityDate != null ? formatDate(activity.activityDate, 'yyyy-MM-dd', 'en') : null);
           this.f.activityDescription.setValue(activity.activityDescription);
           this.f.hours.setValue(activity.hours);
+          this.f.revenue.setValue(activity.revenue);
           this.f.project.patchValue(activity.project.id)
         });
     } else {

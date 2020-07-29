@@ -10,6 +10,7 @@ export class Activity {
   project: Project = new Project();
   activityDate: Date
   hours: number;
+  revenue: number;
   activityDescription: string;
 }
 
