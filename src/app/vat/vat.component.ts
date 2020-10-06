@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CostCharacter, CostType, ImportListService, Transaction } from '../shared/services/import-list.service';
+import {
+  CostCharacter,
+  CostType,
+  ImportListService,
+  Transaction,
+  VatType
+} from '../shared/services/import-list.service';
 import { CostMatch, CostMatchService } from '../shared/services/cost-match.service';
 import { LabelService } from '../shared/services/label.service';
 import { FiscalReport, VatCalculationService, VatReport } from '../shared/services/vat-calculation.service';
@@ -19,6 +25,12 @@ export class VatComponent implements OnInit {
   private transactions: Array<Transaction> = [];
   public columnsToDisplay: string[] = ['date', 'description', 'matchString', 'costType', 'costCharacter', 'matchPercentage', 'matchFixedAmount', 'vatType', 'amount', 'amountNet', 'vatOut'];
   dataSource;
+  costTypes = CostType;
+  costTypeList = [];
+  costCharacters = CostCharacter;
+  costCharacterList = [];
+  vatTypes = VatType;
+  vatTypeList = [];
 
   constructor(
     private importListService: ImportListService,
@@ -40,6 +52,24 @@ export class VatComponent implements OnInit {
         },
         () => console.log('Costmatches retrieved')
       )
+    for (let costType in CostType) {
+      let isValueProperty = parseInt(costType, 10) >= 0;
+      if (isValueProperty) {
+        this.costTypeList.push({key: costType, value: this.labelService.get(CostType[costType])});
+      }
+    }
+    for (let costCharacter in CostCharacter) {
+      let isValueProperty = parseInt(costCharacter, 10) >= 0;
+      if (isValueProperty) {
+        this.costCharacterList.push({key: costCharacter, value: this.labelService.get(CostCharacter[costCharacter])});
+      }
+    }
+    for (let vatType in VatType) {
+      let isValueProperty = parseInt(vatType, 10) >= 0;
+      if (isValueProperty) {
+        this.vatTypeList.push({key: vatType, value: this.labelService.get(VatType[vatType])});
+      }
+    }
   }
 
   displayVatTypeSelector(transaction: Transaction) {

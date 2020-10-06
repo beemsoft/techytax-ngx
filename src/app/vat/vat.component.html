@@ -51,20 +51,31 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header="costTypeDescription"> Type</th>
       <td mat-cell *matCellDef="let transaction">
         <div *ngIf="transaction.costMatch">{{transaction.costTypeDescription | label}}</div>
-        <div *ngIf="!transaction.costMatch"><cost-type-selector (select)="transaction.costType = $event"></cost-type-selector>
+        <div *ngIf="!transaction.costMatch">
+          <select id="costTypes" [(ngModel)]="transaction.costType">
+            <option *ngFor="let costType of costTypeList" [value]="costType.key">
+              {{costType.value}}
+            </option>
+          </select>
         </div>
       </td>
     </ng-container>
     <ng-container matColumnDef="costCharacter">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="costCharacterDescription"> Prive/zakelijk</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="costCharacterDescription"> Prive/zak.</th>
       <td mat-cell *matCellDef="let transaction">
         <div *ngIf="transaction.costMatch">{{transaction.costCharacterDescription}}</div>
-        <div *ngIf="!transaction.costMatch"><cost-character-selector (select)="transaction.costCharacter = $event"></cost-character-selector></div>
+        <div *ngIf="!transaction.costMatch">
+          <select id="costCharacters" [(ngModel)]="transaction.costCharacter">
+              <option *ngFor="let costCharacter of costCharacterList" [value]="costCharacter.key">
+                  {{costCharacter.value}}
+              </option>
+          </select>
+        </div>
       </td>
 
     </ng-container>
     <ng-container matColumnDef="matchPercentage">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Percentage</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Perc.</th>
       <td mat-cell *matCellDef="let transaction">
         <div *ngIf="transaction.costMatch">{{transaction.costMatch.percentage}}</div>
         <div *ngIf="!transaction.costMatch"><input type="text" placeholder="%" style="width: 30px" [(ngModel)]="transaction.percentage"/></div>
@@ -81,7 +92,13 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> btw type</th>
       <td mat-cell *matCellDef="let transaction">
         <div *ngIf="transaction.costMatch">{{transaction.costMatch.vatType | label}}</div>
-        <div *ngIf="!transaction.costMatch && displayVatTypeSelector(transaction)"><vat-type-selector (select)="transaction.vatType = $event"></vat-type-selector></div>
+        <div *ngIf="!transaction.costMatch && displayVatTypeSelector(transaction)">
+          <select id="vatTypes" [(ngModel)]="transaction.vatType">
+              <option *ngFor="let vatType of vatTypeList" [value]="vatType.key">
+                  {{vatType.value}}
+              </option>
+          </select>
+        </div>
       </td>
     </ng-container>
     <ng-container matColumnDef="amount">

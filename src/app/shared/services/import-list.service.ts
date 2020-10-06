@@ -92,7 +92,7 @@ export class ImportListService {
   convert(csvFile: string): Transaction[] {
     let transaction: Transaction;
     let csvLines: string[][];
-    csvLines = this.csvParseService.csvToArray(csvFile, ',');
+    csvLines = this.csvParseService.csvToArray(csvFile, ';');
     let csvType: CsvType;
 
     this.transactions = [];
