@@ -1,9 +1,8 @@
-import {Observable, throwError as observableThrowError} from 'rxjs';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import * as moment from "moment/moment";
-import {catchError} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
+import { Observable, throwError as observableThrowError } from 'rxjs';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 export enum ActivumType {
   MACHINERY = 1,
@@ -168,13 +167,13 @@ export class ActivumService {
   // }
 
   getActiva(): Observable<Activum> {
-    return this.http.get<Activum>(this.baseURL+'/auth/activum', this.httpOptions)
+    return this.http.get<Activum>(this.baseURL+'/auth/activum')
       .pipe(
         catchError(this.handleError));
   }
 
   getActivumCar(): Observable<BusinessCar> {
-    return this.http.get<BusinessCar>(this.baseURL+'/auth/activum/car', this.httpOptions)
+    return this.http.get<BusinessCar>(this.baseURL+'/auth/activum/car')
       .pipe(
         catchError(this.handleError));
   }
