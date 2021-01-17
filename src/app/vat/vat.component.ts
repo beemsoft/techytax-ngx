@@ -123,11 +123,13 @@ export class VatComponent implements OnInit {
     costMatch.vatType = transaction.vatType;
     costMatch.percentage = transaction.percentage;
     costMatch.fixedAmount = transaction.fixedAmount;
-    transaction.costMatch = costMatch;
-    this.costMatchService.addMatch(costMatch);
-    this.costMatches = (<CostMatch[]>this.costMatches).concat(transaction.costMatch);
-    this.transactions = this.costMatchService.match(this.transactions, this.costMatches);
-    this.updateTotalVat();
+    this.costMatchService.addMatch(costMatch)
+      .subscribe(() => {
+        transaction.costMatch = costMatch;
+        this.costMatches = (<CostMatch[]>this.costMatches).concat(transaction.costMatch);
+        this.transactions = this.costMatchService.match(this.transactions, this.costMatches);
+        this.updateTotalVat();
+      });
   }
 
   public match(): void {
@@ -162,7 +164,6 @@ export class VatComponent implements OnInit {
         this.vatReport = vatReport;
         this.checkTransactions();
         this.dataSource = new MatTableDataSource(this.transactions);
-        // this.dataSource.sort = this.sort;
       });
   }
 }
