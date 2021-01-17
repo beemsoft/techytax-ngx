@@ -9,7 +9,6 @@ import {
 import { CostMatch, CostMatchService } from '../shared/services/cost-match.service';
 import { LabelService } from '../shared/services/label.service';
 import { FiscalReport, VatCalculationService, VatReport } from '../shared/services/vat-calculation.service';
-import { TransactionTableComponent } from './transaction-table.component';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 
@@ -36,8 +35,7 @@ export class VatComponent implements OnInit {
     private importListService: ImportListService,
     private costMatchService: CostMatchService,
     private labelService: LabelService,
-    private vatCalculationService: VatCalculationService,
-    public transactionTable: TransactionTableComponent
+    private vatCalculationService: VatCalculationService
   ) {
     this.uploadedFile = null;
   }
@@ -98,7 +96,6 @@ export class VatComponent implements OnInit {
     }
     this.vatReport.firstTransactionDate = firstTransactionDate.format('YYYY-MM-DD');
     this.vatReport.latestTransactionDate = latestTransactionDate.format('YYYY-MM-DD');
-    // this.transactionTable.config.filtering.onlyUnknown = this.transactionsUnmatched > 0;
   }
 
   fileChangeEvent(fileInput: any) {
@@ -110,13 +107,8 @@ export class VatComponent implements OnInit {
       this.transactions = this.transactions.concat(this.importListService.convert(this.importedText));
       this.transactions = this.costMatchService.match(this.transactions, this.costMatches);
       this.transactionsLoaded = this.transactions.length;
-      this.transactionTable.length = this.transactions.length;
       if (this.transactionsLoaded) {
         this.updateTotalVat();
-        this.transactionTable.data = this.transactions;
-        this.transactionTable.rows = this.transactions;
-        this.transactionTable.rows = [...this.transactionTable.rows];
-        // this.transactionTable.onChangeTable(this.transactionTable.config);
       }
     };
     reader.readAsText(this.uploadedFile);

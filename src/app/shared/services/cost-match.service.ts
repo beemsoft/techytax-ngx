@@ -1,10 +1,10 @@
-import {Observable, throwError as observableThrowError} from 'rxjs';
-import {CostCharacter, CostType, Transaction, VatType} from './import-list.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {LabelService} from './label.service';
-import {Injectable} from '@angular/core';
-import {catchError} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
+import { Observable, throwError as observableThrowError } from 'rxjs';
+import { CostCharacter, CostType, Transaction, VatType } from './import-list.service';
+import { HttpClient } from '@angular/common/http';
+import { LabelService } from './label.service';
+import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 export class CostMatch {
   id: number;
@@ -26,62 +26,40 @@ export class CostMatchService {
 
   addMatch(costMatch: CostMatch) {
     let body = JSON.stringify(costMatch);
-    this.http.post(this.baseURL + '/auth/match', body)
-      .subscribe(
-        response => {
-        },
-        error => {
-          alert(error.text());
-          console.log(error.text());
-        }
-      );
+    return this.http.post(this.baseURL + '/auth/match', body)
   }
 
   getMatches(): Observable<CostMatch> {
-
     return this.http.get<CostMatch>(this.baseURL + '/auth/match')
       .pipe(
         catchError(this.handleError));
   }
 
-  deleteMatch(costMatch: CostMatch) {
-    this.http.delete(this.baseURL + '/auth/match/' + costMatch.id)
-      .subscribe(
-        response => {
-        },
-        error => {
-          alert(error);
-          console.log(error);
-        }
-      );
+  getById(id: number): Observable<CostMatch> {
+    return this.http.get<CostMatch>(this.baseURL+'/auth/match/'+  id)
+      .pipe(catchError(this.handleError));
   }
-  //
-  // updateMatch(costMatch: CostMatch) {
-  //   let body = JSON.stringify(costMatch);
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //   let url = this.baseURL + '/auth/match';
-  //   this.http.put(url, body, {headers: contentHeaders})
-  //     .subscribe(
-  //       response => {
-  //         // localStorage.setItem('jwt', response.json().id_token);
-  //         // this.router.parent.navigateByUrl('/vat');
-  //       },
-  //       error => {
-  //         alert(error);
-  //         console.log(error);
-  //       }
-  //     );
-  // }
 
-  /**
-   * Handle HTTP error
-   */
+  deleteById(id: number) {
+    return this.http.delete(this.baseURL+'/auth/match/'+id)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteMatch(costMatch: CostMatch) {
+    return this.http.delete(this.baseURL + '/auth/match/' + costMatch.id)
+  }
+
+  updateMatch(costMatch: CostMatch) {
+    let body = JSON.stringify(costMatch);
+    let url = this.baseURL+'/auth/match';
+    return this.http.put(url, body)
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    console.error(errMsg); // log to console instead
+    console.error(errMsg);
     return observableThrowError(errMsg);
   }
 

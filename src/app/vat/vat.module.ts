@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VatComponent } from './vat.component';
-import { TransactionTableComponent } from './transaction-table.component';
 import { VatReportComponent } from './vat-report.component';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -18,16 +17,12 @@ import { CostCharacterSelector } from '../shared/selectors/cost-character.select
   ],
   declarations: [
     VatComponent,
-    TransactionTableComponent,
     VatReportComponent,
     KeysPipe,
     CostTypeSelector,
     VatTypeSelector,
     CostCharacterSelector,
     LabelPipe
-  ],
-  providers: [
-    TransactionTableComponent
   ]
 })
 

@@ -117,6 +117,8 @@ export class VatCalculationService {
                 totalTransportCosts += transaction.amountNet;
               } else if (transaction.costType['id'] === CostType.OFFICE) {
                 totalOfficeCosts += transaction.amountNet;
+              } else if (transaction.costType['id'] === CostType.OFFICE_DISCOUNT) {
+                totalOfficeCosts -= transaction.amountNet;
               } else if (transaction.costType['id'] === CostType.GENERAL_EXPENSE) {
                 totalOtherCosts += transaction.amountNet;
               } else if (transaction.costType['id'] === CostType.INVESTMENT) {
