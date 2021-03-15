@@ -1,29 +1,18 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {LabelService} from "../shared/services/label.service";
-import {InvoiceService} from "../shared/services/invoice.service";
-import {FiscalOverviewService} from "../shared/services/fiscal-overview.service";
-import {FormsModule} from '@angular/forms';
-import { MatTableModule } from '@angular/material/table';
-import {FiscalOverviewComponent} from './fiscal-overview.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FiscalOverviewComponent } from './fiscal-overview.component';
+import { FiscalOverviewRoutingModule } from '@app/fiscal-overview/fiscal-overview-routing.module';
 
 @NgModule({
   imports: [
     FormsModule,
     CommonModule,
-    MatTableModule
+    FiscalOverviewRoutingModule
   ],
   declarations: [
     FiscalOverviewComponent
-  ],
-  exports: [FiscalOverviewComponent],
-  providers: [
-    LabelService,
-    InvoiceService,
-    FiscalOverviewService
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  ]
 })
-
 export class FiscalOverviewModule {
 }

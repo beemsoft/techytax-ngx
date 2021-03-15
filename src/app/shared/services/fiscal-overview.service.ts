@@ -1,44 +1,28 @@
-import {throwError as observableThrowError} from 'rxjs';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs/Rx";
-import {Injectable} from "@angular/core";
-import {VatReport} from "./vat-calculation.service";
-import {catchError} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
+import { throwError as observableThrowError } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs/Rx";
+import { Injectable } from "@angular/core";
+import { VatReport } from "./vat-calculation.service";
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FiscalOverviewService {
   private baseURL = environment.apiUrl;
-
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Accept':  'application/json',
-      'Content-Type':  'application/json',
-      'Authorization': localStorage.getItem('jwt')
-    })
-  };
 
   constructor(private http: HttpClient) {}
 
   getFiscalOverview(): Observable<any> {
-    return this.http.get(this.baseURL+'/auth/fiscal-overview', this.httpOptions)
+    return this.http.get(this.baseURL+'/auth/fiscal-overview')
       .pipe(
         catchError(this.handleError));
   }
 
   sendFiscalData(vatReport: VatReport) {
     let body = JSON.stringify(vatReport);
-    this.http.post(this.baseURL+'/auth/fiscal-overview', body, this.httpOptions)
-      .subscribe(
-        response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
-        },
-        error => {
-          alert(error.text());
-          console.log(error.text());
-        }
-      );
+    return this.http.post(this.baseURL+'/auth/fiscal-overview', body)
+      .pipe(
+        catchError(this.handleError));
   }
 
   private handleError (error: any) {

@@ -13,6 +13,7 @@ const customerModule = () => import('./customer/customer.module').then(x => x.Cu
 const projectModule = () => import('./project/project.module').then(x => x.ProjectModule);
 const activityModule = () => import('./activity/activity.module').then(x => x.ActivityModule);
 const vatMatchModule = () => import('./vat-match/vat-match.module').then(x => x.VatMatchModule);
+const fiscalOverviewModule = () => import('./fiscal-overview/fiscal-overview.module').then(x => x.FiscalOverviewModule);
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'project', loadChildren: projectModule },
   { path: 'activity', loadChildren: activityModule },
   { path: 'account', loadChildren: accountModule },
+  { path: 'fiscal-overview', loadChildren: fiscalOverviewModule },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
