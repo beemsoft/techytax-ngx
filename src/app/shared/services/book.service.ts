@@ -24,7 +24,7 @@ export class BookValue {
   saldo: number;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BookService {
   private baseURL = environment.apiUrl;
 
@@ -83,13 +83,10 @@ export class BookService {
   }
 
   getBookValues(): Observable<BookValue[]> {
-    return this.http.get<BookValue[]>(this.baseURL+'/auth/book', this.httpOptions)
+    return this.http.get<BookValue[]>(this.baseURL+'/auth/book')
       .pipe(catchError(this.handleError));
   }
 
-  /**
-   * Handle HTTP error
-   */
   private handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message

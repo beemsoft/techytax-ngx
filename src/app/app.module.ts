@@ -25,6 +25,9 @@ import { HomeComponent } from '@app/home';
 import { fakeBackendProvider } from './_helpers';
 import { RegisterModule } from '@app/register/register.module';
 import { CustomerModule } from '@app/customer/customer.module';
+import { ActivaModule } from '@app/activa/activa.module';
+import { CostModule } from '@app/cost/cost.module';
+import { BookModule } from '@app/book/book.module';
 
 @NgModule({
   imports: [
@@ -46,6 +49,9 @@ import { CustomerModule } from '@app/customer/customer.module';
     SendInvoiceModule,
     RegisterModule,
     CustomerModule,
+    BookModule,
+    ActivaModule,
+    CostModule
   ],
   declarations: [
     AppComponent,

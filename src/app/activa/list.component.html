@@ -1,0 +1,39 @@
+﻿<h1>Activa</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Activum toevoegen</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 10%">Omschrijving</th>
+            <th style="width: 30%">Aankoopprijs</th>
+            <th style="width: 20%">Restwaarde</th>
+            <th style="width: 10%">Aantal jaren</th>
+            <th style="width: 10%">Aankoopdatum</th>
+            <th style="width: 10%">Startdatum</th>
+            <th style="width: 10%">Einddatum</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let activum of activa">
+            <td>{{activum.description}}</td>
+            <td>{{activum.purchasePrice}}</td>
+            <td>{{activum.remainingValue}}</td>
+            <td>{{activum.nofYearsForDepreciation}}</td>
+            <td>{{activum.purchaseDate}}</td>
+            <td>{{activum.startDate}}</td>
+            <td>{{activum.endDate}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{activum.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                <button (click)="deleteActivum(activum.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="activum.isDeleting">
+                    <span *ngIf="activum.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!activum.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!activa">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

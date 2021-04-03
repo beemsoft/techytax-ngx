@@ -12,6 +12,9 @@ const usersModule = () => import('./users/users.module').then(x => x.UsersModule
 const customerModule = () => import('./customer/customer.module').then(x => x.CustomerModule);
 const projectModule = () => import('./project/project.module').then(x => x.ProjectModule);
 const activityModule = () => import('./activity/activity.module').then(x => x.ActivityModule);
+const bookModule = () => import('./book/book.module').then(x => x.BookModule);
+const activaModule = () => import('./activa/activa.module').then(x => x.ActivaModule);
+const costModule = () => import('./cost/cost.module').then(x => x.CostModule);
 const vatMatchModule = () => import('./vat-match/vat-match.module').then(x => x.VatMatchModule);
 const fiscalOverviewModule = () => import('./fiscal-overview/fiscal-overview.module').then(x => x.FiscalOverviewModule);
 
@@ -26,6 +29,9 @@ const routes: Routes = [
   { path: 'project', loadChildren: projectModule },
   { path: 'activity', loadChildren: activityModule },
   { path: 'account', loadChildren: accountModule },
+  { path: 'book', loadChildren: bookModule },
+  { path: 'activa', loadChildren: activaModule },
+  { path: 'cost', loadChildren: costModule },
   { path: 'fiscal-overview', loadChildren: fiscalOverviewModule },
 
   // otherwise redirect to home

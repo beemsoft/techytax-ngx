@@ -1,5 +1,5 @@
 import { Observable, throwError as observableThrowError } from 'rxjs';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -11,6 +11,7 @@ export enum ActivumType {
 }
 
 export class Activum {
+  id: number;
   description: string;
   balanceType: ActivumType = ActivumType.MACHINERY;
   balanceTypeDescription: string;
@@ -39,137 +40,29 @@ export class Office extends Activum {
 export class ActivumService {
   private baseURL = environment.apiUrl;
 
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': localStorage.getItem('jwt')
-    })
-  };
-
   constructor(private http: HttpClient) {}
 
-  // addActivum(activum: Activum) {
-  //   let body = JSON.stringify(activum);
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //   let url = this.baseURL+'/auth/activum/machine';
-  //   this.http.post(url, body, { headers: contentHeaders })
-  //     .subscribe(
-  //       response => {
-  //         // localStorage.setItem('jwt', response.json().id_token);
-  //         // this.router.parent.navigateByUrl('/vat');
-  //       },
-  //       error => {
-  //         alert(error);
-  //         console.log(error);
-  //       }
-  //     );
-  // }
-  //
-  // addActivumCar(businessCar: BusinessCar) {
-  //   let body = JSON.stringify(businessCar);
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //   let url = this.baseURL+'/auth/activum/car';
-  //   this.http.post(url, body, { headers: contentHeaders })
-  //       .subscribe(
-  //           response => {
-  //             // localStorage.setItem('jwt', response.json().id_token);
-  //             // this.router.parent.navigateByUrl('/vat');
-  //           },
-  //           error => {
-  //             alert(error);
-  //             console.log(error);
-  //           }
-  //       );
-  // }
-  //
-  // addActivumOffice(activum: Office) {
-  //   let body = JSON.stringify(activum);
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //   let url = this.baseURL+'/auth/activum/office';
-  //   this.http.post(url, body, { headers: contentHeaders })
-  //       .subscribe(
-  //           response => {
-  //             // localStorage.setItem('jwt', response.json().id_token);
-  //             // this.router.parent.navigateByUrl('/vat');
-  //           },
-  //           error => {
-  //             alert(error);
-  //             console.log(error);
-  //           }
-  //       );
-  // }
-  //
-  // updateActivum(activum: Activum) {
-  //   let body = JSON.stringify(activum);
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //   let url = this.baseURL+'/auth/activum/machine';
-  //   this.http.put(url, body, { headers: contentHeaders })
-  //       .subscribe(
-  //           response => {
-  //             // localStorage.setItem('jwt', response.json().id_token);
-  //             // this.router.parent.navigateByUrl('/vat');
-  //           },
-  //           error => {
-  //             alert(error);
-  //             console.log(error);
-  //           }
-  //       );
-  // }
-  //
-  // updateActivumCar(businessCar: BusinessCar) {
-  //   let body = JSON.stringify(businessCar);
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //   let url = this.baseURL+'/auth/activum/car';
-  //   this.http.put(url, body, { headers: contentHeaders })
-  //       .subscribe(
-  //           response => {
-  //             // localStorage.setItem('jwt', response.json().id_token);
-  //             // this.router.parent.navigateByUrl('/vat');
-  //           },
-  //           error => {
-  //             alert(error);
-  //             console.log(error);
-  //           }
-  //       );
-  // }
-  //
-  // updateActivumOffice(activum: Office) {
-  //   let body = JSON.stringify(activum);
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //   let url = this.baseURL+'/auth/activum/office';
-  //   this.http.put(url, body, { headers: contentHeaders })
-  //       .subscribe(
-  //           response => {
-  //             // localStorage.setItem('jwt', response.json().id_token);
-  //             // this.router.parent.navigateByUrl('/vat');
-  //           },
-  //           error => {
-  //             alert(error);
-  //             console.log(error);
-  //           }
-  //       );
-  // }
-  //
-  // deleteActivum(activum: Activum) {
-  //   contentHeaders.set('Authorization', localStorage.getItem('jwt'));
-  //
-  //   this.http.delete(this.baseURL+'/auth/activum/'+activum.id, { headers: contentHeaders })
-  //     .subscribe(
-  //       response => {
-  //         // localStorage.setItem('jwt', response.json().id_token);
-  //         // this.router.parent.navigateByUrl('/vat');
-  //       },
-  //       error => {
-  //         alert(error);
-  //         console.log(error);
-  //       }
-  //     );
-  // }
+  deleteActivum(id: string) {
+    return this.http.delete(this.baseURL+'/auth/activum/'+id)
+      .pipe(catchError(this.handleError));
+  }
 
   getActiva(): Observable<Activum> {
     return this.http.get<Activum>(this.baseURL+'/auth/activum')
       .pipe(
         catchError(this.handleError));
+  }
+
+  getById(id: number): Observable<Activum> {
+    return this.http.get<Activum>(this.baseURL+'/auth/activum/'+  id)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateActivum(activum: Activum) {
+    let body = JSON.stringify(activum);
+    let url = this.baseURL+'/auth/activum';
+    return this.http.put(url, body)
+      .pipe(catchError(this.handleError));
   }
 
   getActivumCar(): Observable<BusinessCar> {
@@ -178,9 +71,6 @@ export class ActivumService {
         catchError(this.handleError));
   }
 
-  /**
-   * Handle HTTP error
-   */
   private handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure
     // We'd also dig deeper into the error to get a better message

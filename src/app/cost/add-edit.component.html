@@ -1,0 +1,46 @@
+﻿<h1 *ngIf="isAddMode">Kost toevoegen</h1>
+<h1 *ngIf="!isAddMode">Kost wijzigen</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="form-group">
+            <label>Kostensoort&nbsp;</label>
+            <select id="costTypes"formControlName="costType">
+                <option *ngFor="let costType of costTypeList" [value]="costType.id">
+                    {{costType.value}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Datum</label>
+            <input type="date" formControlName="costDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.costDate.errors }"/>
+            <div *ngIf="submitted && f.costDate.errors" class="invalid-feedback">
+                <div *ngIf="f.costDate.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label>Bedrag</label>
+            <input type="text" formControlName="amount" class="form-control"/>
+        </div>
+        <div class="form-group col">
+            <label>btw</label>
+            <input type="text" formControlName="vat" class="form-control"/>
+        </div>
+        <div class="form-group col">
+            <label>Omschrijving</label>
+            <input type="text" formControlName="costDescription" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && f.costDescription.errors }"/>
+            <div *ngIf="submitted && f.costDescription.errors" class="invalid-feedback">
+                <div *ngIf="f.costDescription.errors.required">Veld is verplicht</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Opslaan
+        </button>
+        <a routerLink="/cost" class="btn btn-link">Annuleren</a>
+    </div>
+</form>

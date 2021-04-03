@@ -1,0 +1,33 @@
+﻿<h1>Kosten</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Kost toevoegen</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 10%">Datum</th>
+            <th style="width: 30%">Bedrag</th>
+            <th style="width: 20%">btw</th>
+            <th style="width: 10%">Omschrijving</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let cost of costs">
+            <td>{{cost.date}}</td>
+            <td>{{cost.amount}}</td>
+            <td>{{cost.vat}}</td>
+            <td>{{cost.description}}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{cost.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                <button (click)="deleteCost(cost.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="cost.isDeleting">
+                    <span *ngIf="cost.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!cost.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!costs">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
