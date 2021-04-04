@@ -1,1 +1,117 @@
 <h1>Fiscal overview</h1>
+<div *ngIf="fiscalOverview">
+    <div>
+        <label>Jaar</label>
+        {{ fiscalOverview.jaar }}
+    </div>
+    <h2>Winst-en-verliesrekening</h2>
+    <h3>Opbrengsten</h3>
+    <div>
+        <label>Opbrengsten uit leveringen en diensten</label>
+        {{ fiscalOverview.profitAndLoss.income.nettoOmzet }}
+    </div>
+    <h3>Afschrijvingen</h3>
+    <div>
+        <label>Gebouwen en terreinen</label>
+        {{ fiscalOverview.profitAndLoss.depreciation.settlementDepreciation }}
+    </div>
+    <div>
+        <label>Machines en installaties</label>
+        {{ fiscalOverview.profitAndLoss.depreciation.machineryDepreciation }}
+    </div>
+    <div>
+        <label>Overige materiële vaste activa (auto)</label>
+        {{ fiscalOverview.profitAndLoss.depreciation.afschrijvingAuto }}
+    </div>
+
+    <h3>Overige bedrijfskosten</h3>
+    <div>
+        <label>Auto- en transportkosten</label>
+        {{ fiscalOverview.profitAndLoss.companyCosts.carAndTransportCosts }}
+    </div>
+    <div>
+        <label>Huisvestingskosten</label>
+        {{ fiscalOverview.profitAndLoss.companyCosts.officeCosts }}
+    </div>
+    <div>
+        <label>Andere kosten</label>
+        {{ fiscalOverview.profitAndLoss.companyCosts.otherCosts }}
+    </div>
+    <h3>Balans</h3>
+    <h4>Activa</h4>
+    <table>
+        <tr>
+            <td></td>
+            <td>
+                Kosten van
+                aanschaf of
+                voortbrenging
+            </td>
+            <td>
+                Boekwaarde
+                begin boekjaar
+            </td>
+            <td>
+                Boekwaarde
+                einde boekjaar
+            </td>
+            <td>
+                Restwaarde
+            </td>
+        </tr>
+        <tr>
+            <td>(Bedrijfs)gebouwen en terreinen</td>
+            <td></td>
+            <td>{{ fiscalOverview.activaMap["OFFICE"].beginSaldo }}</td>
+            <td>{{ fiscalOverview.activaMap["OFFICE"].endSaldo }}</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Machines en installaties</td>
+            <td>{{ fiscalOverview.activaMap["MACHINERY"].totalPurchaseCost }}</td>
+            <td>{{ fiscalOverview.activaMap["MACHINERY"].beginSaldo }}</td>
+            <td>{{ fiscalOverview.activaMap["MACHINERY"].endSaldo }}</td>
+            <td>{{ fiscalOverview.activaMap["MACHINERY"].totalRemainingValue }}</td>
+        </tr>
+        <tr>
+            <td>Overige materiële vaste activa</td>
+            <td>{{ fiscalOverview.activaMap["CAR"].totalPurchaseCost }}</td>
+            <td>{{ fiscalOverview.activaMap["CAR"].beginSaldo }}</td>
+            <td>{{ fiscalOverview.activaMap["CAR"].endSaldo }}</td>
+            <td>{{ fiscalOverview.activaMap["CAR"].totalRemainingValue }}</td>
+        </tr>
+    </table>
+
+    <h5>Specificatie van (bedrijfs)gebouwen en terreinen</h5>
+    <table>
+        <tr>
+            <td></td>
+            <td>
+                Kosten van
+                aanschaf of
+                voortbrenging
+            </td>
+            <td>
+                Boekwaarde
+                einde boekjaar
+            </td>
+            <td>
+                Restwaarde
+            </td>
+            <td>
+                Bodemwaarde
+            </td>
+        </tr>
+        <tr>
+            <td>(Bedrijfs)gebouwen in eigen
+                gebruik waarop wordt
+                afgeschreven (met
+                bodemwaarde)
+            </td>
+            <td>{{ fiscalOverview.activaMap["OFFICE"].totalPurchaseCost }}</td>
+            <td>{{ fiscalOverview.activaMap["OFFICE"].endSaldo }}</td>
+            <td>{{ fiscalOverview.activaMap["OFFICE"].totalRemainingValue }}</td>
+            <td>{{ fiscalOverview.officeBottomValue }}</td>
+        </tr>
+    </table>
+</div>

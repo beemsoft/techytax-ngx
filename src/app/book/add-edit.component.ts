@@ -1,10 +1,11 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService } from '@app/_services';
-import { Activum, ActivumService } from '@app/shared/services/activum.service';
+import { BookService, BookType, BookValue } from '@app/shared/services/book.service';
+import { LabelService } from '@app/shared/services/label.service';
 
 @Component({templateUrl: 'add-edit.component.html'})
 export class AddEditComponent implements OnInit {
@@ -13,14 +14,16 @@ export class AddEditComponent implements OnInit {
   isAddMode: boolean;
   loading = false;
   submitted = false;
-  activum: Activum;
+  bookValue: BookValue;
+  balanceTypeList = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private activumService: ActivumService,
-    private alertService: AlertService
+    private bookService: BookService,
+    private alertService: AlertService,
+    private labelService: LabelService
   ) {
   }
 
@@ -29,49 +32,30 @@ export class AddEditComponent implements OnInit {
     this.isAddMode = !this.id;
 
     this.form = this.formBuilder.group({
-      description: ['', Validators.required],
-      purchasePrice: [''],
-      remainingValue: [''],
-      nofYearsForDepreciation: [''],
-      purchaseDate: [''],
-      startDate: [''],
-      endDate: ['']
+      balanceType: [''],
+      bookYear: [''],
+      saldo: ['']
     });
     this.form.value.id = this.id;
     if (!this.isAddMode) {
-      this.activumService.getById(this.id)
+      this.bookService.getById(this.id)
         .pipe(first())
-        .subscribe(activum => {
-          this.activum = activum
-          this.f.description.setValue(activum.description);
-          this.f.purchasePrice.setValue(activum.purchasePrice);
-          this.f.remainingValue.setValue(activum.remainingValue);
-          this.f.nofYearsForDepreciation.setValue(activum.nofYearsForDepreciation);
-          this.f.purchaseDate.setValue(activum.purchaseDate);
-          this.f.startDate.setValue(activum.startDate);
-          this.f.endDate.setValue(activum.endDate);
+        .subscribe(bookValue => {
+          this.bookValue = bookValue
+          this.f.balanceType.setValue(bookValue.balanceType);
+          this.f.bookYear.setValue(bookValue.bookYear);
+          this.f.saldo.setValue(bookValue.saldo);
         });
     } else {
 
     }
-    // for (let costType in CostType) {
-    //   let isValueProperty = parseInt(costType, 10) >= 0;
-    //   if (isValueProperty) {
-    //     this.costTypeList.push({key: costType, value: this.labelService.get(CostType[costType])});
-    //   }
-    // }
-    // for (let costCharacter in CostCharacter) {
-    //   let isValueProperty = parseInt(costCharacter, 10) >= 0;
-    //   if (isValueProperty) {
-    //     this.costCharacterList.push({key: costCharacter, value: this.labelService.get(CostCharacter[costCharacter])});
-    //   }
-    // }
-    // for (let vatType in VatType) {
-    //   let isValueProperty = parseInt(vatType, 10) >= 0;
-    //   if (isValueProperty) {
-    //     this.vatTypeList.push({key: vatType, value: this.labelService.get(VatType[vatType])});
-    //   }
-    // }
+
+    for (let bookType in BookType) {
+      let isValueProperty = parseInt(bookType, 10) >= 0;
+      if (isValueProperty) {
+        this.balanceTypeList.push({key: BookType[bookType], value: this.labelService.get(BookType[bookType])});
+      }
+    }
   }
 
   // convenience getter for easy access to form fields
@@ -92,30 +76,30 @@ export class AddEditComponent implements OnInit {
 
     this.loading = true;
     if (this.isAddMode) {
-      // this.createMatch();
+      this.createBookValue();
     } else {
-      this.updateActivum();
+      this.updateBookValue();
     }
   }
 
-  // private createMatch() {
-  //   let costMatch = new CostMatch();
-  //   this.costMatchService.addMatch(costMatch)
-  //     .pipe(first())
-  //     .subscribe(
-  //       data => {
-  //         this.alertService.success('Toevoegen gelukt', {keepAfterRouteChange: true});
-  //         this.router.navigate(['.', {relativeTo: this.route}]);
-  //       },
-  //       error => {
-  //         this.alertService.error(error);
-  //         this.loading = false;
-  //       });
-  // }
+  private createBookValue() {
+    this.form.value.costType = this.bookValue;
+    this.bookService.addBookValue(this.form.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.alertService.success('Toevoegen gelukt', {keepAfterRouteChange: true});
+          this.router.navigate(['.', {relativeTo: this.route}]);
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        });
+  }
 
-  private updateActivum() {
-    this.form.value.id = this.activum.id;
-    this.activumService.updateActivum(this.form.value)
+  private updateBookValue() {
+    this.form.value.id = this.bookValue.id;
+    this.bookService.updateBookValue(this.form.value)
       .pipe(first())
       .subscribe(
         data => {

@@ -1,8 +1,8 @@
-import {Observable} from "rxjs/Rx";
-import {Injectable} from "@angular/core";
-import {environment} from '../../../environments/environment';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError} from 'rxjs/operators';
+import { Observable } from "rxjs/Rx";
+import { Injectable } from "@angular/core";
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 
 export enum BookType {
   MACHINERY = 1,
@@ -28,58 +28,28 @@ export class BookValue {
 export class BookService {
   private baseURL = environment.apiUrl;
 
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': localStorage.getItem('jwt')
-    })
-  };
-
   constructor(private http: HttpClient) {}
+
+  getById(id: number): Observable<BookValue> {
+    return this.http.get<BookValue>(this.baseURL+'/auth/book/'+  id)
+      .pipe(catchError(this.handleError));
+  }
 
   addBookValue(bookValue: BookValue) {
     let body = JSON.stringify(bookValue);
-    this.http.post(this.baseURL+'/auth/book', body, this.httpOptions)
-      .subscribe(
-        response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
-        },
-        error => {
-          alert(error);
-          console.log(error);
-        }
-      );
+    return this.http.post(this.baseURL + '/auth/book', body)
   }
 
   updateBookValue(bookValue: BookValue) {
     let body = JSON.stringify(bookValue);
     let url = this.baseURL+'/auth/book';
-    this.http.put(url, body, this.httpOptions)
-      .subscribe(
-        response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
-        },
-        error => {
-          alert(error);
-          console.log(error);
-        }
-      );
+    return this.http.put(url, body)
+      .pipe(catchError(this.handleError));
   }
 
-  deleteBookValue(bookValue: BookValue) {
-    this.http.delete(this.baseURL+'/auth/book/'+bookValue.id, this.httpOptions)
-      .subscribe(
-        response => {
-          // localStorage.setItem('jwt', response.json().id_token);
-          // this.router.parent.navigateByUrl('/vat');
-        },
-        error => {
-          alert(error);
-          console.log(error);
-        }
-      );
+  deleteBookValue(id: string) {
+    return this.http.delete(this.baseURL+'/auth/book/'+id)
+      .pipe(catchError(this.handleError));
   }
 
   getBookValues(): Observable<BookValue[]> {
