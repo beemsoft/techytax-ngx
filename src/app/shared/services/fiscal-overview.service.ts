@@ -28,14 +28,11 @@ class ProfitAndLoss {
   companyCosts: CompanyCosts;
 }
 
-class ActivumTotal {
+class BalanceDetails {
   beginSaldo: number;
   endSaldo: number;
   totalPurchaseCost: number;
   totalRemainingValue: number;
-}
-
-class PassivaMap {
 }
 
 class FiscalPension {
@@ -44,9 +41,8 @@ class FiscalPension {
 export class FiscalOverview {
   jaar: number;
   profitAndLoss: ProfitAndLoss;
-  activaMap: Map<string, ActivumTotal>;
+  balanceMap: Map<string, BalanceDetails>;
   officeBottomValue: number;
-  passivaMap: PassivaMap;
   fiscalPension: FiscalPension;
 }
 
