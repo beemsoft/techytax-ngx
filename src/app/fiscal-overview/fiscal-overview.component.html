@@ -173,4 +173,19 @@
             <td>{{ fiscalOverview.balanceMap["VAT_TO_BE_PAID"].endSaldo }}</td>
         </tr>
     </table>
+    <h5>Specificatie schuld omzetbelasting</h5>
+    <table>
+        <tr>
+            <td>Schuld omzetbelasting over dit boekjaar</td>
+            <td>{{ fiscalOverview.balanceMap["VAT_TO_BE_PAID"].endSaldo }}</td>
+        </tr>
+    </table>
+    <h4>Privéonttrekkingen en -stortingen</h4>
+    <h5>Onttrekking privégebruik auto van de onderneming</h5>
+    <table>
+        <tr>
+            <td>Kosten voor deze auto</td>
+            <td>{{ fiscalOverview.profitAndLoss.companyCosts.carCosts }}</td>
+        </tr>
+    </table>
 </div>

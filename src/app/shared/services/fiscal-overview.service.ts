@@ -17,6 +17,7 @@ class Depreciation {
 }
 
 class CompanyCosts {
+  carCosts: number;
   carAndTransportCosts: number;
   officeCosts: number;
   otherCosts: number;
