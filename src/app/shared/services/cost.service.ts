@@ -46,7 +46,7 @@ export class CostService {
 
   updateCost(cost: Cost) {
     let body = JSON.stringify(cost);
-    let url = this.baseURL+'/auth/costs';
+    let url = this.baseURL+'/auth/cost';
     return this.http.put(url, body)
       .pipe(catchError(this.handleError));
   }

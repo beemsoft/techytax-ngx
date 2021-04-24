@@ -14,8 +14,8 @@
     <div class="form-row">
         <div class="form-group col">
             <label>Datum</label>
-            <input type="date" formControlName="costDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.costDate.errors }"/>
-            <div *ngIf="submitted && f.costDate.errors" class="invalid-feedback">
+            <input type="date" formControlName="date" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.date.errors }"/>
+            <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
                 <div *ngIf="f.costDate.errors.required">Veld is verplicht</div>
             </div>
         </div>
@@ -29,10 +29,10 @@
         </div>
         <div class="form-group col">
             <label>Omschrijving</label>
-            <input type="text" formControlName="costDescription" class="form-control"
-                   [ngClass]="{ 'is-invalid': submitted && f.costDescription.errors }"/>
-            <div *ngIf="submitted && f.costDescription.errors" class="invalid-feedback">
-                <div *ngIf="f.costDescription.errors.required">Veld is verplicht</div>
+            <input type="text" formControlName="description" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && f.description.errors }"/>
+            <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                <div *ngIf="f.description.errors.required">Veld is verplicht</div>
             </div>
         </div>
     </div>

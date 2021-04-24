@@ -14,6 +14,10 @@ export class VatReportComponent {
   };
 
   public sendFiscalData(): void {
-    this.fiscalOverviewService.sendFiscalData(this.vatReport);
+    console.log('Sending Fiscal data');
+    this.fiscalOverviewService.sendFiscalData(this.vatReport)
+      .subscribe(() => {
+        console.log('Sent!');
+      })
   }
 }

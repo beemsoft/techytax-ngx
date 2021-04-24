@@ -43,18 +43,18 @@ export class AddEditComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       costType: [''],
-      costDate: ['', Validators.required],
+      date: ['', Validators.required],
       amount: [''],
       vat: [''],
-      costDescription: ['', Validators.required]
+      description: ['', Validators.required]
     });
     this.form.value.id = this.id;
     if (!this.isAddMode) {
       this.costService.getById(this.id)
         .pipe(first())
         .subscribe(cost => {
-          this.f.costDate.setValue(cost.date != null ? formatDate(cost.date, 'yyyy-MM-dd', 'en') : null);
-          this.f.costDescription.setValue(cost.description);
+          this.f.date.setValue(cost.date != null ? formatDate(cost.date, 'yyyy-MM-dd', 'en') : null);
+          this.f.description.setValue(cost.description);
           this.f.amount.setValue(cost.amount);
           this.f.vat.setValue(cost.vat);
           // @ts-ignore
@@ -104,6 +104,7 @@ export class AddEditComponent implements OnInit {
 
   private updateCost() {
     this.form.value.costType = this.costType;
+    this.form.value.id = this.id;
     this.costService.updateCost(this.form.value)
       .pipe(first())
       .subscribe(
