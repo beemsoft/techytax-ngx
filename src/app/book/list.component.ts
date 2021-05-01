@@ -16,6 +16,12 @@ export class ListComponent implements OnInit {
   }
 
   deleteBookValue(id: number) {
-
+    const bookValue = this.bookValues.find(x => x.id === id);
+    bookValue.isDeleting = true;
+    this.bookService.deleteBookValue(bookValue.id)
+      .pipe(first())
+      .subscribe(() => {
+        this.bookValues = this.bookValues.filter(x => x.id !== id)
+      });
   }
 }
