@@ -47,6 +47,7 @@ export class CostMatchService {
 
   deleteMatch(costMatch: CostMatch) {
     return this.http.delete(this.baseURL + '/auth/match/' + costMatch.id)
+      .pipe(catchError(this.handleError));
   }
 
   updateMatch(costMatch: CostMatch) {
