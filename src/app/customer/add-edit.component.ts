@@ -29,7 +29,7 @@ export class AddEditComponent implements OnInit {
         this.form = this.formBuilder.group({
             name: ['', Validators.required],
             address: ['', Validators.required],
-            invoiceEmail: ['', [Validators.required, Validators.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$") ]],
+            emailInvoice: ['', [Validators.required, Validators.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$") ]],
             contact: ['', Validators.required]
         });
 
@@ -39,7 +39,7 @@ export class AddEditComponent implements OnInit {
                 .subscribe(x => {
                     this.f.name.setValue(x.name);
                     this.f.address.setValue(x.address);
-                    this.f.invoiceEmail.setValue(x.emailInvoice);
+                    this.f.emailInvoice.setValue(x.emailInvoice);
                     this.f.contact.setValue(x.contact);
                 });
         }
@@ -81,17 +81,18 @@ export class AddEditComponent implements OnInit {
                 });
     }
 
-    private updateCustomer() {
-        this.customerService.updateCustomer(this.form.value)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
-                    this.router.navigate(['..', { relativeTo: this.route }]);
-                },
-                error => {
-                    this.alertService.error(error);
-                    this.loading = false;
-                });
-    }
+  private updateCustomer() {
+    this.form.value.id = this.id;
+    this.customerService.updateCustomer(this.form.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.alertService.success('Wijzigen gelukt', {keepAfterRouteChange: true});
+          this.router.navigate(['..', {relativeTo: this.route}]);
+        },
+        error => {
+          this.alertService.error(error);
+          this.loading = false;
+        });
+  }
 }

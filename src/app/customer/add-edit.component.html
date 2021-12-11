@@ -20,9 +20,9 @@
     <div class="form-row">
         <div class="form-group col">
             <label>Factuur email</label>
-            <input type="text" formControlName="invoiceEmail" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.invoiceEmail.errors }" />
-            <div *ngIf="submitted && f.invoiceEmail.errors" class="invalid-feedback">
-                <div *ngIf="f.invoiceEmail.errors.required">Veld is verplicht</div>
+            <input type="text" formControlName="emailInvoice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.emailInvoice.errors }" />
+            <div *ngIf="submitted && f.emailInvoice.errors" class="invalid-feedback">
+                <div *ngIf="f.emailInvoice.errors.required">Veld is verplicht</div>
             </div>
         </div>
         <div class="form-group col">

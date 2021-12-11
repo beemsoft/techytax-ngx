@@ -79,14 +79,14 @@ export class VatCalculationService {
       }
     }
 
-    // let vatFreeCalculation = true;
+    let vatFreeCalculation = true;
     // for (let i = 0; i < transactions.length; i++) {
     //   if (transactions[i].costMatch.vatType !== null) {
     //     vatFreeCalculation = false;
     //   }
     // }
     // console.log('VAT free calculation: ' + vatFreeCalculation);
-    let vatFreeCalculation = false;
+    // let vatFreeCalculation = false;
 
     for (let i = 0; i < transactions.length; i++) {
       let transaction = transactions[i];
