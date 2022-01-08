@@ -105,7 +105,7 @@ export class SendInvoiceComponent implements OnInit {
 
   private getFullName() {
     const personalData = this.registration.personalData;
-    return personalData.initials.concat(' ', personalData.prefix != null ? personalData.prefix.concat(' ') : '', personalData.surname);
+    return personalData.firstName.concat(' ', personalData.prefix != null ? personalData.prefix.concat(' ') : '', personalData.surname);
   }
 
   sendInvoice() {
