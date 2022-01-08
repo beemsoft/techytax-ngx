@@ -35,6 +35,7 @@ export enum DeclarationPeriod {
 
 class PersonalData {
   initials: string;
+  firstName: string;
   prefix: string;
   surname: string;
   email: string;

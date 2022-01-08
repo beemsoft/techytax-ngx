@@ -29,7 +29,8 @@ export class RegisterComponent implements OnInit {
             address: ['', [ Validators.required ]],
             zipCode: ['', [ Validators.required ]],
             city: ['', [ Validators.required ]],
-            firstName: ['', [ Validators.required, Validators.pattern("([A-Z].?)+") ]],
+            initials: ['', [ Validators.required, Validators.pattern("([A-Z].?)+") ]],
+            firstName: ['', [ Validators.required, Validators.pattern("[a-zA-Z][a-zA-Z]+") ]],
             prefix: ['', []],
             lastName: ['', [ Validators.required, Validators.pattern("[a-zA-Z][a-zA-Z]+") ]],
             email: ['', [ Validators.required, Validators.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$") ]],
@@ -47,7 +48,8 @@ export class RegisterComponent implements OnInit {
             this.f.address.setValue(registration.companyData.address);
             this.f.zipCode.setValue(registration.companyData.zipCode);
             this.f.city.setValue(registration.companyData.city);
-            this.f.firstName.setValue(registration.personalData.initials);
+            this.f.firstName.setValue(registration.personalData.firstName);
+            this.f.initials.setValue(registration.personalData.initials);
             this.f.prefix.setValue(registration.personalData.prefix);
             this.f.lastName.setValue(registration.personalData.surname);
             this.f.email.setValue(registration.personalData.email);
@@ -76,7 +78,8 @@ export class RegisterComponent implements OnInit {
         this.registration.personalData.email = this.f.email.value;
         this.registration.personalData.surname = this.f.lastName.value;
         this.registration.personalData.prefix = this.f.prefix.value;
-        this.registration.personalData.initials = this.f.firstName.value;
+        this.registration.personalData.initials = this.f.initials.value;
+        this.registration.personalData.firstName = this.f.firstName.value;
         this.registration.companyData.companyName = this.f.companyName.value;
         this.registration.companyData.address = this.f.address.value;
         this.registration.companyData.zipCode = this.f.zipCode.value;

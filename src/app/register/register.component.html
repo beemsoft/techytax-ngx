@@ -72,10 +72,19 @@
         <div class="form-row">
           <div class="form-group col">
             <label>Voorletters</label>
+            <input type="text" class="form-control" formControlName="initials"
+                   [ngClass]="{ 'is-invalid': f.initials.errors }">
+            <div *ngIf="f.initials.errors" class="invalid-feedback">
+              <div *ngIf="f.initials.errors.required">Initialen zijn verplicht</div>
+              <div *ngIf="f.lastName.errors.pattern">Initialen bestaan uit hoofdletters met daarachter een punt</div>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>Roepnaam</label>
             <input type="text" class="form-control" formControlName="firstName"
                    [ngClass]="{ 'is-invalid': f.firstName.errors }">
             <div *ngIf="f.firstName.errors" class="invalid-feedback">
-              <div *ngIf="f.firstName.errors.required">Initialen zijn verplicht</div>
+              <div *ngIf="f.firstName.errors.required">Roepnaam is verplicht</div>
             </div>
           </div>
           <div class="form-group col">
