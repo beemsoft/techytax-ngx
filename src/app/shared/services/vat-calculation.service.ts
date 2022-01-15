@@ -174,7 +174,7 @@ export class VatCalculationService {
                 vatReport.vatCorrectionForPrivateUsage = carData ? carData.vatCorrectionForPrivateUsage : 0;
                 vatReport.totalVatOut = Math.round(totalVatOut);
                 vatReport.vatSaldo = Math.round(vatReport.totalVatIn - vatReport.totalVatOut + vatReport.vatCorrectionForPrivateUsage);
-                vatReport.sentInvoices = Math.round((vatReport.totalNetIn > 0 ? vatReport.totalNetIn : sentInvoices) * 100) / 100;
+                vatReport.sentInvoices = Math.round((vatReport.totalNetIn > 0 ? vatReport.totalNetIn + sentInvoices : sentInvoices) * 100) / 100;
                 vatReport.totalOfficeCosts = Math.round(totalOfficeCosts * 100) / 100;
                 vatReport.totalCarCosts = Math.round(totalCarCosts * 100) / 100;
                 vatReport.totalTransportCosts = Math.round(totalTransportCosts * 100) / 100;
