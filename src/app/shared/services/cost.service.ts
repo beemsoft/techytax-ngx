@@ -40,7 +40,7 @@ export class CostService {
 
   addCost(cost: Cost) {
     let body = JSON.stringify(cost);
-    return this.http.post(this.baseURL+'/auth/costs', body )
+    return this.http.post(this.baseURL+'/auth/cost', body )
       .pipe(catchError(this.handleError));
   }
 
