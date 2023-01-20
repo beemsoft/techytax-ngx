@@ -65,8 +65,8 @@ export class ActivumService {
       .pipe(catchError(this.handleError));
   }
 
-  getActivumCar(): Observable<BusinessCar> {
-    return this.http.get<BusinessCar>(this.baseURL+'/auth/activum/car')
+  getActivumCar(): Observable<number> {
+    return this.http.get<number>(this.baseURL+'/auth/activum/car/vat-correction-for-private-usage')
       .pipe(
         catchError(this.handleError));
   }

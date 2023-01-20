@@ -31,6 +31,7 @@ export class LabelService {
     OFFICE: 'Bedrijfsruimte',
     OFFICE_DISCOUNT: 'Bedrijfsruimte korting',
     INVESTMENT: 'Investering',
+    VAT_CORRECTION: 'btw correctie',
 
     MACHINERY: 'Machines',
     CAR: 'Auto',

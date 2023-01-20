@@ -104,6 +104,11 @@ export class VatCalculationService {
             vatOut = 0;
             vatIn = transaction.amountVat;
             break;
+          case CostType.VAT_CORRECTION:
+            vatOut = transaction.amount;
+            transaction.amountVat = transaction.amount;
+            transaction.amountNet = 0;
+            break;
           case CostType.GENERAL_INCOME:
             console.log("TODO: Handle general income")
             break;
@@ -157,7 +162,7 @@ export class VatCalculationService {
 
     return this.activumService.getActivumCar().pipe(
       map(
-        carData => {
+        vatCorrectionForPrivateUsage => {
           let vatReport = new VatReport();
 
           this.invoiceService.getIncomeForLatestPeriod()
@@ -171,7 +176,7 @@ export class VatCalculationService {
                 });
                 vatReport.totalVatIn = Math.round((totalVatIn + vatReport.totalVatIn) * 100) / 100;
                 vatReport.totalNetIn = Math.round(vatReport.totalNetIn * 100) / 100;
-                vatReport.vatCorrectionForPrivateUsage = carData ? carData.vatCorrectionForPrivateUsage : 0;
+                vatReport.vatCorrectionForPrivateUsage = vatCorrectionForPrivateUsage ? vatCorrectionForPrivateUsage : 0;
                 vatReport.totalVatOut = Math.round(totalVatOut);
                 vatReport.vatSaldo = Math.round(vatReport.totalVatIn - vatReport.totalVatOut + vatReport.vatCorrectionForPrivateUsage);
                 vatReport.sentInvoices = Math.round((vatReport.totalNetIn > 0 ? vatReport.totalNetIn + sentInvoices : sentInvoices) * 100) / 100;

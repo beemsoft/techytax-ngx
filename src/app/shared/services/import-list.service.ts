@@ -24,6 +24,7 @@ export enum CostType {
   INCOME_TAX_PAID_BACK = 30,
   ROAD_TAX = 31,
   INTEREST = 33,
+  VAT_CORRECTION = 35,
   OFFICE = 41,
   OFFICE_DISCOUNT = 45
 }
