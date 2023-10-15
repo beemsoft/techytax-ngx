@@ -1,10 +1,10 @@
 import { throwError as observableThrowError } from 'rxjs';
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs/Rx";
-import { Injectable } from "@angular/core";
-import { VatReport } from "./vat-calculation.service";
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { VatReport } from './vat-calculation.service';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
+import { environment } from '@environments/environment';
 
 class Income {
   nettoOmzet: number;
@@ -54,20 +54,20 @@ export class FiscalOverviewService {
   constructor(private http: HttpClient) {}
 
   getFiscalOverview(): Observable<FiscalOverview> {
-    return this.http.get<FiscalOverview>(this.baseURL+'/auth/fiscal-overview')
+    return this.http.get<FiscalOverview>(this.baseURL + '/auth/fiscal-overview')
       .pipe(
         catchError(this.handleError));
   }
 
   sendFiscalData(vatReport: VatReport) {
-    let body = JSON.stringify(vatReport);
-    return this.http.post(this.baseURL+'/auth/fiscal-overview', body)
+    const body = JSON.stringify(vatReport);
+    return this.http.post(this.baseURL + '/auth/fiscal-overview', body)
       .pipe(
         catchError(this.handleError));
   }
 
-  private handleError (error: any) {
-    let errMsg = (error.message) ? error.message :
+  private handleError(error: any) {
+    const errMsg = (error.message) ? error.message :
         error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg);
     return observableThrowError(errMsg);

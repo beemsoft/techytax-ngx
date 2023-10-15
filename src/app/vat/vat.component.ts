@@ -49,7 +49,7 @@ export class VatComponent implements OnInit {
           console.log(error);
         },
         () => console.log('Costmatches retrieved')
-      )
+      );
     for (let costType in CostType) {
       let isValueProperty = parseInt(costType, 10) >= 0;
       if (isValueProperty) {
@@ -80,7 +80,7 @@ export class VatComponent implements OnInit {
     let firstTransactionDate: moment.Moment = this.transactions[0].date;
     for (let i = 0; i < this.transactions.length; i++) {
       if (this.transactions[i].costCharacter === CostCharacter.UNKNOWN) {
-        console.log("Unmatched transaction: " + this.transactions[i].description);
+        console.log('Unmatched transaction: ' + this.transactions[i].description);
         this.transactionsUnmatched++;
       }
       if (this.transactions[i].date.isAfter(latestTransactionDate)) {
@@ -100,9 +100,9 @@ export class VatComponent implements OnInit {
 
   fileChangeEvent(fileInput: any) {
     this.uploadedFile = fileInput.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = file => {
-      let contents: any = file.target;
+      const contents: any = file.target;
       this.importedText = contents.result;
       this.transactions = this.transactions.concat(this.importListService.convert(this.importedText));
       this.transactions = this.costMatchService.match(this.transactions, this.costMatches);
@@ -116,7 +116,7 @@ export class VatComponent implements OnInit {
   }
 
   public addMatch(transaction: Transaction): void {
-    let costMatch = new CostMatch();
+    const costMatch = new CostMatch();
     costMatch.matchString = transaction.matchString;
     costMatch.costCharacter = transaction.costCharacter;
     costMatch.costType = transaction.costType;
@@ -142,7 +142,7 @@ export class VatComponent implements OnInit {
   }
 
   public addManualTransaction(): void {
-    let transaction = new Transaction();
+    const transaction = new Transaction();
     transaction.date = moment();
     this.transactions.push(transaction);
     this.dataSource = new MatTableDataSource(this.transactions);

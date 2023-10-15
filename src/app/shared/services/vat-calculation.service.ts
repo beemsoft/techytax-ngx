@@ -1,29 +1,29 @@
 import { map } from 'rxjs/operators';
-import { CostCharacter, CostType, Transaction, VatType } from "./import-list.service";
-import { Injectable } from "@angular/core";
-import { Activum, ActivumService, ActivumType } from "./activum.service";
-import { Observable } from "rxjs";
-import { Invoice, InvoiceService } from "./invoice.service";
+import { CostCharacter, CostType, Transaction, VatType } from './import-list.service';
+import { Injectable } from '@angular/core';
+import { Activum, ActivumService, ActivumType } from './activum.service';
+import { Observable } from 'rxjs';
+import { Invoice, InvoiceService } from './invoice.service';
 
 export class FiscalReport  {
   firstTransactionDate: string;
   latestTransactionDate: string;
   accountNumbers: string[] = [];
-  totalCarCosts: number = 0;
-  totalTransportCosts: number = 0;
-  totalOfficeCosts: number = 0;
-  totalFoodCosts: number = 0;
-  totalOtherCosts: number = 0;
+  totalCarCosts = 0;
+  totalTransportCosts = 0;
+  totalOfficeCosts = 0;
+  totalFoodCosts = 0;
+  totalOtherCosts = 0;
   investments: Array<Activum>;
 }
 
 export class VatReport extends FiscalReport {
-  totalVatIn: number = 0;
-  totalVatOut: number = 0;
-  vatCorrectionForPrivateUsage: number = 0;
-  vatSaldo: number = 0;
-  sentInvoices: number = 0;
-  totalNetIn: number = 0;
+  totalVatIn = 0;
+  totalVatOut = 0;
+  vatCorrectionForPrivateUsage = 0;
+  vatSaldo = 0;
+  sentInvoices = 0;
+  totalNetIn = 0;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -35,13 +35,13 @@ export class VatCalculationService {
     private invoiceService: InvoiceService
   ) {}
 
-  static applyVat(transaction:Transaction, vatType:number): Transaction {
+  static applyVat(transaction: Transaction, vatType: number): Transaction {
     transaction.amountNet = Math.round((transaction.amount / (1 + (vatType / 100))) * 100) / 100;
     transaction.amountVat = Math.round((transaction.amount - transaction.amountNet) * 100 ) / 100;
     return transaction;
   }
 
-  static applyPercentage(transaction:Transaction, percentage:number): Transaction {
+  static applyPercentage(transaction: Transaction, percentage: number): Transaction {
     transaction.amountNet = Math.round(transaction.amountNet * percentage) / 100;
     transaction.amountVat = Math.round(transaction.amountVat * percentage) / 100;
     return transaction
@@ -62,12 +62,12 @@ export class VatCalculationService {
   }
 
   calculateTotalVat(transactions: Array<Transaction>): Observable<VatReport> {
-    let totalVatOut: number = 0;
-    let totalVatIn: number = 0;
-    let sentInvoices: number = 0;
-    let totalCarCosts: number = 0, totalTransportCosts: number = 0, totalOfficeCosts: number = 0,
-      totalFoodCosts: number = 0, totalOtherCosts: number = 0;
-    let investments = new Array<Activum>();
+    let totalVatOut = 0;
+    let totalVatIn = 0;
+    let sentInvoices = 0;
+    let totalCarCosts = 0, totalTransportCosts = 0, totalOfficeCosts = 0,
+      totalFoodCosts = 0, totalOtherCosts = 0;
+    const investments = new Array<Activum>();
 
     function applyVat(transaction: Transaction): Transaction {
       if (VatType[transaction.costMatch.vatType] == JSON.stringify(VatType.HIGH)) {
@@ -79,7 +79,7 @@ export class VatCalculationService {
       }
     }
 
-    let vatFreeCalculation = true;
+    const vatFreeCalculation = true;
     // for (let i = 0; i < transactions.length; i++) {
     //   if (transactions[i].costMatch.vatType !== null) {
     //     vatFreeCalculation = false;
@@ -110,7 +110,7 @@ export class VatCalculationService {
             transaction.amountNet = 0;
             break;
           case CostType.GENERAL_INCOME:
-            console.log("TODO: Handle general income")
+            console.log('TODO: Handle general income');
             break;
           default:
             if (transaction.costMatch != null && transaction.costMatch.vatType != null) {
@@ -134,7 +134,7 @@ export class VatCalculationService {
               } else if (transaction.costType['id'] === CostType.GENERAL_EXPENSE) {
                 totalOtherCosts += transaction.amountNet;
               } else if (transaction.costType['id'] === CostType.INVESTMENT) {
-                let activum = new Activum();
+                const activum = new Activum();
                 activum.balanceType = ActivumType.MACHINERY;
                 activum.description = transaction.description;
                 activum.startDate = transaction.dateFormatted;
@@ -163,14 +163,14 @@ export class VatCalculationService {
     return this.activumService.getActivumCar().pipe(
       map(
         vatCorrectionForPrivateUsage => {
-          let vatReport = new VatReport();
+          const vatReport = new VatReport();
 
           this.invoiceService.getIncomeForLatestPeriod()
             .subscribe(
               invoiceData => {
                 this.invoices = invoiceData;
                 this.invoices.forEach((invoice: Invoice) => {
-                  let netIn = invoice.unitsOfWork * invoice.project.rate;
+                  const netIn = invoice.unitsOfWork * invoice.project.rate;
                   vatReport.totalNetIn += netIn;
                   vatReport.totalVatIn += netIn * .21;
                 });
@@ -179,7 +179,8 @@ export class VatCalculationService {
                 vatReport.vatCorrectionForPrivateUsage = vatCorrectionForPrivateUsage ? vatCorrectionForPrivateUsage : 0;
                 vatReport.totalVatOut = Math.round(totalVatOut);
                 vatReport.vatSaldo = Math.round(vatReport.totalVatIn - vatReport.totalVatOut + vatReport.vatCorrectionForPrivateUsage);
-                vatReport.sentInvoices = Math.round((vatReport.totalNetIn > 0 ? vatReport.totalNetIn + sentInvoices : sentInvoices) * 100) / 100;
+                vatReport.sentInvoices = Math.round((vatReport.totalNetIn > 0 ?
+                    vatReport.totalNetIn + sentInvoices : sentInvoices) * 100) / 100;
                 vatReport.totalOfficeCosts = Math.round(totalOfficeCosts * 100) / 100;
                 vatReport.totalCarCosts = Math.round(totalCarCosts * 100) / 100;
                 vatReport.totalTransportCosts = Math.round(totalTransportCosts * 100) / 100;

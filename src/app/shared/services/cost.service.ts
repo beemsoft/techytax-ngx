@@ -2,8 +2,8 @@ import { throwError as observableThrowError } from 'rxjs';
 import { CostType } from './import-list.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs/Rx';
+import { environment } from '@environments/environment';
+import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 export class Cost {
@@ -24,29 +24,29 @@ export class CostService {
   constructor(private http: HttpClient) {}
 
   deleteCost(id: string) {
-    return this.http.delete(this.baseURL+'/auth/cost/'+id)
+    return this.http.delete(this.baseURL + '/auth/cost/' + id)
       .pipe(catchError(this.handleError));
   }
 
   getById(id: number): Observable<Cost> {
-    return this.http.get<Cost>(this.baseURL+'/auth/costs/'+  id)
+    return this.http.get<Cost>(this.baseURL + '/auth/costs/' +  id)
       .pipe(catchError(this.handleError));
   }
 
   getCosts(): Observable<Cost> {
-    return this.http.get<Cost>(this.baseURL+'/auth/costs')
+    return this.http.get<Cost>(this.baseURL + '/auth/costs')
       .pipe(catchError(this.handleError));
   }
 
   addCost(cost: Cost) {
-    let body = JSON.stringify(cost);
-    return this.http.post(this.baseURL+'/auth/cost', body )
+    const body = JSON.stringify(cost);
+    return this.http.post(this.baseURL + '/auth/cost', body )
       .pipe(catchError(this.handleError));
   }
 
   updateCost(cost: Cost) {
-    let body = JSON.stringify(cost);
-    let url = this.baseURL+'/auth/cost';
+    const body = JSON.stringify(cost);
+    const url = this.baseURL + '/auth/cost';
     return this.http.put(url, body)
       .pipe(catchError(this.handleError));
   }

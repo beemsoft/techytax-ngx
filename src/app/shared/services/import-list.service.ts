@@ -4,6 +4,7 @@ import {CostMatch} from './cost-match.service';
 import {Injectable} from '@angular/core';
 
 import * as moment from 'moment';
+import {throwError} from "rxjs";
 
 export enum CostType {
   IGNORE = 0,
@@ -96,6 +97,7 @@ export class ImportListService {
     csvLines = this.csvParseService.csvToArray(csvFile, ';');
     let csvType: CsvType;
 
+    // TODO: check ; separated (not , separated)
     this.transactions = [];
     if (csvLines[0][1] !== undefined && csvLines[0][1].indexOf('Naam / Omschrijving') == 0) {
       csvType = CsvType.ING;
@@ -109,6 +111,11 @@ export class ImportListService {
         csvLines = this.csvParseService.csvToArray(csvFile, '\t');
         csvType = CsvType.ABN_AMRO;
       }
+    }
+
+    if (csvLines[0].length < 2) {
+        console.log('Could not parse file, maybe use semicolon separated file?');
+        alert('Error reading file');
     }
 
     csvLines.forEach(line => {

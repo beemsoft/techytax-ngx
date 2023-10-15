@@ -33,6 +33,14 @@
             "scripts": []
           },
           "configurations": {
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -68,10 +76,14 @@
             "browserTarget": "techytax-ngx:build"
           },
           "configurations": {
+            "development": {
+              "browserTarget": "techytax-ngx:build:development"
+            },
             "production": {
               "browserTarget": "techytax-ngx:build:production"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -123,5 +135,7 @@
         }
       }
     }},
-  "defaultProject": "techytax-ngx"
+  "cli": {
+    "analytics": false
+  }
 }
