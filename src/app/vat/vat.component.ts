@@ -8,7 +8,7 @@ import {
 } from '../shared/services/import-list.service';
 import { CostMatch, CostMatchService } from '../shared/services/cost-match.service';
 import { LabelService } from '../shared/services/label.service';
-import { FiscalReport, VatCalculationService, VatReport } from '../shared/services/vat-calculation.service';
+import { VatCalculationService, VatReport } from '../shared/services/vat-calculation.service';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
 
@@ -17,18 +17,15 @@ export class VatComponent implements OnInit {
   uploadedFile: File;
   importedText: string;
   public vatReport: VatReport = new VatReport();
-  public fiscalReport: FiscalReport;
   private costMatches;
-  transactionsLoaded: number = 0;
-  transactionsUnmatched: number;
+  transactionsLoaded = 0;
   private transactions: Array<Transaction> = [];
+  transactionsUnmatched: Array<Transaction> = [];
+  bolLinks: Array<string> = [];
   public columnsToDisplay: string[] = ['date', 'description', 'matchString', 'costType', 'costCharacter', 'matchPercentage', 'matchFixedAmount', 'vatType', 'amount', 'amountNet', 'vatOut'];
   dataSource;
-  costTypes = CostType;
   costTypeList = [];
-  costCharacters = CostCharacter;
   costCharacterList = [];
-  vatTypes = VatType;
   vatTypeList = [];
 
   constructor(
@@ -50,20 +47,20 @@ export class VatComponent implements OnInit {
         },
         () => console.log('Costmatches retrieved')
       );
-    for (let costType in CostType) {
-      let isValueProperty = parseInt(costType, 10) >= 0;
+    for (const costType in CostType) {
+      const isValueProperty = parseInt(costType, 10) >= 0;
       if (isValueProperty) {
         this.costTypeList.push({key: costType, value: this.labelService.get(CostType[costType])});
       }
     }
-    for (let costCharacter in CostCharacter) {
-      let isValueProperty = parseInt(costCharacter, 10) >= 0;
+    for (const costCharacter in CostCharacter) {
+      const isValueProperty = parseInt(costCharacter, 10) >= 0;
       if (isValueProperty) {
         this.costCharacterList.push({key: costCharacter, value: this.labelService.get(CostCharacter[costCharacter])});
       }
     }
-    for (let vatType in VatType) {
-      let isValueProperty = parseInt(vatType, 10) >= 0;
+    for (const vatType in VatType) {
+      const isValueProperty = parseInt(vatType, 10) >= 0;
       if (isValueProperty) {
         this.vatTypeList.push({key: vatType, value: this.labelService.get(VatType[vatType])});
       }
@@ -71,17 +68,17 @@ export class VatComponent implements OnInit {
   }
 
   displayVatTypeSelector(transaction: Transaction) {
-    return transaction.costType != CostType.BUSINESS_FOOD;
+    return transaction.costType !== CostType.BUSINESS_FOOD;
   }
 
   private checkTransactions(): void {
-    this.transactionsUnmatched = 0;
+    this.transactionsUnmatched = [];
     let latestTransactionDate: moment.Moment = this.transactions[0].date;
     let firstTransactionDate: moment.Moment = this.transactions[0].date;
     for (let i = 0; i < this.transactions.length; i++) {
       if (this.transactions[i].costCharacter === CostCharacter.UNKNOWN) {
         console.log('Unmatched transaction: ' + this.transactions[i].description);
-        this.transactionsUnmatched++;
+        this.transactionsUnmatched.push(this.transactions[i]);
       }
       if (this.transactions[i].date.isAfter(latestTransactionDate)) {
         latestTransactionDate = this.transactions[i].date;
@@ -96,6 +93,14 @@ export class VatComponent implements OnInit {
     }
     this.vatReport.firstTransactionDate = firstTransactionDate.format('YYYY-MM-DD');
     this.vatReport.latestTransactionDate = latestTransactionDate.format('YYYY-MM-DD');
+
+    for (let i = 0; i < this.transactionsUnmatched.length; i++) {
+      if (this.transactionsUnmatched[i].description.toLowerCase().indexOf('bol.com') > -1) {
+        const index = this.transactionsUnmatched[i].description.search(/[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/);
+        const bolProductKey = this.transactionsUnmatched[i].description.substring(index, index + 14);
+        console.log('Check bol.com link: https://www.bol.com/nl/rnwy/account/order_details/' + bolProductKey.replaceAll('-', ''));
+      }
+    }
   }
 
   fileChangeEvent(fileInput: any) {
@@ -126,7 +131,7 @@ export class VatComponent implements OnInit {
     this.costMatchService.addMatch(costMatch)
       .subscribe(() => {
         transaction.costMatch = costMatch;
-        this.costMatches = (<CostMatch[]>this.costMatches).concat(transaction.costMatch);
+        this.costMatches = (this.costMatches as CostMatch[]).concat(transaction.costMatch);
         this.transactions = this.costMatchService.match(this.transactions, this.costMatches);
         this.updateTotalVat();
       });

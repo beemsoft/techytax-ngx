@@ -8,13 +8,15 @@ import { CostTypeSelector, KeysPipe } from '../shared/selectors/cost-type.select
 import { LabelPipe } from '../pipes/label.pipe';
 import { VatTypeSelector } from '../shared/selectors/vat-type.selector';
 import { CostCharacterSelector } from '../shared/selectors/cost-character.selector';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
-  imports: [
-    FormsModule,
-    CommonModule,
-    MatTableModule
-  ],
+    imports: [
+        FormsModule,
+        CommonModule,
+        MatTableModule,
+        MatSortModule
+    ],
   declarations: [
     VatComponent,
     VatReportComponent,

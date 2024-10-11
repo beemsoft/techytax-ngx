@@ -11,10 +11,10 @@
 </div>
 <div *ngIf="transactionsLoaded > 0">
   <p>Er zijn {{transactionsLoaded}} transacties geladen.</p>
-  <div [ngSwitch]="transactionsUnmatched > 0">
+  <div [ngSwitch]="transactionsUnmatched.length > 0">
     <p *ngSwitchCase="false">Alle transacties zijn gematcht. Loop de onderstaande tabel door om te kijken of alle transacties correct zijn gematch.  Je kunt nog een bestand inladen of de fiscale gegevens uploaden met de knop hieronder.</p>
     <div *ngSwitchCase="true">
-      <p>Er zijn nog {{transactionsUnmatched}} onbekende transacties, voeg matches toe.</p>
+      <p>Er zijn nog {{transactionsUnmatched.length}} onbekende transacties, voeg matches toe.</p>
     </div>
   </div>
 
