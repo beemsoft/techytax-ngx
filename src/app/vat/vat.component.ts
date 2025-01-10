@@ -21,7 +21,6 @@ export class VatComponent implements OnInit {
   transactionsLoaded = 0;
   private transactions: Array<Transaction> = [];
   transactionsUnmatched: Array<Transaction> = [];
-  bolLinks: Array<string> = [];
   public columnsToDisplay: string[] = ['date', 'description', 'matchString', 'costType', 'costCharacter', 'matchPercentage', 'matchFixedAmount', 'vatType', 'amount', 'amountNet', 'vatOut'];
   dataSource;
   costTypeList = [];
@@ -48,20 +47,17 @@ export class VatComponent implements OnInit {
         () => console.log('Costmatches retrieved')
       );
     for (const costType in CostType) {
-      const isValueProperty = parseInt(costType, 10) >= 0;
-      if (isValueProperty) {
+      if (parseInt(costType, 10) >= 0) {
         this.costTypeList.push({key: costType, value: this.labelService.get(CostType[costType])});
       }
     }
     for (const costCharacter in CostCharacter) {
-      const isValueProperty = parseInt(costCharacter, 10) >= 0;
-      if (isValueProperty) {
+      if (parseInt(costCharacter, 10) >= 0) {
         this.costCharacterList.push({key: costCharacter, value: this.labelService.get(CostCharacter[costCharacter])});
       }
     }
     for (const vatType in VatType) {
-      const isValueProperty = parseInt(vatType, 10) >= 0;
-      if (isValueProperty) {
+      if (parseInt(vatType, 10) >= 0) {
         this.vatTypeList.push({key: vatType, value: this.labelService.get(VatType[vatType])});
       }
     }
@@ -75,30 +71,32 @@ export class VatComponent implements OnInit {
     this.transactionsUnmatched = [];
     let latestTransactionDate: moment.Moment = this.transactions[0].date;
     let firstTransactionDate: moment.Moment = this.transactions[0].date;
-    for (let i = 0; i < this.transactions.length; i++) {
-      if (this.transactions[i].costCharacter === CostCharacter.UNKNOWN) {
-        console.log('Unmatched transaction: ' + this.transactions[i].description);
-        this.transactionsUnmatched.push(this.transactions[i]);
+    for (const item of this.transactions) {
+      if (item.costCharacter === CostCharacter.UNKNOWN) {
+        console.log('Unmatched transaction: ' + item.description);
+        this.transactionsUnmatched.push(item);
       }
-      if (this.transactions[i].date.isAfter(latestTransactionDate)) {
-        latestTransactionDate = this.transactions[i].date;
+      if (item.date.isAfter(latestTransactionDate)) {
+        latestTransactionDate = item.date;
       }
-      if (this.transactions[i].date.isBefore(firstTransactionDate)) {
-        firstTransactionDate = this.transactions[i].date;
+      if (item.date.isBefore(firstTransactionDate)) {
+        firstTransactionDate = item.date;
       }
-      if (!this.vatReport.accountNumbers.includes(this.transactions[i].accountNumber)) {
-        this.vatReport.accountNumbers.push(this.transactions[i].accountNumber);
+      if (!this.vatReport.accountNumbers.includes(item.accountNumber)) {
+        this.vatReport.accountNumbers.push(item.accountNumber);
       }
-      this.transactions[i].costTypeDescription = CostType[this.transactions[i].costType['id']];
+      item.costTypeDescription = CostType[item.costType['id']];
     }
     this.vatReport.firstTransactionDate = firstTransactionDate.format('YYYY-MM-DD');
     this.vatReport.latestTransactionDate = latestTransactionDate.format('YYYY-MM-DD');
 
-    for (let i = 0; i < this.transactionsUnmatched.length; i++) {
-      if (this.transactionsUnmatched[i].description.toLowerCase().indexOf('bol.com') > -1) {
-        const index = this.transactionsUnmatched[i].description.search(/[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/);
-        const bolProductKey = this.transactionsUnmatched[i].description.substring(index, index + 14);
-        console.log('Check bol.com link: https://www.bol.com/nl/rnwy/account/order_details/' + bolProductKey.replaceAll('-', ''));
+    for (const item of this.transactionsUnmatched) {
+      if (item.description.toLowerCase().indexOf('bol.com') > -1) {
+        const index = item.description.search(/[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/);
+        const bolProductKey = item.description.substring(index, index + 14);
+        console.log('Check bol.com order: https://www.bol.com/nl/rnwy/account/order_details/' + bolProductKey.replaceAll('-', ''));
+      } else if (item.description.toLowerCase().indexOf('google play store') > -1) {
+        console.log('Check Google Play Store activity: https://pay.google.com/gp/w/home/activity?hl=nl');
       }
     }
   }
@@ -157,12 +155,12 @@ export class VatComponent implements OnInit {
     this.costMatchService.deleteMatch(transaction.costMatch)
       .subscribe( () => {
         this.costMatches.forEach((item, index) => {
-          if (item.id === transaction.costMatch.id) this.costMatches.splice(index,1);
+          if (item.id === transaction.costMatch.id) { this.costMatches.splice(index, 1); }
         });
         transaction.costMatch = null;
         this.transactions = this.costMatchService.match(this.transactions, this.costMatches);
         this.updateTotalVat();
-      })
+      });
   }
 
   private updateTotalVat(): void {
