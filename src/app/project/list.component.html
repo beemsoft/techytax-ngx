@@ -4,45 +4,56 @@
         <mat-icon>add</mat-icon> Project toevoegen
     </a>
 </div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="width: 18%">Code</th>
-            <th style="width: 18%">Projectomschrijving</th>
-            <th style="width: 18%">Werkzaamheden</th>
-            <th style="width: 18%">Tarief</th>
-            <th style="width: 18%">Betalingstermijn</th>
-            <th style="width: 10%"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (project of projects(); track project.id) {
-            <tr>
-                <td>{{project.code}}</td>
-                <td>{{project.projectDescription}}</td>
-                <td>{{project.activityDescription}}</td>
-                <td>{{project.rate}}</td>
-                <td>{{project.paymentTermDays}}</td>
-                <td style="white-space: nowrap">
-                    <a mat-icon-button routerLink="edit/{{project.id}}" class="action-btn edit-btn" title="Wijzigen">
-                        <mat-icon>edit</mat-icon>
-                    </a>
-                    <button mat-icon-button (click)="deleteProject(project.id)" class="action-btn delete-btn" [disabled]="project.isDeleting" title="Verwijderen">
-                        @if (project.isDeleting) {
-                            <mat-spinner diameter="20"></mat-spinner>
-                        } @else {
-                            <mat-icon>delete</mat-icon>
-                        }
-                    </button>
-                </td>
-            </tr>
-        }
-        @if (!projects()) {
-            <tr>
-                <td colspan="4" class="text-center">
-                    <span class="spinner-border spinner-border-lg align-center"></span>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th style="width: 15%">Code</th>
+                    <th style="width: 20%">Projectomschrijving</th>
+                    <th style="width: 20%">Werkzaamheden</th>
+                    <th style="width: 15%">Tarief</th>
+                    <th style="width: 15%">Betalingstermijn</th>
+                    <th style="width: 15%">Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (project of projects(); track project.id) {
+                    <tr>
+                        <td>{{project.code}}</td>
+                        <td>{{project.projectDescription}}</td>
+                        <td>{{project.activityDescription}}</td>
+                        <td>{{project.rate | currency:'EUR'}}</td>
+                        <td>{{project.paymentTermDays}} dagen</td>
+                        <td style="white-space: nowrap">
+                            <a mat-icon-button routerLink="edit/{{project.id}}" class="action-btn edit-btn" title="Wijzigen">
+                                <mat-icon>edit</mat-icon>
+                            </a>
+                            <button mat-icon-button (click)="deleteProject(project.id)" class="action-btn delete-btn" [disabled]="project.isDeleting" title="Verwijderen">
+                                @if (project.isDeleting) {
+                                    <mat-spinner diameter="20"></mat-spinner>
+                                } @else {
+                                    <mat-icon>delete</mat-icon>
+                                }
+                            </button>
+                        </td>
+                    </tr>
+                }
+                @if (!projects()) {
+                    <tr>
+                        <td colspan="6" class="text-center p-5">
+                            <span class="spinner-border spinner-border-lg align-center"></span>
+                        </td>
+                    </tr>
+                }
+                @if (projects() && projects().length === 0) {
+                    <tr>
+                        <td colspan="6" class="text-center p-4">
+                            Geen projecten gevonden.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

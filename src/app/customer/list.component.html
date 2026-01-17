@@ -4,42 +4,54 @@
         <mat-icon>add</mat-icon> Klant toevoegen
     </a>
 </div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="width: 25%">Naam</th>
-            <th style="width: 25%">Adres</th>
-            <th style="width: 25%">Factuur email</th>
-            <th style="width: 25%">Contactpersoon</th>
-            <th style="width: 10%"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (customer of customers(); track customer.id) {
-            <tr>
-                <td>{{customer.name}}</td>
-                <td>{{customer.address}}</td>
-                <td>{{customer.contact}}</td>
-                <td style="white-space: nowrap">
-                    <a mat-icon-button routerLink="edit/{{customer.id}}" class="action-btn edit-btn" title="Wijzigen">
-                        <mat-icon>edit</mat-icon>
-                    </a>
-                    <button mat-icon-button (click)="deleteCustomer(customer.id)" class="action-btn delete-btn" [disabled]="customer.isDeleting" title="Verwijderen">
-                        @if (customer.isDeleting) {
-                            <mat-spinner diameter="20"></mat-spinner>
-                        } @else {
-                            <mat-icon>delete</mat-icon>
-                        }
-                    </button>
-                </td>
-            </tr>
-        }
-        @if (!customers()) {
-            <tr>
-                <td colspan="4" class="text-center">
-                    <span class="spinner-border spinner-border-lg align-center"></span>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th style="width: 20%">Naam</th>
+                    <th style="width: 25%">Adres</th>
+                    <th style="width: 25%">Factuur email</th>
+                    <th style="width: 15%">Contactpersoon</th>
+                    <th style="width: 15%">Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (customer of customers(); track customer.id) {
+                    <tr>
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.address}}</td>
+                        <td>{{customer.emailInvoice}}</td>
+                        <td>{{customer.contact}}</td>
+                        <td style="white-space: nowrap">
+                            <a mat-icon-button routerLink="edit/{{customer.id}}" class="action-btn edit-btn" title="Wijzigen">
+                                <mat-icon>edit</mat-icon>
+                            </a>
+                            <button mat-icon-button (click)="deleteCustomer(customer.id)" class="action-btn delete-btn" [disabled]="customer.isDeleting" title="Verwijderen">
+                                @if (customer.isDeleting) {
+                                    <mat-spinner diameter="20"></mat-spinner>
+                                } @else {
+                                    <mat-icon>delete</mat-icon>
+                                }
+                            </button>
+                        </td>
+                    </tr>
+                }
+                @if (!customers()) {
+                    <tr>
+                        <td colspan="5" class="text-center p-5">
+                            <span class="spinner-border spinner-border-lg align-center"></span>
+                        </td>
+                    </tr>
+                }
+                @if (customers() && customers().length === 0) {
+                    <tr>
+                        <td colspan="5" class="text-center p-4">
+                            Geen klanten gevonden.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

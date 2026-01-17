@@ -4,47 +4,58 @@
         <mat-icon>add</mat-icon> Match toevoegen
     </a>
 </div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="width: 10%">Match</th>
-            <th style="width: 30%">Kostensoort</th>
-            <th style="width: 20%">Kost karakter</th>
-            <th style="width: 10%">btw type</th>
-            <th style="width: 10%">percentage</th>
-            <th style="width: 10%">vast bedrag</th>
-            <th style="width: 10%"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (costMatch of costMatches(); track costMatch.id) {
-            <tr>
-                <td>{{costMatch.matchString}}</td>
-                <td>{{costTypes[costMatch.costType['id']]}}</td>
-                <td>{{costMatch.costCharacter}}</td>
-                <td>{{costMatch.vatType}}</td>
-                <td>{{costMatch.percentage}}</td>
-                <td>{{costMatch.fixedAmount}}</td>
-                <td style="white-space: nowrap">
-                    <a mat-icon-button routerLink="edit/{{costMatch.id}}" class="action-btn edit-btn" title="Wijzigen">
-                        <mat-icon>edit</mat-icon>
-                    </a>
-                    <button mat-icon-button (click)="deleteMatch(costMatch.id)" class="action-btn delete-btn" [disabled]="costMatch.isDeleting" title="Verwijderen">
-                        @if (costMatch.isDeleting) {
-                            <mat-spinner diameter="20"></mat-spinner>
-                        } @else {
-                            <mat-icon>delete</mat-icon>
-                        }
-                    </button>
-                </td>
-            </tr>
-        }
-        @if (!costMatches()) {
-            <tr>
-                <td colspan="4" class="text-center">
-                    <span class="spinner-border spinner-border-lg align-center"></span>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th style="width: 15%">Match</th>
+                    <th style="width: 20%">Kostensoort</th>
+                    <th style="width: 15%">Kost karakter</th>
+                    <th style="width: 15%">btw type</th>
+                    <th style="width: 10%">percentage</th>
+                    <th style="width: 10%">vast bedrag</th>
+                    <th style="width: 15%">Acties</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (costMatch of costMatches(); track costMatch.id) {
+                    <tr>
+                        <td>{{costMatch.matchString}}</td>
+                        <td>{{costTypes[costMatch.costType['id']]}}</td>
+                        <td>{{costMatch.costCharacter}}</td>
+                        <td>{{costMatch.vatType}}</td>
+                        <td>{{costMatch.percentage}}</td>
+                        <td>{{costMatch.fixedAmount}}</td>
+                        <td style="white-space: nowrap">
+                            <a mat-icon-button routerLink="edit/{{costMatch.id}}" class="action-btn edit-btn" title="Wijzigen">
+                                <mat-icon>edit</mat-icon>
+                            </a>
+                            <button mat-icon-button (click)="deleteMatch(costMatch.id)" class="action-btn delete-btn" [disabled]="costMatch.isDeleting" title="Verwijderen">
+                                @if (costMatch.isDeleting) {
+                                    <mat-spinner diameter="20"></mat-spinner>
+                                } @else {
+                                    <mat-icon>delete</mat-icon>
+                                }
+                            </button>
+                        </td>
+                    </tr>
+                }
+                @if (!costMatches()) {
+                    <tr>
+                        <td colspan="7" class="text-center p-5">
+                            <span class="spinner-border spinner-border-lg align-center"></span>
+                        </td>
+                    </tr>
+                }
+                @if (costMatches() && costMatches().length === 0) {
+                    <tr>
+                        <td colspan="7" class="text-center p-4">
+                            Geen matches gevonden.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
