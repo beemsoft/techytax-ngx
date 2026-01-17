@@ -217,6 +217,7 @@ option {
       .mdc-list-item__content {
         display: flex !important;
         align-items: center !important;
+        color: #ffffff !important;
       }
 
       mat-icon {
@@ -234,11 +235,18 @@ option {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: #ffffff !important;
       }
 
       &:hover {
         background-color: rgba(255, 255, 255, 0.1) !important;
         color: var(--neon-blue) !important;
+        .mdc-list-item__content {
+          color: var(--neon-blue) !important;
+        }
+        span {
+          color: var(--neon-blue) !important;
+        }
         mat-icon {
           color: var(--neon-blue);
         }
@@ -248,6 +256,12 @@ option {
         background-color: rgba(0, 242, 255, 0.1) !important;
         color: var(--neon-blue) !important;
         font-weight: bold;
+        .mdc-list-item__content {
+          color: var(--neon-blue) !important;
+        }
+        span {
+          color: var(--neon-blue) !important;
+        }
         mat-icon {
           color: var(--neon-blue);
         }
@@ -258,10 +272,10 @@ option {
       padding: 24px 20px 12px 20px;
       font-size: 0.85rem;
       font-weight: 800;
-      color: var(--primary-color);
+      color: var(--neon-blue);
       text-transform: uppercase;
       letter-spacing: 2px;
-      opacity: 0.9;
+      opacity: 1;
     }
   }
 
