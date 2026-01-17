@@ -17,6 +17,59 @@ table {
   width: 100%;
 }
 
+th.mat-header-cell {
+  color: var(--accent-color) !important;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  padding: 12px 8px !important;
+}
+
+.mat-column-date {
+  width: 100px;
+}
+
+.mat-column-description {
+  min-width: 300px;
+}
+
+.mat-column-matchString {
+  width: 200px;
+}
+
+.mat-column-costType {
+  width: 150px;
+}
+
+.mat-column-costCharacter {
+  width: 120px;
+}
+
+.mat-column-matchPercentage {
+  width: 80px;
+}
+
+.mat-column-matchFixedAmount {
+  width: 100px;
+}
+
+.mat-column-vatType {
+  width: 100px;
+}
+
+.mat-column-amount {
+  width: 120px;
+}
+
+.mat-column-amountNet {
+  width: 120px;
+}
+
+.mat-column-vatOut {
+  width: 120px;
+}
+
 th.mat-sort-header-sorted {
-  color: var(--neon-blue);
+  color: var(--neon-blue) !important;
 }
