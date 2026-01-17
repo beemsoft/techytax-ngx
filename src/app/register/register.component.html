@@ -2,9 +2,9 @@
   <div class="container">
     <h1>Mijn gegevens</h1>
     <p class="text-muted">TechyTax heeft je gegevens nodig om namens jou een factuur te kunnen versturen.</p>
-    <div class="checkbox mb-3">
-      <input type="checkbox" (change)="acceptedTermsAndConditions.set(!acceptedTermsAndConditions())">
-      <span class="ms-2">Ik geef toestemming voor het opslaan van mijn gegevens.</span>
+    <div class="checkbox mb-3 p-2 rounded" style="background: rgba(255, 255, 255, 0.05);">
+      <input type="checkbox" (change)="acceptedTermsAndConditions.set(!acceptedTermsAndConditions())" id="terms">
+      <label class="ms-2 mb-0" for="terms" style="cursor: pointer;">Ik geef toestemming voor het opslaan van mijn gegevens.</label>
     </div>
     @if (acceptedTermsAndConditions()) {
       <div class="card">

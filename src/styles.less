@@ -87,7 +87,6 @@ a {
     background-color: rgba(255, 255, 255, 0.05) !important;
     border-bottom: 1px solid var(--border-color) !important;
     font-weight: bold;
-    color: var(--neon-blue);
     text-transform: uppercase;
     letter-spacing: 1px;
   }
@@ -316,7 +315,7 @@ option {
   }
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, .card-header {
   color: var(--neon-blue);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -442,17 +441,30 @@ h1, h2, h3, h4 {
 }
 
 /* Form controls and inputs */
-select, input:not([type="checkbox"]):not([type="radio"]) {
+select, input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([type="reset"]) {
   background-color: #010409 !important;
   border: 1px solid var(--border-color) !important;
   color: var(--text-color) !important;
-  padding: 4px 8px;
+  padding: 8px 12px;
   border-radius: 4px;
 
   &:focus {
     outline: none;
     border-color: var(--primary-color) !important;
     box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.25);
+  }
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent-color);
+    cursor: pointer;
   }
 }
 

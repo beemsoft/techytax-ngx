@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group mb-4">
                     <label class="form-label" for="password">Wachtwoord</label>
-                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Minimaal 6 tekens" />
                     @if (submitted && f.password.errors) {
                         <div class="invalid-feedback">
                             @if (f.password.errors.required) {
