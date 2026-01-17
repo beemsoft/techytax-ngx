@@ -19,6 +19,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
 import { SendInvoiceModule } from './send-invoice/send-invoice.module';
 import { ErrorInterceptor, JwtInterceptor } from '@app/_helpers';
 import { AlertComponent } from '@app/_components';
@@ -46,6 +47,7 @@ import { provideZoneChangeDetection } from '@angular/core';
     MatSidenavModule,
     MatListModule,
     MatInputModule,
+    MatCardModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,

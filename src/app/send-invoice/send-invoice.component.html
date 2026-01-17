@@ -49,11 +49,18 @@
                     <td colspan="2"><textarea style="width: 100%;" [ngModel]="invoice().htmlText" (ngModelChange)="invoice().htmlText=$event"></textarea></td>
                 </tr>
             </table>
-            <div class="checkbox">
+            <div class="checkbox mb-3">
                 <input type="checkbox" (change)="approveInvoice.set(!approveInvoice())"> Ik geef toestemming voor het opslaan van mijn gegevens.
             </div>
-            <button (click)="sendInvoice()" [disabled]="isButtonDisabled()">Stuur factuur</button>
-            Test email: <input [ngModel]="invoice().project.customer.emailInvoice" (ngModelChange)="invoice().project.customer.emailInvoice=$event">
+            <div class="d-flex align-items-center mb-3">
+                <button mat-raised-button color="accent" (click)="sendInvoice()" [disabled]="isButtonDisabled()" class="me-3">
+                    <mat-icon>send</mat-icon> Stuur factuur
+                </button>
+                <div class="d-flex align-items-center">
+                    <span class="me-2">Test email:</span>
+                    <input class="form-control form-control-sm" style="width: 250px;" [ngModel]="invoice().project.customer.emailInvoice" (ngModelChange)="invoice().project.customer.emailInvoice=$event">
+                </div>
+            </div>
         }
     </div>
 </div>

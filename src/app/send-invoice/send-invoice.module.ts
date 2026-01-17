@@ -6,12 +6,16 @@ import {MatTableModule} from '@angular/material/table';
 import {SendInvoiceComponent} from './send-invoice.component';
 import {ProjectService} from '../shared/services/project.service';
 import {RegisterService} from '../shared/services/register.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
     FormsModule,
     CommonModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule
   ],
   declarations: [
     SendInvoiceComponent
