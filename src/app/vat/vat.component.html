@@ -28,18 +28,18 @@
       <mat-icon>add</mat-icon> Handmatige match toevoegen
   </button>
 
-  <table mat-table [dataSource]="dataSource()" matSort class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource()" matSort class="mat-elevation-z8 mt-4">
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header="dateFormatted"> Datum</th>
-      <td mat-cell *matCellDef="let transaction"> {{transaction.dateFormatted}}</td>
+      <td mat-cell *matCellDef="let transaction" class="neon-text"> {{transaction.dateFormatted}}</td>
     </ng-container>
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Description</th>
       <td mat-cell *matCellDef="let transaction">
-        <input type="text" placeholder="beschrijving" [(ngModel)]="transaction.description"/>
+        <input type="text" placeholder="beschrijving" [(ngModel)]="transaction.description" class="form-control form-control-sm"/>
         @if (!transaction.costMatch) {
-          <div>
-            <button mat-stroked-button (click)="match()">
+          <div class="mt-2">
+            <button mat-stroked-button (click)="match()" size="small">
                 <mat-icon>search</mat-icon> Zoek match
             </button>
           </div>
@@ -51,7 +51,7 @@
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
           <div class="d-flex align-items-center">
-            <span class="me-2">{{transaction.costMatch.matchString}}</span>
+            <span class="me-2 accent-text">{{transaction.costMatch.matchString}}</span>
             <button mat-icon-button (click)="removeMatch(transaction)" class="action-btn delete-btn" title="Match verwijderen">
               <mat-icon>close</mat-icon>
             </button>
@@ -59,8 +59,8 @@
         }
         @if (!transaction.costMatch) {
           <div>
-            <input type="text" placeholder="matchstring" [(ngModel)]="transaction.matchString"/>
-            <button mat-flat-button color="accent" (click)="addMatch(transaction)" [disabled]="addMatchDisabled(transaction)">
+            <input type="text" placeholder="matchstring" [(ngModel)]="transaction.matchString" class="form-control form-control-sm mb-2"/>
+            <button mat-flat-button color="accent" (click)="addMatch(transaction)" [disabled]="addMatchDisabled(transaction)" size="small">
                 <mat-icon>save</mat-icon> Match toevoegen
             </button>
           </div>
@@ -71,11 +71,11 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header="costTypeDescription"> Type</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
-          <div>{{transaction.costTypeDescription | label}}</div>
+          <div class="text-color">{{transaction.costTypeDescription | label}}</div>
         }
         @if (!transaction.costMatch) {
           <div>
-            <select id="costTypes" [(ngModel)]="transaction.costType">
+            <select id="costTypes" [(ngModel)]="transaction.costType" class="form-control form-control-sm">
               @for (costType of costTypeList; track costType.key) {
                 <option [value]="costType.key">
                   {{costType.value}}
@@ -90,11 +90,11 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header="costCharacterDescription"> Prive/zak.</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
-          <div>{{transaction.costCharacterDescription}}</div>
+          <div class="text-color">{{transaction.costCharacterDescription}}</div>
         }
         @if (!transaction.costMatch) {
           <div>
-            <select id="costCharacters" [(ngModel)]="transaction.costCharacter">
+            <select id="costCharacters" [(ngModel)]="transaction.costCharacter" class="form-control form-control-sm">
               @for (costCharacter of costCharacterList; track costCharacter.key) {
                 <option [value]="costCharacter.key">
                   {{costCharacter.value}}
@@ -104,16 +104,15 @@
           </div>
         }
       </td>
-
     </ng-container>
     <ng-container matColumnDef="matchPercentage">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Perc.</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
-          <div>{{transaction.costMatch.percentage}}</div>
+          <div class="accent-text">{{transaction.costMatch.percentage}}</div>
         }
         @if (!transaction.costMatch) {
-          <div><input type="text" placeholder="%" style="width: 30px" [(ngModel)]="transaction.percentage"/></div>
+          <div><input type="text" placeholder="%" style="width: 50px" [(ngModel)]="transaction.percentage" class="form-control form-control-sm"/></div>
         }
       </td>
     </ng-container>
@@ -121,10 +120,10 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Vast bedrag</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
-          <div>{{transaction.costMatch.fixedAmount}}</div>
+          <div class="accent-text">{{transaction.costMatch.fixedAmount}}</div>
         }
         @if (!transaction.costMatch) {
-          <div><input type="text" style="width: 50px" [(ngModel)]="transaction.fixedAmount"/></div>
+          <div><input type="text" style="width: 60px" [(ngModel)]="transaction.fixedAmount" class="form-control form-control-sm"/></div>
         }
       </td>
     </ng-container>
@@ -132,11 +131,11 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> btw type</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
-          <div>{{transaction.costMatch.vatType | label}}</div>
+          <div class="text-color">{{transaction.costMatch.vatType | label}}</div>
         }
         @if (!transaction.costMatch && displayVatTypeSelector(transaction)) {
           <div>
-            <select id="vatTypes" [(ngModel)]="transaction.vatType">
+            <select id="vatTypes" [(ngModel)]="transaction.vatType" class="form-control form-control-sm">
               @for (vatType of vatTypeList; track vatType.key) {
                 <option [value]="vatType.key">
                   {{vatType.value}}
@@ -151,20 +150,20 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header="amountFormatted"> Bedrag bruto</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.amount && transaction.costMatch) {
-          <div>{{transaction.amountFormatted}}</div>
+          <div class="text-color font-monospace">{{transaction.amountFormatted}}</div>
         }
         @if (!transaction.amount || !transaction.costMatch) {
-          <div><input type="text" placeholder="bedrag" [(ngModel)]="transaction.amount"/></div>
+          <div><input type="text" placeholder="bedrag" [(ngModel)]="transaction.amount" class="form-control form-control-sm"/></div>
         }
       </td>
     </ng-container>
     <ng-container matColumnDef="amountNet">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Bedrag netto</th>
-      <td mat-cell *matCellDef="let transaction"> {{transaction.amountNet}}</td>
+      <td mat-cell *matCellDef="let transaction" class="accent-text font-monospace"> {{transaction.amountNet | currency:'EUR'}}</td>
     </ng-container>
     <ng-container matColumnDef="vatOut">
       <th mat-header-cell *matHeaderCellDef mat-sort-header="amountVat"> btw uit</th>
-      <td mat-cell *matCellDef="let transaction"> {{transaction.amountVat}}</td>
+      <td mat-cell *matCellDef="let transaction" class="neon-text font-monospace"> {{transaction.amountVat | currency:'EUR'}}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
     <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
