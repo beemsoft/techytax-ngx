@@ -5,9 +5,12 @@ import {CostCharacter} from "../services/import-list.service";
   standalone: false,
   selector: 'cost-character-selector',
   template: `<div>
-    <select #sel (change)="select.emit(sel.value)">
-<!--      <option *ngFor="let item of costCharacters | keys" [value]="item.key" [selected]="selectedCostCharacter == item.key">{{item.value}}-->
-<!--      </option>-->
+    <select #sel (change)="select.emit(sel.value)" class="form-control">
+      @for (item of costCharacters | keys; track item.key) {
+        <option [value]="item.key" [selected]="selectedCostCharacter == item.key">
+          {{item.value}}
+        </option>
+      }
     </select>
   </div>`
 })

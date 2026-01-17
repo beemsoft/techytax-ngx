@@ -1,52 +1,64 @@
-﻿<h1 *ngIf="isAddMode">Kost toevoegen</h1>
-<h1 *ngIf="!isAddMode">Kost wijzigen</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-row">
-        <div class="form-group">
-            <label>Kostensoort&nbsp;</label>
-            <select id="costTypes"formControlName="costType">
-                <option *ngFor="let costType of costTypeList" [value]="costType.id">
-                    {{costType.value}}
-                </option>
-            </select>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col">
-            <label>Datum</label>
-            <input type="date" formControlName="date" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.date.errors }"/>
-            <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
-                <div *ngIf="f.costDate.errors.required">Veld is verplicht</div>
+﻿@if (isAddMode) { <h1>Kost toevoegen</h1> }
+@else { <h1>Kost wijzigen</h1> }
+
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label class="form-label">Kostensoort</label>
+                    <select id="costTypes" formControlName="costType" class="form-control">
+                        @for (costType of costTypeList; track costType.id) {
+                            <option [value]="costType.id">
+                                {{costType.value}}
+                            </option>
+                        }
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="form-group col">
-            <label>Bedrag</label>
-            <input type="text" formControlName="amount" class="form-control"/>
-        </div>
-        <div class="form-group col">
-            <label>btw</label>
-            <input type="text" formControlName="vat" class="form-control"/>
-        </div>
-        <div class="form-group col">
-            <label>Omschrijving</label>
-            <input type="text" formControlName="description" class="form-control"
-                   [ngClass]="{ 'is-invalid': submitted && f.description.errors }"/>
-            <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
-                <div *ngIf="f.description.errors.required">Veld is verplicht</div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Datum</label>
+                    <input type="date" formControlName="date" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.date.errors }"/>
+                    @if (submitted && f.date.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.costDate.errors?.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Omschrijving</label>
+                    <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"/>
+                    @if (submitted && f.description.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.description.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Bedrag</label>
+                    <input type="text" formControlName="amount" class="form-control"/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">btw</label>
+                    <input type="text" formControlName="vat" class="form-control"/>
+                </div>
+            </div>
+            <div class="d-flex align-items-center mt-4">
+                <button [disabled]="loading" mat-raised-button color="accent" class="me-3">
+                    @if (loading) {
+                        <mat-spinner diameter="20" class="me-2 d-inline-block"></mat-spinner>
+                    } @else {
+                        <mat-icon>save</mat-icon>
+                    }
+                    Opslaan
+                </button>
+                <a mat-button routerLink="/cost">
+                    <mat-icon>cancel</mat-icon> Annuleren
+                </a>
+            </div>
+        </form>
     </div>
-    <div class="d-flex align-items-center mt-4">
-        <button [disabled]="loading" mat-raised-button color="accent" class="me-3">
-            @if (loading) {
-                <mat-spinner diameter="20" class="me-2 d-inline-block"></mat-spinner>
-            } @else {
-                <mat-icon>save</mat-icon>
-            }
-            Opslaan
-        </button>
-        <a mat-button routerLink="/cost">
-            <mat-icon>cancel</mat-icon> Annuleren
-        </a>
-    </div>
-</form>
+</div>

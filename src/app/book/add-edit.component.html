@@ -1,38 +1,45 @@
-﻿<h1 *ngIf="isAddMode">Boekwaarde toevoegen</h1>
-<h1 *ngIf="!isAddMode">Boekwaarde wijzigen</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-row">
-        <div class="form-group">
-            <label>Balans type</label>
-            <select id="balanceTypes"formControlName="balanceType">
-                <option *ngFor="let balanceType of balanceTypeList" [value]="balanceType.key">
-                    {{balanceType.value}}
-                </option>
-            </select>
-        </div>
+﻿@if (isAddMode) { <h1>Boekwaarde toevoegen</h1> }
+@else { <h1>Boekwaarde wijzigen</h1> }
+
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label class="form-label">Type</label>
+                    <select id="balanceTypes" formControlName="balanceType" class="form-control">
+                        @for (balanceType of balanceTypeList; track balanceType.key) {
+                            <option [value]="balanceType.key">
+                                {{balanceType.value}}
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Boekjaar</label>
+                    <input type="text" formControlName="bookYear" class="form-control" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Saldo</label>
+                    <input type="text" formControlName="saldo" class="form-control" />
+                </div>
+            </div>
+            <div class="d-flex align-items-center mt-4">
+                <button [disabled]="loading" mat-raised-button color="accent" class="me-3">
+                    @if (loading) {
+                        <mat-spinner diameter="20" class="me-2 d-inline-block"></mat-spinner>
+                    } @else {
+                        <mat-icon>save</mat-icon>
+                    }
+                    Opslaan
+                </button>
+                <a mat-button routerLink="/book">
+                    <mat-icon>cancel</mat-icon> Annuleren
+                </a>
+            </div>
+        </form>
     </div>
-    <div class="form-row">
-        <div class="form-group col">
-            <label>Boekjaar</label>
-            <input type="text" formControlName="bookYear" class="form-control"/>
-        </div>
-        <div class="form-group col">
-            <label>Saldo</label>
-            <input type="text" formControlName="saldo" class="form-control"/>
-        </div>
-    </div>
-    <div class="d-flex align-items-center mt-4">
-        <button [disabled]="loading" mat-raised-button color="accent" class="me-3">
-            @if (loading) {
-                <mat-spinner diameter="20" class="me-2 d-inline-block"></mat-spinner>
-            } @else {
-                <mat-icon>save</mat-icon>
-            }
-            Opslaan
-        </button>
-        <a mat-button routerLink="/book">
-            <mat-icon>cancel</mat-icon> Annuleren
-        </a>
-    </div>
-</form>
+</div>
 

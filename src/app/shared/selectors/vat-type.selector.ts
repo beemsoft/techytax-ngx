@@ -5,9 +5,12 @@ import {VatType} from "../services/import-list.service";
   standalone: false,
   selector: 'vat-type-selector',
   template: `<div>
-    <select #sel (change)="select.emit(sel.value)">
-<!--      <option *ngFor="let item of vatTypes | keys" [value]="item.key" [selected]="selectedVatType && vatTypes[selectedVatType] == item.key">{{item.value}}-->
-<!--      </option>-->
+    <select #sel (change)="select.emit(sel.value)" class="form-control">
+      @for (item of vatTypes | keys; track item.key) {
+        <option [value]="item.key" [selected]="selectedVatType && vatTypes[selectedVatType] == item.key">
+          {{item.value}}
+        </option>
+      }
     </select>
   </div>`
 })

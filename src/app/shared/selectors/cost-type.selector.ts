@@ -10,7 +10,7 @@ export class KeysPipe implements PipeTransform {
 
   constructor(private labelService: LabelService) {}
 
-  transform(value: any, args: string[]): any {
+  transform(value: any, args?: string[]): any {
     let keys = [];
     for (let enumMember in value) {
       let isValueProperty = parseInt(enumMember, 10) >= 0;
@@ -27,9 +27,12 @@ export class KeysPipe implements PipeTransform {
   selector: 'cost-type-selector',
   providers: [LabelService],
   template: `<div>
-    <select #sel (change)="select.emit(sel.value)">
-<!--      <option *ngFor="let item of costTypes | keys" [value]="item.key" [selected]="selectedCostTypeId == item.key">{{item.value}}-->
-<!--      </option>-->
+    <select #sel (change)="select.emit(sel.value)" class="form-control">
+      @for (item of costTypes | keys; track item.key) {
+        <option [value]="item.key" [selected]="selectedCostTypeId == item.key">
+          {{item.value}}
+        </option>
+      }
     </select>
   </div>`
 })
