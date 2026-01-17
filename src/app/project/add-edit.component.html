@@ -1,84 +1,112 @@
-﻿<h1 *ngIf="isAddMode">Project toevoegen</h1>
-<h1 *ngIf="!isAddMode">Project wijzigen</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-row">
-        <div class="form-group">
-            <label>Klant</label>
-            <select formControlName="customer" id="customers">
-                <option *ngFor="let customer of customers; let i = index" [value]="customers[i].id">
-                    {{customers[i].name}}
-                </option>
-            </select>
-        </div>
+﻿@if (isAddMode) { <h1>Project toevoegen</h1> }
+@else { <h1>Project wijzigen</h1> }
+
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label class="form-label">Klant</label>
+                    <select formControlName="customer" id="customers" class="form-control">
+                        @for (customer of customers; track customer.id) {
+                            <option [value]="customer.id">
+                                {{customer.name}}
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Code</label>
+                    <input type="text" formControlName="code" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.code.errors }"/>
+                    @if (submitted && f.code.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.code.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Projectomschrijving</label>
+                    <input type="text" formControlName="projectDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.projectDescription.errors }"/>
+                    @if (submitted && f.projectDescription.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.projectDescription.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label class="form-label">Werkzaamheden</label>
+                    <input type="text" formControlName="activityDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.activityDescription.errors }"/>
+                    @if (submitted && f.activityDescription.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.activityDescription.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Tarief</label>
+                    <input type="text" formControlName="rate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.rate.errors }"/>
+                    @if (submitted && f.rate.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.rate.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Omzetpercentage</label>
+                    <input type="text" formControlName="revenuePerc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.revenuePerc.errors }"/>
+                    @if (submitted && f.revenuePerc.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.revenuePerc.errors.pattern) { <div>Gebruik een . in het percentage</div> }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Betalingstermijn</label>
+                    <input type="text" formControlName="paymentTermDays" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.paymentTermDays.errors }"/>
+                    @if (submitted && f.paymentTermDays.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.paymentTermDays.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Startdatum</label>
+                    <input type="date" formControlName="startDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }"/>
+                    @if (submitted && f.startDate.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.startDate.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Einddatum</label>
+                    <input type="date" formControlName="endDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.endDate.errors }"/>
+                    @if (submitted && f.endDate.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.endDate.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="d-flex align-items-center mt-4">
+                <button [disabled]="loading" mat-raised-button color="accent" class="me-3">
+                    @if (loading) {
+                        <mat-spinner diameter="20" class="me-2"></mat-spinner>
+                    } @else {
+                        <mat-icon>save</mat-icon>
+                    }
+                    Opslaan
+                </button>
+                <a mat-button routerLink="/project">
+                    <mat-icon>cancel</mat-icon> Annuleren
+                </a>
+            </div>
+        </form>
     </div>
-    <div class="form-row">
-        <div class="form-group col">
-            <label>Code</label>
-            <input type="text" formControlName="code" class="form-control" [ngClass]="{ 'is-invalid': f.code.errors }"/>
-            <div *ngIf="f.code.errors" class="invalid-feedback">
-                <div *ngIf="f.code.errors.required">Veld is verplicht</div>
-            </div>
-        </div>
-        <div class="form-group col">
-            <label>Projectomschrijving</label>
-            <input type="text" formControlName="projectDescription" class="form-control" [ngClass]="{ 'is-invalid': f.projectDescription.errors }"/>
-            <div *ngIf="f.projectDescription.errors" class="invalid-feedback">
-                <div *ngIf="f.projectDescription.errors.required">Veld is verplicht</div>
-            </div>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col">
-            <label>Werkzaamheden</label>
-            <input type="text" formControlName="activityDescription" class="form-control" [ngClass]="{ 'is-invalid': f.activityDescription.errors }"/>
-            <div *ngIf="f.activityDescription.errors" class="invalid-feedback">
-                <div *ngIf="f.activityDescription.errors.required">Veld is verplicht</div>
-            </div>
-        </div>
-        <div class="form-group col">
-            <label>Tarief</label>
-            <input type="text" formControlName="rate" class="form-control" [ngClass]="{ 'is-invalid': f.rate.errors }"/>
-            <div *ngIf="f.rate.errors" class="invalid-feedback">
-                <div *ngIf="f.rate.errors.required">Veld is verplicht</div>
-            </div>
-        </div>
-        <div class="form-group col">
-            <label>Omzetpercentage</label>
-            <input type="text" formControlName="revenuePerc" class="form-control" [ngClass]="{ 'is-invalid': f.revenuePerc.errors }"/>
-            <div *ngIf="f.revenuePerc.errors" class="invalid-feedback">
-                <div *ngIf="f.revenuePerc.errors.pattern">Gebruik een . in het percentage</div>
-            </div>
-        </div>
-        <div class="form-group col">
-            <label>Betalingstermijn</label>
-            <input type="text" formControlName="paymentTermDays" class="form-control" [ngClass]="{ 'is-invalid': f.paymentTermDays.errors }"/>
-            <div *ngIf="f.paymentTermDays.errors" class="invalid-feedback">
-                <div *ngIf="f.paymentTermDays.errors.required">Veld is verplicht</div>
-            </div>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col">
-            <label>Startdatum</label>
-            <input type="date" formControlName="startDate" class="form-control" [ngClass]="{ 'is-invalid': f.startDate.errors }"/>
-            <div *ngIf="f.startDate.errors" class="invalid-feedback">
-                <div *ngIf="f.startDate.errors.required">Veld is verplicht</div>
-            </div>
-        </div>
-        <div class="form-group col">
-            <label>Einddatum</label>
-            <input type="date" formControlName="endDate" class="form-control"
-                   [ngClass]="{ 'is-invalid': f.endDate.errors }"/>
-            <div *ngIf="f.endDate.errors" class="invalid-feedback">
-                <div *ngIf="f.endDate.errors.required">Veld is verplicht</div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Opslaan
-        </button>
-        <a routerLink="/project" class="btn btn-link">Annuleren</a>
-    </div>
-</form>
+</div>

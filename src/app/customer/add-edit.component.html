@@ -1,43 +1,62 @@
-﻿<h1 *ngIf="isAddMode">Klant toevoegen</h1>
-<h1 *ngIf="!isAddMode">Klant wijzigen</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-row">
-        <div class="form-group col">
-            <label>Naam</label>
-            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
-            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                <div *ngIf="f.name.errors.required">Veld is verplicht</div>
+﻿@if (isAddMode) { <h1>Klant toevoegen</h1> }
+@else { <h1>Klant wijzigen</h1> }
+
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Naam</label>
+                    <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                    @if (submitted && f.name.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.name.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Adres</label>
+                    <input type="text" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+                    @if (submitted && f.address.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.address.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
-        <div class="form-group col">
-            <label>Adres</label>
-            <input type="text" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
-            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
-                <div *ngIf="f.address.errors.required">Veld is verplicht</div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Factuur email</label>
+                    <input type="text" formControlName="emailInvoice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.emailInvoice.errors }" />
+                    @if (submitted && f.emailInvoice.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.emailInvoice.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Contactpersoon</label>
+                    <input type="text" formControlName="contact" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contact.errors }" />
+                    @if (submitted && f.contact.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.contact.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
             </div>
-        </div>
+            <div class="d-flex align-items-center mt-4">
+                <button [disabled]="loading" mat-raised-button color="accent" class="me-3">
+                    @if (loading) {
+                        <mat-spinner diameter="20" class="me-2"></mat-spinner>
+                    } @else {
+                        <mat-icon>save</mat-icon>
+                    }
+                    Opslaan
+                </button>
+                <a mat-button routerLink="/customer">
+                    <mat-icon>cancel</mat-icon> Annuleren
+                </a>
+            </div>
+        </form>
     </div>
-    <div class="form-row">
-        <div class="form-group col">
-            <label>Factuur email</label>
-            <input type="text" formControlName="emailInvoice" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.emailInvoice.errors }" />
-            <div *ngIf="submitted && f.emailInvoice.errors" class="invalid-feedback">
-                <div *ngIf="f.emailInvoice.errors.required">Veld is verplicht</div>
-            </div>
-        </div>
-        <div class="form-group col">
-            <label>Contactpersoon</label>
-            <input type="text" formControlName="contact" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contact.errors }" />
-            <div *ngIf="submitted && f.contact.errors" class="invalid-feedback">
-                <div *ngIf="f.contact.errors.required">Veld is verplicht</div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Opslaan
-        </button>
-        <a routerLink="/customer" class="btn btn-link">Annuleren</a>
-    </div>
-</form>
+</div>

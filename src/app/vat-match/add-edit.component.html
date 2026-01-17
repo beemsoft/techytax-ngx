@@ -1,42 +1,58 @@
-﻿<h1 *ngIf="isAddMode">Match toevoegen</h1>
-<h1 *ngIf="!isAddMode">Match wijzigen</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-row">
-        <div class="form-group col">
-            <label>Match</label>
-            <input type="text" formControlName="matchString" class="form-control" [ngClass]="{ 'is-invalid': submitted }"/>
-            <div *ngIf="submitted && f.matchString.errors" class="invalid-feedback">
-                <div *ngIf="f.matchString.errors.required">Veld is verplicht</div>
+﻿@if (isAddMode) { <h1>Match toevoegen</h1> }
+@else { <h1>Match wijzigen</h1> }
+
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label class="form-label">Match</label>
+                    <input type="text" formControlName="matchString" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.matchString.errors }"/>
+                    @if (submitted && f.matchString.errors) {
+                        <div class="invalid-feedback">
+                            @if (f.matchString.errors.required) { <div>Veld is verplicht</div> }
+                        </div>
+                    }
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Kostensoort</label>
+                    @if (costMatch) {
+                        <select id="costTypes" formControlName="costType" class="form-control">
+                            @for (costType of costTypeList; track costType.key) {
+                                <option [value]="costType.key">
+                                    {{costType.value}}
+                                </option>
+                            }
+                        </select>
+                    }
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Kost karakter</label>
+                    @if (costMatch) {
+                        <select id="costCharacters" formControlName="costCharacter" class="form-control">
+                            @for (costCharacter of costCharacterList; track costCharacter.key) {
+                                <option [value]="costCharacter.key">
+                                    {{costCharacter.value}}
+                                </option>
+                            }
+                        </select>
+                    }
+                </div>
             </div>
-        </div>
-        <div class="form-group col">
-            <label>Kostensoort</label>
-            <div>
-                <select id="costTypes" *ngIf="costMatch != undefined" formControlName="costType">
-                    <option *ngFor="let costType of costTypeList" [value]="costType.key"
-                            [selected]="costMatch.costType['id'] == costTypes[costTypes[costType.key]]">
-                        {{costType.value}}
-                    </option>
-                </select>
+
+            <div class="d-flex align-items-center mt-4">
+                <button [disabled]="loading" mat-raised-button color="accent" class="me-3">
+                    @if (loading) {
+                        <mat-spinner diameter="20" class="me-2"></mat-spinner>
+                    } @else {
+                        <mat-icon>save</mat-icon>
+                    }
+                    Opslaan
+                </button>
+                <a mat-button routerLink="/vat-match">
+                    <mat-icon>cancel</mat-icon> Annuleren
+                </a>
             </div>
-        </div>
-        <div class="form-group col">
-            <label>Kost karakter</label>
-            <div>
-                <select id="costCharacters" *ngIf="costMatch != undefined" formControlName="costCharacter">
-                    <option *ngFor="let costCharacter of costCharacterList" [value]="costCharacter.key"
-                            [selected]="costMatch.costCharacter == costCharacter">
-                        {{costCharacter.value}}
-                    </option>
-                </select>
-            </div>
-        </div>
+        </form>
     </div>
-    <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Opslaan
-        </button>
-        <a routerLink="/vat-match" class="btn btn-link">Annuleren</a>
-    </div>
-</form>
+</div>
