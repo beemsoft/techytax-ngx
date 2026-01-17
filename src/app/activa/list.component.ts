@@ -2,7 +2,8 @@
 import { first } from 'rxjs/operators';
 import { ActivumService } from '@app/shared/services/activum.service';
 
-@Component({templateUrl: 'list.component.html'})
+@Component({
+  standalone: false,templateUrl: 'list.component.html'})
 export class ListComponent implements OnInit {
   activa = null;
 

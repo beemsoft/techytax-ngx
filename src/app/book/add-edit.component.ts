@@ -7,7 +7,8 @@ import { AlertService } from '@app/_services';
 import { BookService, BookType, BookValue } from '@app/shared/services/book.service';
 import { LabelService } from '@app/shared/services/label.service';
 
-@Component({templateUrl: 'add-edit.component.html'})
+@Component({
+  standalone: false,templateUrl: 'add-edit.component.html'})
 export class AddEditComponent implements OnInit {
   form: FormGroup;
   id: number;

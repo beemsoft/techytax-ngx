@@ -3,6 +3,7 @@ import {CostType} from "../services/import-list.service";
 import {LabelService} from "../services/label.service";
 
 @Pipe({
+  standalone: false,
   name: 'keys'
 })
 export class KeysPipe implements PipeTransform {
@@ -22,6 +23,7 @@ export class KeysPipe implements PipeTransform {
 }
 
 @Component({
+  standalone: false,
   selector: 'cost-type-selector',
   providers: [LabelService],
   template: `<div>

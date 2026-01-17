@@ -2,6 +2,7 @@ import {Component, Output, EventEmitter, Input} from '@angular/core'
 import {VatType} from "../services/import-list.service";
 
 @Component({
+  standalone: false,
   selector: 'vat-type-selector',
   template: `<div>
     <select #sel (change)="select.emit(sel.value)">

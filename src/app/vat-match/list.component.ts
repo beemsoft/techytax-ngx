@@ -3,7 +3,8 @@ import { first } from 'rxjs/operators';
 import { CostMatchService } from '@app/shared/services/cost-match.service';
 import { CostType } from '@app/shared/services/import-list.service';
 
-@Component({templateUrl: 'list.component.html'})
+@Component({
+  standalone: false,templateUrl: 'list.component.html'})
 export class ListComponent implements OnInit {
   costMatches = null;
   costTypes = CostType;

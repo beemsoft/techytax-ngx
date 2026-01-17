@@ -10,9 +10,10 @@ import { CostMatch, CostMatchService } from '../shared/services/cost-match.servi
 import { LabelService } from '../shared/services/label.service';
 import { VatCalculationService, VatReport } from '../shared/services/vat-calculation.service';
 import { MatTableDataSource } from '@angular/material/table';
-import * as moment from 'moment';
+import moment from 'moment';
 
-@Component({ templateUrl: 'vat.component.html'})
+@Component({
+  standalone: false, templateUrl: 'vat.component.html'})
 export class VatComponent implements OnInit {
   uploadedFile: File;
   importedText: string;

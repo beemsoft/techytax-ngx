@@ -2,7 +2,8 @@
 import { first } from 'rxjs/operators';
 import { BookService } from '@app/shared/services/book.service';
 
-@Component({templateUrl: 'list.component.html'})
+@Component({
+  standalone: false,templateUrl: 'list.component.html'})
 export class ListComponent implements OnInit {
   bookValues = null;
 

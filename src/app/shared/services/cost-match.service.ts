@@ -58,7 +58,8 @@ export class CostMatchService {
   }
 
   private handleError(error: any) {
-    let errMsg = (error.message) ? error.message :
+    const errMsg = (error.message) ? error.message :
+      (typeof error === 'string') ? error :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg);
     return observableThrowError(errMsg);

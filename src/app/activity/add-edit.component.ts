@@ -8,7 +8,8 @@ import { ProjectService } from '@app/shared/services/project.service';
 import { ActivityService } from '@app/shared/services/activity.service';
 import { formatDate } from '@angular/common';
 
-@Component({templateUrl: 'add-edit.component.html'})
+@Component({
+  standalone: false,templateUrl: 'add-edit.component.html'})
 export class AddEditComponent implements OnInit {
   form: FormGroup;
   id: number;

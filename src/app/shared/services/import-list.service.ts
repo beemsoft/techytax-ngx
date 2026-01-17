@@ -3,7 +3,7 @@ import {LabelService} from './label.service';
 import {CostMatch} from './cost-match.service';
 import {Injectable} from '@angular/core';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 export enum CostType {
   IGNORE = 0,

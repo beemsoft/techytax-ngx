@@ -8,13 +8,12 @@
         "downlevelIteration": true,
         "experimentalDecorators": true,
         "module": "esnext",
-        "moduleResolution": "node",
+        "moduleResolution": "bundler",
         "importHelpers": true,
-        "target": "es2015",
+        "target": "ES2022",
         "lib": [
-            "es2018",
-            "dom",
-            "ES2021.String"
+            "ES2022",
+            "dom"
         ],
         "paths": {
             "@app/*": ["src/app/*"],
@@ -22,7 +21,8 @@
         }
     },
     "angularCompilerOptions": {
-        "fullTemplateTypeCheck": true,
-        "strictInjectionParameters": true
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true
     }
 }

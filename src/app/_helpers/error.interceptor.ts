@@ -11,6 +11,11 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
+            if (err.status === 0) {
+                const connError = "Kan geen verbinding maken met de server. Controleer of de backend draait.";
+                console.error('Backend connection error:', err);
+                return throwError(connError);
+            }
             if (err.status === 401) {
                 // auto logout if 401 response returned from api
                 this.accountService.logout();

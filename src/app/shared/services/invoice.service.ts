@@ -140,9 +140,8 @@ export class InvoiceService {
    * Handle HTTP error
    */
   private handleError(error: any) {
-    // In a real world app, we might use a remote logging infrastructure
-    // We'd also dig deeper into the error to get a better message
-    let errMsg = (error.message) ? error.message :
+    const errMsg = (error.message) ? error.message :
+      (typeof error === 'string') ? error :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg); // log to console instead
     return observableThrowError(errMsg);

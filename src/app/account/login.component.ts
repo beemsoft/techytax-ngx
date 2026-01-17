@@ -5,7 +5,8 @@ import { first } from 'rxjs/operators';
 
 import { AccountService, AlertService } from '@app/_services';
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({
+  standalone: false, templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
     form: FormGroup;
     loading = false;

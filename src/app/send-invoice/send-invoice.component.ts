@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Invoice, InvoiceService } from '../shared/services/invoice.service';
 import { Project, ProjectService } from '../shared/services/project.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import { RegisterService, Registration } from '../shared/services/register.service';
 import { ActivityService } from '@app/shared/services/activity.service';
 import { AlertService } from '@app/_services';
 import { first } from 'rxjs/operators';
 
-@Component({ templateUrl: 'send-invoice.component.html' })
+@Component({ standalone: false, templateUrl: 'send-invoice.component.html' })
 export class SendInvoiceComponent implements OnInit {
 
   projects: Project[];

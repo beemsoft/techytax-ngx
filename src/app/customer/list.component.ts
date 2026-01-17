@@ -2,7 +2,8 @@
 import { first } from 'rxjs/operators';
 import { CustomerService } from '@app/shared/services/customer.service';
 
-@Component({ templateUrl: 'list.component.html' })
+@Component({
+  standalone: false, templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
     customers = null;
 

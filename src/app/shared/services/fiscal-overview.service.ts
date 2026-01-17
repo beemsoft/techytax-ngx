@@ -68,6 +68,7 @@ export class FiscalOverviewService {
 
   private handleError(error: any) {
     const errMsg = (error.message) ? error.message :
+        (typeof error === 'string') ? error :
         error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg);
     return observableThrowError(errMsg);

@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AlertService } from '@app/_services';
 import { first } from 'rxjs/operators';
 
-@Component({ templateUrl: 'register.component.html' })
+@Component({
+  standalone: false, templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
     public registration: Registration;
     public acceptedTermsAndConditions: boolean = false;

@@ -2,7 +2,8 @@
 import { first } from 'rxjs/operators';
 import { CostService } from '@app/shared/services/cost.service';
 
-@Component({templateUrl: 'list.component.html'})
+@Component({
+  standalone: false,templateUrl: 'list.component.html'})
 export class ListComponent implements OnInit {
   costs = null;
 

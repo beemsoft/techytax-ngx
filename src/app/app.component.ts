@@ -2,7 +2,8 @@ import { AccountService } from './_services';
 import { User } from './_models';
 import { Component } from '@angular/core';
 
-@Component({ selector: 'app', templateUrl: 'app.component.html' })
+@Component({
+  standalone: false, selector: 'app', templateUrl: 'app.component.html' })
 export class AppComponent {
   user: User;
 
