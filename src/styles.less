@@ -209,7 +209,7 @@ option {
     padding-top: 12px;
 
     .mat-mdc-list-item {
-      color: var(--text-color) !important;
+      color: #ffffff !important;
       margin: 4px 12px;
       border-radius: 6px;
       height: 48px !important;
@@ -221,7 +221,7 @@ option {
 
       mat-icon {
         margin-right: 16px !important;
-        color: var(--text-muted);
+        color: var(--primary-color);
         font-size: 22px;
         width: 22px;
         height: 22px;
@@ -237,15 +237,17 @@ option {
       }
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.08) !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: var(--neon-blue) !important;
         mat-icon {
           color: var(--neon-blue);
         }
       }
 
       &.active {
-        background-color: rgba(88, 166, 255, 0.15) !important;
+        background-color: rgba(0, 242, 255, 0.1) !important;
         color: var(--neon-blue) !important;
+        font-weight: bold;
         mat-icon {
           color: var(--neon-blue);
         }
@@ -253,12 +255,13 @@ option {
     }
 
     .nav-section-title {
-      padding: 20px 20px 8px 20px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      color: var(--text-muted);
+      padding: 24px 20px 12px 20px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary-color);
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
+      opacity: 0.9;
     }
   }
 
