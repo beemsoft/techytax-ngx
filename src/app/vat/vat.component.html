@@ -30,11 +30,11 @@
 
   <table mat-table [dataSource]="dataSource()" matSort class="mat-elevation-z8 mt-4">
     <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="dateFormatted"> Datum</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="dateFormatted" class="neon-text"> Datum</th>
       <td mat-cell *matCellDef="let transaction" class="neon-text"> {{transaction.dateFormatted}}</td>
     </ng-container>
     <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Omschrijving</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="neon-text"> Omschrijving</th>
       <td mat-cell *matCellDef="let transaction">
         <input type="text" placeholder="beschrijving" [(ngModel)]="transaction.description" class="form-control form-control-sm w-100"/>
         @if (!transaction.costMatch) {
@@ -47,7 +47,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="matchString">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Match</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="accent-text"> Match</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
           <div class="d-flex align-items-center">
@@ -68,7 +68,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="costType">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="costTypeDescription"> Type</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="costTypeDescription" class="text-color"> Type</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
           <div class="text-color">{{transaction.costTypeDescription | label}}</div>
@@ -87,7 +87,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="costCharacter">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="costCharacterDescription"> Prive/zak.</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="costCharacterDescription" class="text-color"> Prive/zak.</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
           <div class="text-color">{{transaction.costCharacterDescription}}</div>
@@ -106,7 +106,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="matchPercentage">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Perc.</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="accent-text"> Perc.</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
           <div class="accent-text">{{transaction.costMatch.percentage}}</div>
@@ -117,7 +117,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="matchFixedAmount">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Vast bedrag</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="accent-text"> Vast bedrag</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
           <div class="accent-text">{{transaction.costMatch.fixedAmount}}</div>
@@ -128,7 +128,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="vatType">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> btw type</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-color"> btw type</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
           <div class="text-color">{{transaction.costMatch.vatType | label}}</div>
@@ -147,7 +147,7 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="amountFormatted"> Bedrag bruto</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="amountFormatted" class="text-color"> Bedrag bruto</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.amount && transaction.costMatch) {
           <div class="text-color font-monospace">{{transaction.amountFormatted}}</div>
@@ -158,11 +158,11 @@
       </td>
     </ng-container>
     <ng-container matColumnDef="amountNet">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Bedrag netto</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="accent-text"> Bedrag netto</th>
       <td mat-cell *matCellDef="let transaction" class="accent-text font-monospace"> {{transaction.amountNet | currency:'EUR'}}</td>
     </ng-container>
     <ng-container matColumnDef="vatOut">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header="amountVat"> btw uit</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="amountVat" class="neon-text"> btw uit</th>
       <td mat-cell *matCellDef="let transaction" class="neon-text font-monospace"> {{transaction.amountVat | currency:'EUR'}}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
