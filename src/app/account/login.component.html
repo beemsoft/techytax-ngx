@@ -29,10 +29,14 @@
                     <button [disabled]="loading" mat-raised-button color="primary" class="me-3">
                         @if (loading) {
                             <mat-spinner diameter="20" class="me-2 d-inline-block"></mat-spinner>
+                        } @else {
+                            <mat-icon>login</mat-icon>
                         }
                         Login
                     </button>
-                    <a mat-button routerLink="../register">Registreren</a>
+                    <a mat-button routerLink="../register">
+                        <mat-icon>person_add</mat-icon> Registreren
+                    </a>
                 </div>
             </form>
         </div>

@@ -20,6 +20,10 @@ export class AddEditComponent implements OnInit {
   costTypes = CostType;
   costTypeList = [];
   costType = CostType.GENERAL_EXPENSE;
+  billFile: File | null = null;
+  itemFile: File | null = null;
+  billPreview: string | null = null;
+  itemPreview: string | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,6 +66,12 @@ export class AddEditComponent implements OnInit {
             // @ts-ignore
             this.f.costType.patchValue(cost.costType.id);
             this.costType = cost.costType;
+            if (cost.billImage) {
+              this.billPreview = `${this.costService.baseURL}/auth/cost/image/${cost.billImage}`;
+            }
+            if (cost.itemImage) {
+              this.itemPreview = `${this.costService.baseURL}/auth/cost/image/${cost.itemImage}`;
+            }
           },
           error: error => {
             this.alertService.error(error);
@@ -76,6 +86,28 @@ export class AddEditComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() {
     return this.form.controls;
+  }
+
+  onBillFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.billFile = file;
+
+      const reader = new FileReader();
+      reader.onload = e => this.billPreview = reader.result as string;
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onItemFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.itemFile = file;
+
+      const reader = new FileReader();
+      reader.onload = e => this.itemPreview = reader.result as string;
+      reader.readAsDataURL(file);
+    }
   }
 
   onSubmit() {
@@ -96,7 +128,7 @@ export class AddEditComponent implements OnInit {
 
   private createCost() {
     this.form.value.costType = this.costType;
-    this.costService.addCost(this.form.value)
+    this.costService.addCost(this.form.value, this.billFile, this.itemFile)
       .pipe(first())
       .subscribe({
         next: data => {
@@ -113,7 +145,7 @@ export class AddEditComponent implements OnInit {
   private updateCost() {
     this.form.value.costType = this.costType;
     this.form.value.id = this.id;
-    this.costService.updateCost(this.form.value)
+    this.costService.updateCost(this.form.value, this.billFile, this.itemFile)
       .pipe(first())
       .subscribe({
         next: data => {

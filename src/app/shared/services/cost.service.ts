@@ -15,11 +15,13 @@ export class Cost {
   date: string;
   amount: number;
   vat: number;
+  billImage?: string;
+  itemImage?: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class CostService {
-  private baseURL = environment.apiUrl;
+  public baseURL = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -38,15 +40,29 @@ export class CostService {
       .pipe(catchError(this.handleError));
   }
 
-  addCost(cost: Cost) {
-    return this.http.post(this.baseURL + '/auth/cost', cost )
+  addCost(cost: any, billImage?: File, itemImage?: File) {
+    const formData = this.createFormData(cost, billImage, itemImage);
+    return this.http.post(this.baseURL + '/auth/cost', formData)
       .pipe(catchError(this.handleError));
   }
 
-  updateCost(cost: Cost) {
+  updateCost(cost: any, billImage?: File, itemImage?: File) {
     const url = this.baseURL + '/auth/cost';
-    return this.http.put(url, cost)
+    const formData = this.createFormData(cost, billImage, itemImage);
+    return this.http.put(url, formData)
       .pipe(catchError(this.handleError));
+  }
+
+  private createFormData(cost: any, billImage?: File, itemImage?: File): FormData {
+    const formData = new FormData();
+    formData.append('cost', JSON.stringify(cost));
+    if (billImage) {
+      formData.append('billImage', billImage);
+    }
+    if (itemImage) {
+      formData.append('itemImage', itemImage);
+    }
+    return formData;
   }
 
   private handleError(error: any) {

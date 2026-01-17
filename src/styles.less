@@ -46,9 +46,6 @@ a {
     padding: 20px;
 }
 
-.bg-light {
-  background-color: var(--bg-color) !important;
-}
 
 /* Material Overrides */
 .mat-toolbar.mat-primary {
@@ -208,7 +205,7 @@ option {
 
 .sidenav-container {
   height: 100vh;
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .sidenav {
@@ -511,5 +508,9 @@ select, input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):no
 }
 
 .mat-mdc-table {
+  background-color: transparent !important;
+}
+
+.mat-sidenav-content {
   background-color: transparent !important;
 }
