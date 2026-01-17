@@ -12,15 +12,15 @@
   <input type="file" (change)="fileChangeEvent($event)" placeholder="Laad transacties..." />
 </div>
 @if (transactionsLoaded() > 0) {
-  <div>
-    <p>Er zijn {{transactionsLoaded()}} transacties geladen.</p>
-    @if (transactionsUnmatched().length > 0) {
-      <div>
-        <p>Er zijn nog {{transactionsUnmatched().length}} onbekende transacties, voeg matches toe.</p>
-      </div>
-    } @else {
-      <p>Alle transacties zijn gematcht. Loop de onderstaande tabel door om te kijken of alle transacties correct zijn gematch.  Je kunt nog een bestand inladen of de fiscale gegevens uploaden met de knop hieronder.</p>
-    }
+  <div class="card mb-4">
+    <div class="card-body">
+      <p class="mb-2">Er zijn {{transactionsLoaded()}} transacties geladen.</p>
+      @if (transactionsUnmatched().length > 0) {
+        <p class="text-warning mb-0">Er zijn nog {{transactionsUnmatched().length}} onbekende transacties, voeg matches toe.</p>
+      } @else {
+        <p class="text-success mb-0">Alle transacties zijn gematcht. Loop de onderstaande tabel door om te kijken of alle transacties correct zijn gematch. Je kunt nog een bestand inladen of de fiscale gegevens uploaden met de knop hieronder.</p>
+      }
+    </div>
   </div>
 
   <vat-report [vatReport]="vatReport()"></vat-report>

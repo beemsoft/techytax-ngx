@@ -1,41 +1,65 @@
-<div>
-    Laatste transactiedatum: {{vatReport.latestTransactionDate}}
-</div>
-<div>
-    btw uit: {{vatReport.totalVatOut}}
-</div>
-<div>
-    btw in: {{vatReport.totalVatIn}}
-</div>
-<div>
-    btw correctie prive gebruik zakelijke auto: {{vatReport.vatCorrectionForPrivateUsage}}
-</div>
-<div>
-    btw saldo: {{vatReport.vatSaldo}}
-</div>
-<div>
-    Omzet: {{vatReport.totalNetIn}}
-</div>
-<div>
-    Verstuurde facturen: {{vatReport.sentInvoices}}
-</div>
-<div>
-    Autokosten: {{vatReport.totalCarCosts}}
-</div>
-<div>
-    Transportkosten: {{vatReport.totalTransportCosts}}
-</div>
-<div>
-    Kantoorkosten: {{vatReport.totalOfficeCosts}}
-</div>
-<div>
-    Eten kosten: {{vatReport.totalFoodCosts}}
-</div>
-<div>
-    Overige kosten: {{vatReport.totalOtherCosts}}
-</div>
-<div class="mt-4">
-    <button mat-raised-button color="accent" type="button" (click)="sendFiscalData()">
-        <mat-icon>upload_file</mat-icon> Fiscale gegevens uploaden
-    </button>
+<div class="card mb-4">
+    <div class="card-header">Btw Rapportage</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="fiscal-item">
+                    <label>Laatste transactiedatum</label>
+                    <span class="value text-color">{{vatReport.latestTransactionDate}}</span>
+                </div>
+                <div class="fiscal-item">
+                    <label>btw uit</label>
+                    <span class="value neon-text">{{vatReport.totalVatOut | currency:'EUR'}}</span>
+                </div>
+                <div class="fiscal-item">
+                    <label>btw in</label>
+                    <span class="value neon-text">{{vatReport.totalVatIn | currency:'EUR'}}</span>
+                </div>
+                <div class="fiscal-item">
+                    <label>btw correctie prive gebruik zakelijke auto</label>
+                    <span class="value neon-text">{{vatReport.vatCorrectionForPrivateUsage | currency:'EUR'}}</span>
+                </div>
+                <div class="fiscal-item">
+                    <label>btw saldo</label>
+                    <span class="value accent-text">{{vatReport.vatSaldo | currency:'EUR'}}</span>
+                </div>
+                <div class="fiscal-item">
+                    <label>Omzet</label>
+                    <span class="value accent-text">{{vatReport.totalNetIn | currency:'EUR'}}</span>
+                </div>
+                <div class="fiscal-item">
+                    <label>Verstuurde facturen</label>
+                    <span class="value accent-text">{{vatReport.sentInvoices | currency:'EUR'}}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="fiscal-item">
+                    <label>Autokosten</label>
+                    <span class="value text-color">{{vatReport.totalCarCosts | currency:'EUR'}}</span>
+                </div>
+                <div class="fiscal-item">
+                    <label>Transportkosten</label>
+                    <span class="value text-color">{{vatReport.totalTransportCosts | currency:'EUR'}}</span>
+                </div>
+                <div class="fiscal-item">
+                    <label>Kantoorkosten</label>
+                    <span class="value text-color">{{vatReport.totalOfficeCosts | currency:'EUR'}}</span>
+                </div>
+                <div class="fiscal-item">
+                    <label>Eten kosten</label>
+                    <span class="value text-color">{{vatReport.totalFoodCosts | currency:'EUR'}}</span>
+                </div>
+                <div class="fiscal-item">
+                    <label>Overige kosten</label>
+                    <span class="value text-color">{{vatReport.totalOtherCosts | currency:'EUR'}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button mat-raised-button color="accent" type="button" (click)="sendFiscalData()">
+                <mat-icon>upload_file</mat-icon> Fiscale gegevens uploaden
+            </button>
+        </div>
+    </div>
 </div>
