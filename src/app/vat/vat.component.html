@@ -24,7 +24,9 @@
   </div>
 
   <vat-report [vatReport]="vatReport()"></vat-report>
-  <button (click)="addManualTransaction()">Handmatige match toevoegen</button>
+  <button mat-raised-button color="primary" (click)="addManualTransaction()">
+      <mat-icon>add</mat-icon> Handmatige match toevoegen
+  </button>
 
   <table mat-table [dataSource]="dataSource()" matSort class="mat-elevation-z8">
     <ng-container matColumnDef="date">
@@ -37,7 +39,9 @@
         <input type="text" placeholder="beschrijving" [(ngModel)]="transaction.description"/>
         @if (!transaction.costMatch) {
           <div>
-            <button (click)="match()">Zoek match</button>
+            <button mat-stroked-button (click)="match()">
+                <mat-icon>search</mat-icon> Zoek match
+            </button>
           </div>
         }
       </td>
@@ -46,14 +50,19 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Match</th>
       <td mat-cell *matCellDef="let transaction">
         @if (transaction.costMatch) {
-          <div>{{transaction.costMatch.matchString}}
-            <button (click)="removeMatch(transaction)">X</button>
+          <div class="d-flex align-items-center">
+            <span class="me-2">{{transaction.costMatch.matchString}}</span>
+            <button mat-icon-button (click)="removeMatch(transaction)" class="action-btn delete-btn" title="Match verwijderen">
+              <mat-icon>close</mat-icon>
+            </button>
           </div>
         }
         @if (!transaction.costMatch) {
           <div>
             <input type="text" placeholder="matchstring" [(ngModel)]="transaction.matchString"/>
-            <button (click)="addMatch(transaction)" [disabled]="addMatchDisabled(transaction)">Match toevoegen</button>
+            <button mat-flat-button color="accent" (click)="addMatch(transaction)" [disabled]="addMatchDisabled(transaction)">
+                <mat-icon>save</mat-icon> Match toevoegen
+            </button>
           </div>
         }
       </td>

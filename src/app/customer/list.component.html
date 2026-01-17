@@ -1,5 +1,9 @@
-﻿<h1>Klanten</h1>
-<a routerLink="add" class="btn btn-sm btn-success mb-2">Klant toevoegen</a>
+﻿<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Klanten</h1>
+    <a mat-raised-button color="accent" routerLink="add">
+        <mat-icon>add</mat-icon> Klant toevoegen
+    </a>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -17,13 +21,14 @@
                 <td>{{customer.address}}</td>
                 <td>{{customer.contact}}</td>
                 <td style="white-space: nowrap">
-                    <a routerLink="edit/{{customer.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                    <button (click)="deleteCustomer(customer.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="customer.isDeleting">
+                    <a mat-icon-button routerLink="edit/{{customer.id}}" class="action-btn edit-btn" title="Wijzigen">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                    <button mat-icon-button (click)="deleteCustomer(customer.id)" class="action-btn delete-btn" [disabled]="customer.isDeleting" title="Verwijderen">
                         @if (customer.isDeleting) {
-                            <span class="spinner-border spinner-border-sm"></span>
-                        }
-                        @if (!customer.isDeleting) {
-                            <span>Delete</span>
+                            <mat-spinner diameter="20"></mat-spinner>
+                        } @else {
+                            <mat-icon>delete</mat-icon>
                         }
                     </button>
                 </td>

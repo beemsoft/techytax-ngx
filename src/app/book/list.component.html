@@ -1,5 +1,9 @@
-﻿<h1>Boekwaardes</h1>
-<a routerLink="add" class="btn btn-sm btn-success mb-2">Boekwaarde toevoegen</a>
+﻿<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Boekwaardes</h1>
+    <a mat-raised-button color="accent" routerLink="add">
+        <mat-icon>add</mat-icon> Boekwaarde toevoegen
+    </a>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -16,13 +20,14 @@
                 <td>{{bookValue.bookYear}}</td>
                 <td>{{bookValue.saldo}}</td>
                 <td style="white-space: nowrap">
-                    <a routerLink="edit/{{bookValue.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                    <button (click)="deleteBookValue(bookValue.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="bookValue.isDeleting">
+                    <a mat-icon-button routerLink="edit/{{bookValue.id}}" class="action-btn edit-btn" title="Wijzigen">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                    <button mat-icon-button (click)="deleteBookValue(bookValue.id)" class="action-btn delete-btn" [disabled]="bookValue.isDeleting" title="Verwijderen">
                         @if (bookValue.isDeleting) {
-                            <span class="spinner-border spinner-border-sm"></span>
-                        }
-                        @if (!bookValue.isDeleting) {
-                            <span>Delete</span>
+                            <mat-spinner diameter="20"></mat-spinner>
+                        } @else {
+                            <mat-icon>delete</mat-icon>
                         }
                     </button>
                 </td>

@@ -9,13 +9,17 @@ import { LabelPipe } from '../pipes/label.pipe';
 import { VatTypeSelector } from '../shared/selectors/vat-type.selector';
 import { CostCharacterSelector } from '../shared/selectors/cost-character.selector';
 import {MatSortModule} from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     imports: [
         FormsModule,
         CommonModule,
         MatTableModule,
-        MatSortModule
+        MatSortModule,
+        MatButtonModule,
+        MatIconModule
     ],
   declarations: [
     VatComponent,

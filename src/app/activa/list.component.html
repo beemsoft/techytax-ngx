@@ -1,5 +1,9 @@
-﻿<h1>Activa</h1>
-<a routerLink="add" class="btn btn-sm btn-success mb-2">Activum toevoegen</a>
+﻿<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Activa</h1>
+    <a mat-raised-button color="accent" routerLink="add">
+        <mat-icon>add</mat-icon> Activum toevoegen
+    </a>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -24,13 +28,14 @@
                 <td>{{activum.startDate}}</td>
                 <td>{{activum.endDate}}</td>
                 <td style="white-space: nowrap">
-                    <a routerLink="edit/{{activum.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                    <button (click)="deleteActivum(activum.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="activum.isDeleting">
+                    <a mat-icon-button routerLink="edit/{{activum.id}}" class="action-btn edit-btn" title="Wijzigen">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                    <button mat-icon-button (click)="deleteActivum(activum.id)" class="action-btn delete-btn" [disabled]="activum.isDeleting" title="Verwijderen">
                         @if (activum.isDeleting) {
-                            <span class="spinner-border spinner-border-sm"></span>
-                        }
-                        @if (!activum.isDeleting) {
-                            <span>Delete</span>
+                            <mat-spinner diameter="20"></mat-spinner>
+                        } @else {
+                            <mat-icon>delete</mat-icon>
                         }
                     </button>
                 </td>

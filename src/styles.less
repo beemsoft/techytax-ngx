@@ -320,3 +320,25 @@ h1, h2, h3, h4 {
     box-shadow: 0 0 8px #f85149;
   }
 }
+
+/* Modernized Action Buttons */
+.action-btn {
+  &.edit-btn {
+    color: var(--primary-color) !important;
+    &:hover {
+      color: var(--neon-blue) !important;
+      background-color: rgba(0, 242, 255, 0.1) !important;
+    }
+  }
+  &.delete-btn {
+    color: #f85149 !important;
+    &:hover {
+      color: #ff6b66 !important;
+      background-color: rgba(248, 81, 73, 0.1) !important;
+    }
+  }
+}
+
+.mat-mdc-table {
+  background-color: transparent !important;
+}

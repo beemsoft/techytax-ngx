@@ -1,0 +1,493 @@
+Application bundle generation failed. [1.792 seconds] - 2026-01-17T16:35:05.101Z
+X [ERROR] NG6002: 'CustomerModule' does not appear to be an NgModule class. [plugin angular-compiler]
+    src/app/app.module.ts:59:4:
+      59 │     CustomerModule,
+         ╵     ~~~~~~~~~~~~~~
+  Is it missing an @NgModule annotation?
+    src/app/customer/customer.module.ts:25:13:
+      25 │ export class CustomerModule { }
+         ╵              ~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'formGroup' since it isn't a known property of 'form'. [plugin angular-compiler]
+    src/app/customer/add-edit.component.html:3:6:
+      3 │ <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        ╵       ~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/customer/add-edit.component.ts:10:34:
+      10 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/customer/add-edit.component.html:7:75:
+      7 │ ...m-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors...
+        ╵               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/customer/add-edit.component.ts:10:34:
+      10 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/customer/add-edit.component.html:14:78:
+      14 │ ...-control" [ngClass]="{ 'is-invalid': submitted && f.address.err...
+         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/customer/add-edit.component.ts:10:34:
+      10 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/customer/add-edit.component.html:23:83:
+      23 │ ...-control" [ngClass]="{ 'is-invalid': submitted && f.emailInvoic...
+         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/customer/add-edit.component.ts:10:34:
+      10 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/customer/add-edit.component.html:30:78:
+      30 │ ...-control" [ngClass]="{ 'is-invalid': submitted && f.contact.err...
+         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/customer/add-edit.component.ts:10:34:
+      10 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG1010: Value at position 0 in the NgModule.declarations of CustomerModule is not a reference
+  Value could not be determined statically. [plugin angular-compiler]
+    src/app/customer/customer.module.ts:19:18:
+      19 │     declarations: [
+         ╵                   ^
+  Unknown reference.
+    src/app/customer/customer.module.ts:20:8:
+      20 │         LayoutComponent,
+         ╵         ~~~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'LayoutComponent'. [plugin angular-compiler]
+    src/app/customer/customer.module.ts:20:8:
+      20 │         LayoutComponent,
+         ╵         ~~~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'ListComponent'. [plugin angular-compiler]
+    src/app/customer/customer.module.ts:21:8:
+      21 │         ListComponent,
+         ╵         ~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'AddEditComponent'. [plugin angular-compiler]
+    src/app/customer/customer.module.ts:22:8:
+      22 │         AddEditComponent
+         ╵         ~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/customer/layout.component.html:3:8:
+      3 │         <router-outlet></router-outlet>
+        ╵         ~~~~~~~~~~~~~~~
+  Error occurs in the template of component LayoutComponent.
+    src/app/customer/layout.component.ts:4:63:
+      4 │ ...elector: 'customer-layout', templateUrl: 'layout.component.html' })
+        ╵                                             ~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/customer/list.component.html:4:8:
+      4 │         <mat-icon>add</mat-icon> Klant toevoegen
+        ╵         ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/customer/list.component.ts:6:34:
+      6 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'. [plugin angular-compiler]
+    src/app/customer/list.component.html:24:39:
+      24 │ ...at-icon-button routerLink="edit/{{customer.id}}" class="action-...
+         ╵                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/customer/list.component.ts:6:34:
+      6 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/customer/list.component.html:25:24:
+      25 │                         <mat-icon>edit</mat-icon>
+         ╵                         ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/customer/list.component.ts:6:34:
+      6 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-spinner' is not a known element:
+1. If 'mat-spinner' is an Angular component, then verify that it is part of this module.
+2. If 'mat-spinner' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/customer/list.component.html:29:28:
+      29 │                             <mat-spinner diameter="20"></mat-spinner>
+         ╵                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/customer/list.component.ts:6:34:
+      6 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/customer/list.component.html:31:28:
+      31 │                             <mat-icon>delete</mat-icon>
+         ╵                             ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/customer/list.component.ts:6:34:
+      6 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'formGroup' since it isn't a known property of 'form'. [plugin angular-compiler]
+    src/app/project/add-edit.component.html:3:6:
+      3 │ <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        ╵       ~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/project/add-edit.component.ts:12:34:
+      12 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/project/add-edit.component.html:17:75:
+      17 │ ...class="form-control" [ngClass]="{ 'is-invalid': f.code.errors }"/>
+         ╵                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/project/add-edit.component.ts:12:34:
+      12 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/project/add-edit.component.html:24:89:
+      24 │ ...-control" [ngClass]="{ 'is-invalid': f.projectDescription.error...
+         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/project/add-edit.component.ts:12:34:
+      12 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/project/add-edit.component.html:33:90:
+      33 │ ...-control" [ngClass]="{ 'is-invalid': f.activityDescription.erro...
+         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/project/add-edit.component.ts:12:34:
+      12 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/project/add-edit.component.html:40:75:
+      40 │ ...class="form-control" [ngClass]="{ 'is-invalid': f.rate.errors }"/>
+         ╵                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/project/add-edit.component.ts:12:34:
+      12 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/project/add-edit.component.html:47:82:
+      47 │ ...form-control" [ngClass]="{ 'is-invalid': f.revenuePerc.errors }"/>
+         ╵                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/project/add-edit.component.ts:12:34:
+      12 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/project/add-edit.component.html:54:86:
+      54 │ ...-control" [ngClass]="{ 'is-invalid': f.paymentTermDays.errors }"/>
+         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/project/add-edit.component.ts:12:34:
+      12 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/project/add-edit.component.html:63:80:
+      63 │ ...="form-control" [ngClass]="{ 'is-invalid': f.startDate.errors }"/>
+         ╵                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/project/add-edit.component.ts:12:34:
+      12 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/project/add-edit.component.html:71:19:
+      71 │                    [ngClass]="{ 'is-invalid': f.endDate.errors }"/>
+         ╵                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/project/add-edit.component.ts:12:34:
+      12 │   standalone: false, templateUrl: 'add-edit.component.html' })
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/project/layout.component.html:3:8:
+      3 │         <router-outlet></router-outlet>
+        ╵         ~~~~~~~~~~~~~~~
+  Error occurs in the template of component LayoutComponent.
+    src/app/project/layout.component.ts:4:62:
+      4 │ ...selector: 'project-layout', templateUrl: 'layout.component.html' })
+        ╵                                             ~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/project/list.component.html:4:8:
+      4 │         <mat-icon>add</mat-icon> Project toevoegen
+        ╵         ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/project/list.component.ts:6:34:
+      6 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'. [plugin angular-compiler]
+    src/app/project/list.component.html:27:39:
+      27 │ ...mat-icon-button routerLink="edit/{{project.id}}" class="action-...
+         ╵                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/project/list.component.ts:6:34:
+      6 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/project/list.component.html:28:24:
+      28 │                         <mat-icon>edit</mat-icon>
+         ╵                         ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/project/list.component.ts:6:34:
+      6 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-spinner' is not a known element:
+1. If 'mat-spinner' is an Angular component, then verify that it is part of this module.
+2. If 'mat-spinner' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/project/list.component.html:32:28:
+      32 │                             <mat-spinner diameter="20"></mat-spinner>
+         ╵                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/project/list.component.ts:6:34:
+      6 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/project/list.component.html:34:28:
+      34 │                             <mat-icon>delete</mat-icon>
+         ╵                             ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/project/list.component.ts:6:34:
+      6 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG1010: Value at position 0 in the NgModule.declarations of ProjectModule is not a reference
+  Value could not be determined statically. [plugin angular-compiler]
+    src/app/project/project.module.ts:19:18:
+      19 │     declarations: [
+         ╵                   ^
+  Unknown reference.
+    src/app/project/project.module.ts:20:8:
+      20 │         LayoutComponent,
+         ╵         ~~~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'LayoutComponent'. [plugin angular-compiler]
+    src/app/project/project.module.ts:20:8:
+      20 │         LayoutComponent,
+         ╵         ~~~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'ListComponent'. [plugin angular-compiler]
+    src/app/project/project.module.ts:21:8:
+      21 │         ListComponent,
+         ╵         ~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'AddEditComponent'. [plugin angular-compiler]
+    src/app/project/project.module.ts:22:8:
+      22 │         AddEditComponent
+         ╵         ~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'formGroup' since it isn't a known property of 'form'. [plugin angular-compiler]
+    src/app/users/add-edit.component.html:3:6:
+      3 │ <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        ╵       ~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/users/add-edit.component.ts:9:34:
+      9 │   standalone: false, templateUrl: 'add-edit.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/users/add-edit.component.html:7:80:
+      7 │ ...m-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.e...
+        ╵               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/users/add-edit.component.ts:9:34:
+      9 │   standalone: false, templateUrl: 'add-edit.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/users/add-edit.component.html:14:79:
+      14 │ ...-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.er...
+         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/users/add-edit.component.ts:9:34:
+      9 │   standalone: false, templateUrl: 'add-edit.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/users/add-edit.component.html:23:79:
+      23 │ ...-control" [ngClass]="{ 'is-invalid': submitted && f.username.er...
+         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/users/add-edit.component.ts:9:34:
+      9 │   standalone: false, templateUrl: 'add-edit.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/users/add-edit.component.html:33:83:
+      33 │ ...-control" [ngClass]="{ 'is-invalid': submitted && f.password.er...
+         ╵              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/users/add-edit.component.ts:9:34:
+      9 │   standalone: false, templateUrl: 'add-edit.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/users/layout.component.html:3:8:
+      3 │         <router-outlet></router-outlet>
+        ╵         ~~~~~~~~~~~~~~~
+  Error occurs in the template of component LayoutComponent.
+    src/app/users/layout.component.ts:4:60:
+      4 │ ..., selector: 'users-layout', templateUrl: 'layout.component.html' })
+        ╵                                             ~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/users/list.component.html:4:8:
+      4 │         <mat-icon>add</mat-icon> Add User
+        ╵         ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/users/list.component.ts:7:34:
+      7 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'. [plugin angular-compiler]
+    src/app/users/list.component.html:23:39:
+      23 │ ... mat-icon-button routerLink="edit/{{user.id}}" class="action-bt...
+         ╵                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/users/list.component.ts:7:34:
+      7 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/users/list.component.html:24:24:
+      24 │                         <mat-icon>edit</mat-icon>
+         ╵                         ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/users/list.component.ts:7:34:
+      7 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-spinner' is not a known element:
+1. If 'mat-spinner' is an Angular component, then verify that it is part of this module.
+2. If 'mat-spinner' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/users/list.component.html:28:28:
+      28 │                             <mat-spinner diameter="20"></mat-spinner>
+         ╵                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/users/list.component.ts:7:34:
+      7 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/users/list.component.html:30:28:
+      30 │                             <mat-icon>delete</mat-icon>
+         ╵                             ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/users/list.component.ts:7:34:
+      7 │   standalone: false, templateUrl: 'list.component.html' })
+        ╵                                   ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG1010: Value at position 0 in the NgModule.declarations of UsersModule is not a reference
+  Value could not be determined statically. [plugin angular-compiler]
+    src/app/users/users.module.ts:19:18:
+      19 │     declarations: [
+         ╵                   ^
+  Unknown reference.
+    src/app/users/users.module.ts:20:8:
+      20 │         LayoutComponent,
+         ╵         ~~~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'LayoutComponent'. [plugin angular-compiler]
+    src/app/users/users.module.ts:20:8:
+      20 │         LayoutComponent,
+         ╵         ~~~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'ListComponent'. [plugin angular-compiler]
+    src/app/users/users.module.ts:21:8:
+      21 │         ListComponent,
+         ╵         ~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'AddEditComponent'. [plugin angular-compiler]
+    src/app/users/users.module.ts:22:8:
+      22 │         AddEditComponent
+         ╵         ~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'formGroup' since it isn't a known property of 'form'. [plugin angular-compiler]
+    src/app/vat-match/add-edit.component.html:3:6:
+      3 │ <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        ╵       ~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/vat-match/add-edit.component.ts:12:33:
+      12 │   standalone: false,templateUrl: 'add-edit.component.html'})
+         ╵                                  ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'ngClass' since it isn't a known property of 'input'. [plugin angular-compiler]
+    src/app/vat-match/add-edit.component.html:7:82:
+      7 │ ...ing" class="form-control" [ngClass]="{ 'is-invalid': submitted }"/>
+        ╵                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component AddEditComponent.
+    src/app/vat-match/add-edit.component.ts:12:33:
+      12 │   standalone: false,templateUrl: 'add-edit.component.html'})
+         ╵                                  ~~~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/vat-match/layout.component.html:3:8:
+      3 │         <router-outlet></router-outlet>
+        ╵         ~~~~~~~~~~~~~~~
+  Error occurs in the template of component LayoutComponent.
+    src/app/vat-match/layout.component.ts:4:64:
+      4 │ ...lector: 'vat-match-layout', templateUrl: 'layout.component.html' })
+        ╵                                             ~~~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/vat-match/list.component.html:4:8:
+      4 │         <mat-icon>add</mat-icon> Match toevoegen
+        ╵         ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/vat-match/list.component.ts:7:33:
+      7 │   standalone: false,templateUrl: 'list.component.html'})
+        ╵                                  ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'. [plugin angular-compiler]
+    src/app/vat-match/list.component.html:29:39:
+      29 │ ...at-icon-button routerLink="edit/{{costMatch.id}}" class="action...
+         ╵                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/vat-match/list.component.ts:7:33:
+      7 │   standalone: false,templateUrl: 'list.component.html'})
+        ╵                                  ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/vat-match/list.component.html:30:24:
+      30 │                         <mat-icon>edit</mat-icon>
+         ╵                         ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/vat-match/list.component.ts:7:33:
+      7 │   standalone: false,templateUrl: 'list.component.html'})
+        ╵                                  ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-spinner' is not a known element:
+1. If 'mat-spinner' is an Angular component, then verify that it is part of this module.
+2. If 'mat-spinner' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/vat-match/list.component.html:34:28:
+      34 │                             <mat-spinner diameter="20"></mat-spinner>
+         ╵                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/vat-match/list.component.ts:7:33:
+      7 │   standalone: false,templateUrl: 'list.component.html'})
+        ╵                                  ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG8001: 'mat-icon' is not a known element:
+1. If 'mat-icon' is an Angular component, then verify that it is part of this module.
+2. If 'mat-icon' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message. [plugin angular-compiler]
+    src/app/vat-match/list.component.html:36:28:
+      36 │                             <mat-icon>delete</mat-icon>
+         ╵                             ~~~~~~~~~~
+  Error occurs in the template of component ListComponent.
+    src/app/vat-match/list.component.ts:7:33:
+      7 │   standalone: false,templateUrl: 'list.component.html'})
+        ╵                                  ~~~~~~~~~~~~~~~~~~~~~
+X [ERROR] NG1010: Value at position 0 in the NgModule.declarations of VatMatchModule is not a reference
+  Value could not be determined statically. [plugin angular-compiler]
+    src/app/vat-match/vat-match.module.ts:20:18:
+      20 │     declarations: [
+         ╵                   ^
+  Unknown reference.
+    src/app/vat-match/vat-match.module.ts:21:8:
+      21 │         LayoutComponent,
+         ╵         ~~~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'LayoutComponent'. [plugin angular-compiler]
+    src/app/vat-match/vat-match.module.ts:21:8:
+      21 │         LayoutComponent,
+         ╵         ~~~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'ListComponent'. [plugin angular-compiler]
+    src/app/vat-match/vat-match.module.ts:22:8:
+      22 │         ListComponent,
+         ╵         ~~~~~~~~~~~~~
+X [ERROR] TS2304: Cannot find name 'AddEditComponent'. [plugin angular-compiler]
+    src/app/vat-match/vat-match.module.ts:23:8:
+      23 │         AddEditComponent
+         ╵         ~~~~~~~~~~~~~~~~

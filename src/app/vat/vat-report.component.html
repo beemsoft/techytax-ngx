@@ -34,4 +34,8 @@
 <div>
     Overige kosten: {{vatReport.totalOtherCosts}}
 </div>
-<button type="button" (click)="sendFiscalData()">Fiscale gegevens uploaden</button>
+<div class="mt-4">
+    <button mat-raised-button color="accent" type="button" (click)="sendFiscalData()">
+        <mat-icon>upload_file</mat-icon> Fiscale gegevens uploaden
+    </button>
+</div>

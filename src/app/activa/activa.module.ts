@@ -6,13 +6,19 @@ import { ActivaRoutingModule } from './activa-routing.module';
 import { LayoutComponent } from './layout.component';
 import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        ActivaRoutingModule
+        ActivaRoutingModule,
+        MatButtonModule,
+        MatIconModule,
+        MatProgressSpinnerModule
     ],
     declarations: [
         LayoutComponent,
