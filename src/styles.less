@@ -154,16 +154,16 @@ a {
 }
 
 .sidenav {
-  width: 260px;
+  width: 280px;
   background-color: var(--surface-color) !important;
   border-right: 1px solid var(--border-color) !important;
   display: flex;
   flex-direction: column;
 
   .nav-brand {
-    padding: 24px 16px;
+    padding: 24px 20px;
     font-weight: 900;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: var(--neon-blue);
     text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
     letter-spacing: 2px;
@@ -172,35 +172,36 @@ a {
 
   mat-nav-list {
     flex: 1;
-    padding-top: 8px;
+    padding-top: 12px;
 
     .mat-mdc-list-item {
       color: var(--text-color) !important;
-      margin: 4px 8px;
-      border-radius: 4px;
-      height: 40px !important;
+      margin: 8px 12px;
+      border-radius: 6px;
+      height: 48px !important;
 
       mat-icon {
-        margin-right: 12px;
+        margin-right: 16px;
         color: var(--text-muted);
-        font-size: 20px;
-        width: 20px;
-        height: 20px;
+        font-size: 22px;
+        width: 22px;
+        height: 22px;
       }
 
       span {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        font-weight: 500;
       }
 
       &:hover {
-        background-color: rgba(255, 255, 255, 0.05) !important;
+        background-color: rgba(255, 255, 255, 0.08) !important;
         mat-icon {
           color: var(--neon-blue);
         }
       }
 
       &.active {
-        background-color: rgba(88, 166, 255, 0.1) !important;
+        background-color: rgba(88, 166, 255, 0.15) !important;
         color: var(--neon-blue) !important;
         mat-icon {
           color: var(--neon-blue);
@@ -209,17 +210,17 @@ a {
     }
 
     .nav-section-title {
-      padding: 16px 16px 8px 16px;
-      font-size: 0.75rem;
+      padding: 20px 20px 8px 20px;
+      font-size: 0.8rem;
       font-weight: bold;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
     }
   }
 
   .sidenav-footer {
-    padding: 16px;
+    padding: 20px;
     border-top: 1px solid var(--border-color);
     background-color: rgba(0, 0, 0, 0.2);
 
