@@ -154,7 +154,7 @@ a {
 }
 
 .sidenav {
-  width: 560px;
+  width: 320px;
   background-color: var(--surface-color) !important;
   border-right: 1px solid var(--border-color) !important;
   display: flex;
@@ -176,21 +176,30 @@ a {
 
     .mat-mdc-list-item {
       color: var(--text-color) !important;
-      margin: 8px 12px;
+      margin: 4px 12px;
       border-radius: 6px;
       height: 48px !important;
 
+      .mdc-list-item__content {
+        display: flex !important;
+        align-items: center !important;
+      }
+
       mat-icon {
-        margin-right: 16px;
+        margin-right: 16px !important;
         color: var(--text-muted);
         font-size: 22px;
         width: 22px;
         height: 22px;
+        flex-shrink: 0;
       }
 
       span {
-        font-size: 0.95rem;
+        font-size: 1rem;
         font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       &:hover {
