@@ -18,5 +18,5 @@ table {
 }
 
 th.mat-sort-header-sorted {
-  color: black;
+  color: var(--neon-blue);
 }
