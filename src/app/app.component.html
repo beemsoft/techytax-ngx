@@ -1,24 +1,78 @@
-<!-- nav -->
-<mat-toolbar color="primary" *ngIf="user$() as user">
-    <div class="navbar-nav">
-        <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-        <a mat-button (click)="logout()">Uitloggen</a>
-        <a mat-button routerLink="/register" routerLinkActive="active">Mijn gegevens</a>
-        <a mat-button routerLink="/customer" routerLinkActive="active">Klanten</a>
-        <a mat-button routerLink="/project" routerLinkActive="active">Projecten</a>
-        <a mat-button routerLink="/activity" routerLinkActive="active">Uren</a>
-        <a mat-button routerLink="/invoice" routerLinkActive="active">Factuur sturen</a>
-        <a mat-button routerLink="/vat" routerLinkActive="active">btw aangifte</a>
-        <a mat-button routerLink="/vat-match" routerLinkActive="active">btw match</a>
-        <a mat-button routerLink="/book" routerLinkActive="active">Boekwaardes</a>
-        <a mat-button routerLink="/activa" routerLinkActive="active">Activa</a>
-        <a mat-button routerLink="/cost" routerLinkActive="active">Kosten</a>
-        <a mat-button routerLink="/fiscal-overview" routerLinkActive="active">Fiscaal overzicht</a>
-    </div>
-</mat-toolbar>
+<!-- main layout -->
+<mat-sidenav-container class="sidenav-container" *ngIf="user$() as user; else loggedOut">
+    <mat-sidenav mode="side" opened class="sidenav">
+        <div class="nav-brand">TECHYTAX</div>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <mat-icon>home</mat-icon> <span>Home</span>
+            </a>
+            <a mat-list-item routerLink="/register" routerLinkActive="active">
+                <mat-icon>person</mat-icon> <span>Mijn gegevens</span>
+            </a>
 
-<!-- main app container -->
-<div class="app-container" [ngClass]="{ 'bg-light': user$() }">
-    <alert></alert>
-    <router-outlet></router-outlet>
-</div>
+            <div class="nav-section-title">Beheer</div>
+            <a mat-list-item routerLink="/customer" routerLinkActive="active">
+                <mat-icon>business</mat-icon> <span>Klanten</span>
+            </a>
+            <a mat-list-item routerLink="/project" routerLinkActive="active">
+                <mat-icon>assignment</mat-icon> <span>Projecten</span>
+            </a>
+            <a mat-list-item routerLink="/activity" routerLinkActive="active">
+                <mat-icon>access_time</mat-icon> <span>Uren</span>
+            </a>
+            <a mat-list-item routerLink="/invoice" routerLinkActive="active">
+                <mat-icon>description</mat-icon> <span>Factuur sturen</span>
+            </a>
+
+            <div class="nav-section-title">Fiscaal</div>
+            <a mat-list-item routerLink="/vat" routerLinkActive="active">
+                <mat-icon>calculate</mat-icon> <span>btw aangifte</span>
+            </a>
+            <a mat-list-item routerLink="/vat-match" routerLinkActive="active">
+                <mat-icon>compare_arrows</mat-icon> <span>btw match</span>
+            </a>
+            <a mat-list-item routerLink="/book" routerLinkActive="active">
+                <mat-icon>book</mat-icon> <span>Boekwaardes</span>
+            </a>
+            <a mat-list-item routerLink="/activa" routerLinkActive="active">
+                <mat-icon>inventory_2</mat-icon> <span>Activa</span>
+            </a>
+            <a mat-list-item routerLink="/cost" routerLinkActive="active">
+                <mat-icon>receipt_long</mat-icon> <span>Kosten</span>
+            </a>
+            <a mat-list-item routerLink="/fiscal-overview" routerLinkActive="active">
+                <mat-icon>summarize</mat-icon> <span>Fiscaal overzicht</span>
+            </a>
+        </mat-nav-list>
+
+        <div class="sidenav-footer">
+            <div class="user-info">
+                <mat-icon>account_circle</mat-icon>
+                <span>{{user.username}}</span>
+            </div>
+            <a mat-button (click)="logout()" class="logout-btn">Uitloggen</a>
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="sidenav-content">
+        <!-- main app container -->
+        <div class="app-container" [ngClass]="{ 'bg-light': user$() }">
+            <alert></alert>
+            <router-outlet></router-outlet>
+        </div>
+
+        <!-- footer -->
+        <footer class="footer">
+            <div class="container text-center">
+                <em>TechyTax, a simple bookkeeping program, more info <a href="http://www.beemsoft.nl">here</a>.</em>
+            </div>
+        </footer>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #loggedOut>
+    <div class="app-container">
+        <alert></alert>
+        <router-outlet></router-outlet>
+    </div>
+</ng-template>
