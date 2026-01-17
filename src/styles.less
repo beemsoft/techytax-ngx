@@ -12,14 +12,17 @@
   --neon-blue: #00f2ff;
   --neon-green: #39ff14;
   --grid-color: rgba(0, 242, 255, 0.05);
+  --grid-accent: rgba(0, 242, 255, 0.1);
 }
 
 body {
   background-color: var(--bg-color);
   background-image:
+    linear-gradient(var(--grid-accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-accent) 1px, transparent 1px),
     linear-gradient(var(--grid-color) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-size: 200px 200px, 200px 200px, 40px 40px, 40px 40px;
   color: var(--text-color);
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   margin: 0;
