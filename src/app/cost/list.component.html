@@ -11,23 +11,31 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let cost of costs">
-            <td>{{cost.date}}</td>
-            <td>{{cost.amount}}</td>
-            <td>{{cost.vat}}</td>
-            <td>{{cost.description}}</td>
-            <td style="white-space: nowrap">
-                <a routerLink="edit/{{cost.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                <button (click)="deleteCost(cost.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="cost.isDeleting">
-                    <span *ngIf="cost.isDeleting" class="spinner-border spinner-border-sm"></span>
-                    <span *ngIf="!cost.isDeleting">Delete</span>
-                </button>
-            </td>
-        </tr>
-        <tr *ngIf="!costs">
-            <td colspan="4" class="text-center">
-                <span class="spinner-border spinner-border-lg align-center"></span>
-            </td>
-        </tr>
+        @for (cost of costs(); track cost.id) {
+            <tr>
+                <td>{{cost.date}}</td>
+                <td>{{cost.amount}}</td>
+                <td>{{cost.vat}}</td>
+                <td>{{cost.description}}</td>
+                <td style="white-space: nowrap">
+                    <a routerLink="edit/{{cost.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                    <button (click)="deleteCost(cost.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="cost.isDeleting">
+                        @if (cost.isDeleting) {
+                            <span class="spinner-border spinner-border-sm"></span>
+                        }
+                        @if (!cost.isDeleting) {
+                            <span>Delete</span>
+                        }
+                    </button>
+                </td>
+            </tr>
+        }
+        @if (!costs()) {
+            <tr>
+                <td colspan="4" class="text-center">
+                    <span class="spinner-border spinner-border-lg align-center"></span>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

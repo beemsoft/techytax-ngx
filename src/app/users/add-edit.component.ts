@@ -42,8 +42,13 @@ export class AddEditComponent implements OnInit {
         if (!this.isAddMode) {
             this.accountService.getById(this.id)
                 .pipe(first())
-                .subscribe(x => {
-                    this.f.username.setValue(x.username);
+                .subscribe({
+                    next: x => {
+                        this.f.username.setValue(x.username);
+                    },
+                    error: error => {
+                        this.alertService.error(error);
+                    }
                 });
         }
     }
@@ -73,28 +78,30 @@ export class AddEditComponent implements OnInit {
     private createUser() {
         this.accountService.register(this.form.value)
             .pipe(first())
-            .subscribe(
-                data => {
+            .subscribe({
+                next: data => {
                     this.alertService.success('User added successfully', { keepAfterRouteChange: true });
                     this.router.navigate(['.', { relativeTo: this.route }]);
                 },
-                error => {
+                error: error => {
                     this.alertService.error(error);
                     this.loading = false;
-                });
+                }
+            });
     }
 
     private updateUser() {
         this.accountService.update(this.id, this.form.value)
             .pipe(first())
-            .subscribe(
-                data => {
+            .subscribe({
+                next: data => {
                     this.alertService.success('Update successful', { keepAfterRouteChange: true });
                     this.router.navigate(['..', { relativeTo: this.route }]);
                 },
-                error => {
+                error: error => {
                     this.alertService.error(error);
                     this.loading = false;
-                });
+                }
+            });
     }
 }

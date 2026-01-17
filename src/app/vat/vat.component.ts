@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import {
   CostCharacter,
   CostType,
@@ -17,13 +17,13 @@ import moment from 'moment';
 export class VatComponent implements OnInit {
   uploadedFile: File;
   importedText: string;
-  public vatReport: VatReport = new VatReport();
+  public vatReport = signal<VatReport>(new VatReport());
   private costMatches;
-  transactionsLoaded = 0;
+  transactionsLoaded = signal(0);
   private transactions: Array<Transaction> = [];
-  transactionsUnmatched: Array<Transaction> = [];
+  transactionsUnmatched = signal<Array<Transaction>>([]);
   public columnsToDisplay: string[] = ['date', 'description', 'matchString', 'costType', 'costCharacter', 'matchPercentage', 'matchFixedAmount', 'vatType', 'amount', 'amountNet', 'vatOut'];
-  dataSource;
+  dataSource = signal<any>(null);
   costTypeList = [];
   costCharacterList = [];
   vatTypeList = [];
@@ -39,14 +39,16 @@ export class VatComponent implements OnInit {
 
   ngOnInit() {
     this.costMatchService.getMatches()
-      .subscribe(
-        costMatchData => this.costMatches = costMatchData,
-        error => {
+      .subscribe({
+        next: costMatchData => {
+          this.costMatches = costMatchData;
+        },
+        error: error => {
           alert(error);
           console.log(error);
         },
-        () => console.log('Costmatches retrieved')
-      );
+        complete: () => console.log('Costmatches retrieved')
+      });
     for (const costType in CostType) {
       if (parseInt(costType, 10) >= 0) {
         this.costTypeList.push({key: costType, value: this.labelService.get(CostType[costType])});
@@ -69,13 +71,14 @@ export class VatComponent implements OnInit {
   }
 
   private checkTransactions(): void {
-    this.transactionsUnmatched = [];
+    const unmatched: Array<Transaction> = [];
+    const report = this.vatReport();
     let latestTransactionDate: moment.Moment = this.transactions[0].date;
     let firstTransactionDate: moment.Moment = this.transactions[0].date;
     for (const item of this.transactions) {
       if (item.costCharacter === CostCharacter.UNKNOWN) {
         console.log('Unmatched transaction: ' + item.description);
-        this.transactionsUnmatched.push(item);
+        unmatched.push(item);
       }
       if (item.date.isAfter(latestTransactionDate)) {
         latestTransactionDate = item.date;
@@ -83,15 +86,17 @@ export class VatComponent implements OnInit {
       if (item.date.isBefore(firstTransactionDate)) {
         firstTransactionDate = item.date;
       }
-      if (!this.vatReport.accountNumbers.includes(item.accountNumber)) {
-        this.vatReport.accountNumbers.push(item.accountNumber);
+      if (!report.accountNumbers.includes(item.accountNumber)) {
+        report.accountNumbers.push(item.accountNumber);
       }
       item.costTypeDescription = CostType[item.costType['id']];
     }
-    this.vatReport.firstTransactionDate = firstTransactionDate.format('YYYY-MM-DD');
-    this.vatReport.latestTransactionDate = latestTransactionDate.format('YYYY-MM-DD');
+    this.transactionsUnmatched.set(unmatched);
+    report.firstTransactionDate = firstTransactionDate.format('YYYY-MM-DD');
+    report.latestTransactionDate = latestTransactionDate.format('YYYY-MM-DD');
+    this.vatReport.set({...report});
 
-    for (const item of this.transactionsUnmatched) {
+    for (const item of unmatched) {
       if (item.description.toLowerCase().indexOf('bol.com') > -1) {
         const index = item.description.search(/[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9]/);
         const bolProductKey = item.description.substring(index, index + 14);
@@ -110,8 +115,8 @@ export class VatComponent implements OnInit {
       this.importedText = contents.result;
       this.transactions = this.transactions.concat(this.importListService.convert(this.importedText));
       this.transactions = this.costMatchService.match(this.transactions, this.costMatches);
-      this.transactionsLoaded = this.transactions.length;
-      if (this.transactionsLoaded) {
+      this.transactionsLoaded.set(this.transactions.length);
+      if (this.transactionsLoaded()) {
         this.updateTotalVat();
       }
     };
@@ -149,7 +154,7 @@ export class VatComponent implements OnInit {
     const transaction = new Transaction();
     transaction.date = moment();
     this.transactions.push(transaction);
-    this.dataSource = new MatTableDataSource(this.transactions);
+    this.dataSource.set(new MatTableDataSource(this.transactions));
   }
 
   public removeMatch(transaction: Transaction): void {
@@ -166,10 +171,16 @@ export class VatComponent implements OnInit {
 
   private updateTotalVat(): void {
     this.vatCalculationService.calculateTotalVat(this.transactions)
-      .subscribe(vatReport => {
-        this.vatReport = vatReport;
-        this.checkTransactions();
-        this.dataSource = new MatTableDataSource(this.transactions);
+      .subscribe({
+        next: vatReport => {
+          this.vatReport.set(vatReport);
+          this.checkTransactions();
+          this.dataSource.set(new MatTableDataSource(this.transactions));
+        },
+        error: error => {
+          alert(error);
+          console.error(error);
+        }
       });
   }
 }

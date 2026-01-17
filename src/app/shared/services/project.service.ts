@@ -27,8 +27,7 @@ export class ProjectService {
   constructor(private http: HttpClient) {}
 
   addProject(project: Project) {
-    const body = JSON.stringify(project);
-    return this.http.post(this.baseURL + '/auth/project', body )
+    return this.http.post(this.baseURL + '/auth/project', project)
       .pipe(catchError(this.handleError));
   }
 
@@ -53,9 +52,8 @@ export class ProjectService {
   }
 
   updateProject(project: Project) {
-    const body = JSON.stringify(project);
     const url = this.baseURL + '/auth/project';
-    return this.http.put(url, body)
+    return this.http.put(url, project)
       .pipe(catchError(this.handleError));
   }
 

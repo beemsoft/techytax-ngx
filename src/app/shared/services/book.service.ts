@@ -36,14 +36,12 @@ export class BookService {
   }
 
   addBookValue(bookValue: BookValue) {
-    const body = JSON.stringify(bookValue);
-    return this.http.post(this.baseURL + '/auth/book', body);
+    return this.http.post(this.baseURL + '/auth/book', bookValue);
   }
 
   updateBookValue(bookValue: BookValue) {
-    const body = JSON.stringify(bookValue);
     const url = this.baseURL + '/auth/book';
-    return this.http.put(url, body)
+    return this.http.put(url, bookValue)
       .pipe(catchError(this.handleError));
   }
 

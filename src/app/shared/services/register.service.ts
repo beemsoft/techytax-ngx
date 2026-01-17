@@ -49,13 +49,13 @@ export class RegisterService {
   constructor(private http: HttpClient) {}
 
   getRegistration(): Observable<Registration> {
-    return this.http.get<Registration>(this.baseURL + '/auth/register');
+    return this.http.get<Registration>(this.baseURL + '/auth/register')
+      .pipe(catchError(this.handleError));
   }
 
   updateRegistration(registration: Registration) {
-    const body = JSON.stringify(registration);
     const url = this.baseURL + '/auth/register';
-    return this.http.put(url, body)
+    return this.http.put(url, registration)
       .pipe(catchError(this.handleError));
   }
 

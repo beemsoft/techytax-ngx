@@ -1,14 +1,14 @@
 import { AccountService } from './_services';
 import { User } from './_models';
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   standalone: false, selector: 'app', templateUrl: 'app.component.html' })
 export class AppComponent {
-  user: User;
+  user$ = computed(() => this.accountService.currentUser());
 
   constructor(private accountService: AccountService) {
-    this.accountService.user.subscribe(x => this.user = x);
   }
 
   logout() {

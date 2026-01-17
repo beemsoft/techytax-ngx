@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {LabelService} from '../shared/services/label.service';
+import { Component, OnInit, signal } from '@angular/core';
+import { LabelService } from '../shared/services/label.service';
 import { FiscalOverview, FiscalOverviewService } from '../shared/services/fiscal-overview.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { FiscalOverview, FiscalOverviewService } from '../shared/services/fiscal
   templateUrl: 'fiscal-overview.component.html'
 })
 export class FiscalOverviewComponent implements OnInit {
-  fiscalOverview: FiscalOverview;
+  fiscalOverview = signal<FiscalOverview>(null);
 
   constructor(
     private labelService: LabelService,
@@ -17,16 +17,15 @@ export class FiscalOverviewComponent implements OnInit {
 
   ngOnInit() {
     this.fiscalOverViewService.getFiscalOverview()
-      .subscribe(
-        (fiscalOverview) => {
-          this.fiscalOverview = fiscalOverview;
+      .subscribe({
+        next: (fiscalOverview) => {
+          this.fiscalOverview.set(fiscalOverview);
         },
-        error => {
+        error: error => {
           alert(error);
           console.log(error);
         },
-        () => console.log('Fiscal overview retrieved')
-      )
+        complete: () => console.log('Fiscal overview retrieved')
+      });
   }
-
 }

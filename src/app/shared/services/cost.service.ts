@@ -39,15 +39,13 @@ export class CostService {
   }
 
   addCost(cost: Cost) {
-    const body = JSON.stringify(cost);
-    return this.http.post(this.baseURL + '/auth/cost', body )
+    return this.http.post(this.baseURL + '/auth/cost', cost )
       .pipe(catchError(this.handleError));
   }
 
   updateCost(cost: Cost) {
-    const body = JSON.stringify(cost);
     const url = this.baseURL + '/auth/cost';
-    return this.http.put(url, body)
+    return this.http.put(url, cost)
       .pipe(catchError(this.handleError));
   }
 

@@ -12,24 +12,32 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let activity of activities">
-            <td>{{activity.activityDate | date : 'dd-MM-yyyy' }}</td>
-            <td>{{activity.hours}}</td>
-            <td>{{activity.revenue}}</td>
-            <td>{{activity.activityDescription}}</td>
-            <td>{{activity.project.code}}</td>
-            <td style="white-space: nowrap">
-                <a routerLink="edit/{{activity.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                <button (click)="deleteActivity(activity.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="activity.isDeleting">
-                    <span *ngIf="activity.isDeleting" class="spinner-border spinner-border-sm"></span>
-                    <span *ngIf="!activity.isDeleting">Delete</span>
-                </button>
-            </td>
-        </tr>
-        <tr *ngIf="!activities">
-            <td colspan="4" class="text-center">
-                <span class="spinner-border spinner-border-lg align-center"></span>
-            </td>
-        </tr>
+        @for (activity of activities(); track activity.id) {
+            <tr>
+                <td>{{activity.activityDate | date : 'dd-MM-yyyy' }}</td>
+                <td>{{activity.hours}}</td>
+                <td>{{activity.revenue}}</td>
+                <td>{{activity.activityDescription}}</td>
+                <td>{{activity.project.code}}</td>
+                <td style="white-space: nowrap">
+                    <a routerLink="edit/{{activity.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                    <button (click)="deleteActivity(activity.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="activity.isDeleting">
+                        @if (activity.isDeleting) {
+                            <span class="spinner-border spinner-border-sm"></span>
+                        }
+                        @if (!activity.isDeleting) {
+                            <span>Delete</span>
+                        }
+                    </button>
+                </td>
+            </tr>
+        }
+        @if (!activities()) {
+            <tr>
+                <td colspan="4" class="text-center">
+                    <span class="spinner-border spinner-border-lg align-center"></span>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

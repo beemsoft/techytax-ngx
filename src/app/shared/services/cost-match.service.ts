@@ -25,8 +25,8 @@ export class CostMatchService {
   }
 
   addMatch(costMatch: CostMatch) {
-    let body = JSON.stringify(costMatch);
-    return this.http.post(this.baseURL + '/auth/match', body)
+    return this.http.post(this.baseURL + '/auth/match', costMatch)
+      .pipe(catchError(this.handleError));
   }
 
   getMatches(): Observable<CostMatch> {
@@ -51,9 +51,8 @@ export class CostMatchService {
   }
 
   updateMatch(costMatch: CostMatch) {
-    let body = JSON.stringify(costMatch);
     let url = this.baseURL+'/auth/match';
-    return this.http.put(url, body)
+    return this.http.put(url, costMatch)
       .pipe(catchError(this.handleError));
   }
 

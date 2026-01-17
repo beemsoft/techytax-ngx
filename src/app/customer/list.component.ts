@@ -1,27 +1,31 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, signal } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { CustomerService } from '@app/shared/services/customer.service';
 
 @Component({
   standalone: false, templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
-    customers = null;
+    customers = signal<any[] | null>(null);
 
-    constructor(private customerService: CustomerService) {}
+    constructor(
+        private customerService: CustomerService
+    ) {}
 
     ngOnInit() {
         this.customerService.getCustomers()
             .pipe(first())
-            .subscribe(customers => this.customers = customers);
+            .subscribe(customers => {
+                this.customers.set(customers);
+            });
     }
 
     deleteCustomer(id: string) {
-        const customer = this.customers.find(x => x.id === id);
+        const customer = this.customers().find(x => x.id === id);
         customer.isDeleting = true;
         this.customerService.deleteCustomer(id)
             .pipe(first())
             .subscribe(() => {
-                this.customers = this.customers.filter(x => x.id !== id)
+                this.customers.set(this.customers().filter(x => x.id !== id));
             });
     }
 }

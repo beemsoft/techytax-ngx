@@ -14,26 +14,34 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let activum of activa">
-            <td>{{activum.description}}</td>
-            <td>{{activum.purchasePrice}}</td>
-            <td>{{activum.remainingValue}}</td>
-            <td>{{activum.nofYearsForDepreciation}}</td>
-            <td>{{activum.purchaseDate}}</td>
-            <td>{{activum.startDate}}</td>
-            <td>{{activum.endDate}}</td>
-            <td style="white-space: nowrap">
-                <a routerLink="edit/{{activum.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                <button (click)="deleteActivum(activum.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="activum.isDeleting">
-                    <span *ngIf="activum.isDeleting" class="spinner-border spinner-border-sm"></span>
-                    <span *ngIf="!activum.isDeleting">Delete</span>
-                </button>
-            </td>
-        </tr>
-        <tr *ngIf="!activa">
-            <td colspan="4" class="text-center">
-                <span class="spinner-border spinner-border-lg align-center"></span>
-            </td>
-        </tr>
+        @for (activum of activa(); track activum.id) {
+            <tr>
+                <td>{{activum.description}}</td>
+                <td>{{activum.purchasePrice}}</td>
+                <td>{{activum.remainingValue}}</td>
+                <td>{{activum.nofYearsForDepreciation}}</td>
+                <td>{{activum.purchaseDate}}</td>
+                <td>{{activum.startDate}}</td>
+                <td>{{activum.endDate}}</td>
+                <td style="white-space: nowrap">
+                    <a routerLink="edit/{{activum.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                    <button (click)="deleteActivum(activum.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="activum.isDeleting">
+                        @if (activum.isDeleting) {
+                            <span class="spinner-border spinner-border-sm"></span>
+                        }
+                        @if (!activum.isDeleting) {
+                            <span>Delete</span>
+                        }
+                    </button>
+                </td>
+            </tr>
+        }
+        @if (!activa()) {
+            <tr>
+                <td colspan="4" class="text-center">
+                    <span class="spinner-border spinner-border-lg align-center"></span>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

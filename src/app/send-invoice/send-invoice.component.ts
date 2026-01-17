@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Invoice, InvoiceService } from '../shared/services/invoice.service';
 import { Project, ProjectService } from '../shared/services/project.service';
 import moment from 'moment';
 import { RegisterService, Registration } from '../shared/services/register.service';
 import { ActivityService } from '@app/shared/services/activity.service';
 import { AlertService } from '@app/_services';
-import { first } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 
 @Component({ standalone: false, templateUrl: 'send-invoice.component.html' })
 export class SendInvoiceComponent implements OnInit {
 
-  projects: Project[];
-  invoice: Invoice;
-  subTotal: number;
-  registration: Registration;
-  invoiceType = "factuur";
-  approveInvoice: boolean = false;
+  projects = signal<Project[]>([]);
+  invoice = signal<Invoice>(new Invoice());
+  subTotal = signal<number>(0);
+  registration = signal<Registration>(null);
+  invoiceType = signal<string>("factuur");
+  approveInvoice = signal<boolean>(false);
 
   constructor(
     private invoiceService: InvoiceService,
@@ -24,36 +24,36 @@ export class SendInvoiceComponent implements OnInit {
     private activityService: ActivityService,
     private alertService: AlertService
 ) {
-  this.invoice = new Invoice();
+    const inv = new Invoice();
     let invoiceMonth = moment().locale('nl').subtract(1, 'months');
-    this.invoice.month = invoiceMonth.format("MMMM");
+    inv.month = invoiceMonth.format("MMMM");
     let prefix = "";
     if (invoiceMonth.month() < 9) {
       prefix = "0";
     }
-    this.invoice.invoiceNumber = invoiceMonth.year() + prefix + (invoiceMonth.month() + 1) + "01";
+    inv.invoiceNumber = invoiceMonth.year() + prefix + (invoiceMonth.month() + 1) + "01";
+    this.invoice.set(inv);
   }
 
   ngOnInit() {
     this.registerService.getRegistration()
-      .subscribe((registration) => {
-          this.registration = registration;
-          this.projectService.getCurrentProjects()
-            .pipe(first())
-            .subscribe(
-              (projects) => {
-                this.projects = projects;
-                if (this.projects.length === 1) {
-                  this.selectProject(this.projects[0])
-                }
-              },
-              error => {
-                this.alertService.error(error);
-              });
+      .pipe(
+        switchMap(registration => {
+          this.registration.set(registration);
+          return this.projectService.getCurrentProjects().pipe(first());
+        })
+      )
+      .subscribe({
+        next: (projects) => {
+          this.projects.set(projects);
+          if (projects.length === 1) {
+            this.selectProject(projects[0]);
+          }
         },
-        error => {
+        error: error => {
           this.alertService.error(error);
-        });
+        }
+      });
   }
 
   onChangeEvent(ev) {
@@ -61,18 +61,19 @@ export class SendInvoiceComponent implements OnInit {
   }
 
   isButtonDisabled() {
-    return !this.approveInvoice
-      || this.invoice.unitsOfWork == undefined
-      || (this.invoiceType == "factuur" && this.invoice.unitsOfWork < 1)
-      || (this.invoiceType == "creditnota" && (this.invoice.unitsOfWork > -1
-       || (this.invoice.originalInvoiceNumber == undefined || this.invoice.originalInvoiceNumber.length < 8)));
+    const inv = this.invoice();
+    return !this.approveInvoice()
+      || inv.unitsOfWork == undefined
+      || (this.invoiceType() == "factuur" && inv.unitsOfWork < 1)
+      || (this.invoiceType() == "creditnota" && (inv.unitsOfWork > -1
+       || (inv.originalInvoiceNumber == undefined || inv.originalInvoiceNumber.length < 8)));
   }
 
   checkUnitsOfWork() {
-    if (this.invoice.unitsOfWork < 0) {
-      this.invoiceType = "creditnota"
+    if (this.invoice().unitsOfWork < 0) {
+      this.invoiceType.set("creditnota");
     } else {
-      this.invoiceType = "factuur"
+      this.invoiceType.set("factuur");
     }
     this.updateHtmlText()
   }
@@ -82,35 +83,47 @@ export class SendInvoiceComponent implements OnInit {
   }
 
   private selectProject(project) {
-    this.invoice.project = project;
+    const inv = this.invoice();
+    inv.project = project;
+    this.invoice.set({...inv});
     this.updateHtmlText()
     this.activityService.getActivitiesForPreviousMonth(project.id)
-      .subscribe(activities => {
-        console.log(JSON.stringify(activities));
-        let totalHours = 0;
-        activities.forEach(activity => {
-          totalHours += activity.hours;
-        })
-        this.invoice.unitsOfWork = totalHours;
-        this.checkUnitsOfWork();
-        this.subTotal = totalHours * this.invoice.project.rate;
-        this.invoice.revenue = this.subTotal * (this.invoice.project.revenuePerc ? this.invoice.project.revenuePerc / 100 : 1);
-      })
+      .subscribe({
+        next: activities => {
+          console.log(JSON.stringify(activities));
+          let totalHours = 0;
+          activities.forEach(activity => {
+            totalHours += activity.hours;
+          })
+          const updatedInv = this.invoice();
+          updatedInv.unitsOfWork = totalHours;
+          this.invoice.set({...updatedInv});
+          this.checkUnitsOfWork();
+          this.subTotal.set(totalHours * project.rate);
+          updatedInv.revenue = this.subTotal() * (project.revenuePerc ? project.revenuePerc / 100 : 1);
+          this.invoice.set({...updatedInv});
+        },
+        error: error => {
+          this.alertService.error(error);
+        }
+      });
   }
 
   updateHtmlText() {
-    this.invoice.htmlText = "Beste " + this.invoice.project.customer.contact + ", <br><br>Hierbij stuur ik je " + this.invoiceType + " " + this.invoice.invoiceNumber +
+    const inv = this.invoice();
+    inv.htmlText = "Beste " + inv.project.customer.contact + ", <br><br>Hierbij stuur ik je " + this.invoiceType() + " " + inv.invoiceNumber +
       ".<br><br>Met vriendelijke groet,<br>" + this.getFullName();
+    this.invoice.set({...inv});
   }
 
   private getFullName() {
-    const personalData = this.registration.personalData;
+    const personalData = this.registration().personalData;
     return personalData.firstName.concat(' ', personalData.prefix != null ? personalData.prefix.concat(' ') : '', personalData.surname);
   }
 
   sendInvoice() {
-     console.log("Send invoice: " + JSON.stringify(this.invoice));
-     this.invoiceService.sendInvoice(this.invoice);
+     console.log("Send invoice: " + JSON.stringify(this.invoice()));
+     this.invoiceService.sendInvoice(this.invoice());
   }
 
 }

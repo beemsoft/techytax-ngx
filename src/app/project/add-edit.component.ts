@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 
 import { AlertService } from '@app/_services';
 import { CustomerService } from '@app/shared/services/customer.service';
@@ -89,38 +89,44 @@ export class AddEditComponent implements OnInit {
 
     private createProject() {
       this.customerService.getCustomer(this.form.value.customer)
-        .subscribe(customer => {
-          this.form.value.customer = customer;
-          this.projectService.addProject(this.form.value)
-            .pipe(first())
-            .subscribe(
-              data => {
-                this.alertService.success('Toevoegen gelukt', {keepAfterRouteChange: true});
-                this.router.navigate(['.', {relativeTo: this.route}]);
-              },
-              error => {
-                this.alertService.error(error);
-                this.loading = false;
-              });
+        .pipe(
+          first(),
+          switchMap(customer => {
+            this.form.value.customer = customer;
+            return this.projectService.addProject(this.form.value).pipe(first());
+          })
+        )
+        .subscribe({
+          next: data => {
+            this.alertService.success('Toevoegen gelukt', { keepAfterRouteChange: true });
+            this.router.navigate(['.', { relativeTo: this.route }]);
+          },
+          error: error => {
+            this.alertService.error(error);
+            this.loading = false;
+          }
         });
     }
 
     private updateProject() {
       this.customerService.getCustomer(this.form.value.customer)
-        .subscribe(customer => {
-          this.form.value.customer = customer;
-          this.form.value.id = this.id;
-          this.projectService.updateProject(this.form.value)
-            .pipe(first())
-            .subscribe(
-              data => {
-                this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
-                this.router.navigate(['..', { relativeTo: this.route }]);
-              },
-              error => {
-                this.alertService.error(error);
-                this.loading = false;
-              });
-        })
+        .pipe(
+          first(),
+          switchMap(customer => {
+            this.form.value.customer = customer;
+            this.form.value.id = this.id;
+            return this.projectService.updateProject(this.form.value).pipe(first());
+          })
+        )
+        .subscribe({
+          next: data => {
+            this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
+            this.router.navigate(['..', { relativeTo: this.route }]);
+          },
+          error: error => {
+            this.alertService.error(error);
+            this.loading = false;
+          }
+        });
     }
 }

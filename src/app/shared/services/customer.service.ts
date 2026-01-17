@@ -19,8 +19,7 @@ export class CustomerService {
   constructor(private http: HttpClient) {}
 
   addCustomer(customer: Customer) {
-    const body = JSON.stringify(customer);
-    return this.http.post(this.baseURL + '/auth/customer', body)
+    return this.http.post(this.baseURL + '/auth/customer', customer)
       .pipe(catchError(this.handleError));
   }
 
@@ -40,9 +39,8 @@ export class CustomerService {
   }
 
   updateCustomer(customer: Customer) {
-    const body = JSON.stringify(customer);
     const url = this.baseURL + '/auth/customer';
-    return this.http.put(url, body)
+    return this.http.put(url, customer)
       .pipe(catchError(this.handleError));
   }
 

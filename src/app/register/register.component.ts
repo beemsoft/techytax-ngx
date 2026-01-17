@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, signal } from "@angular/core";
 import { RegisterService, Registration } from "../shared/services/register.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -8,11 +8,11 @@ import { first } from 'rxjs/operators';
 @Component({
   standalone: false, templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
-    public registration: Registration;
-    public acceptedTermsAndConditions: boolean = false;
+    public registration = signal<Registration>(new Registration());
+    public acceptedTermsAndConditions = signal<boolean>(false);
     form: FormGroup;
-    loading = false;
-    submitted = false;
+    loading = signal(false);
+    submitted = signal(false);
 
     constructor(
       private formBuilder: FormBuilder,
@@ -21,7 +21,6 @@ export class RegisterComponent implements OnInit {
       private alertService: AlertService,
       private router: Router
     ) {
-        this.registration = new Registration();
     }
 
     ngOnInit(): void {
@@ -43,29 +42,34 @@ export class RegisterComponent implements OnInit {
             btwNummer: ['', []],
         });
         this.registerService.getRegistration()
-          .subscribe((registration) => {
-            this.registration = registration
-            this.f.companyName.setValue(registration.companyData.companyName);
-            this.f.address.setValue(registration.companyData.address);
-            this.f.zipCode.setValue(registration.companyData.zipCode);
-            this.f.city.setValue(registration.companyData.city);
-            this.f.firstName.setValue(registration.personalData.firstName);
-            this.f.initials.setValue(registration.personalData.initials);
-            this.f.prefix.setValue(registration.personalData.prefix);
-            this.f.lastName.setValue(registration.personalData.surname);
-            this.f.email.setValue(registration.personalData.email);
-            this.f.phoneNumber.setValue(registration.personalData.phoneNumber);
-            this.f.kvkNummer.setValue(registration.companyData.chamberOfCommerceNumber);
-            this.f.bigNummer.setValue(registration.companyData.jobsInIndividualHealthcareNumber);
-            this.f.ibanNummer.setValue(registration.companyData.accountNumber);
-            this.f.btwNummer.setValue(registration.fiscalData.vatNumber);
-        });
+          .subscribe({
+            next: (registration) => {
+              this.registration.set(registration);
+              this.f.companyName.setValue(registration.companyData.companyName);
+              this.f.address.setValue(registration.companyData.address);
+              this.f.zipCode.setValue(registration.companyData.zipCode);
+              this.f.city.setValue(registration.companyData.city);
+              this.f.firstName.setValue(registration.personalData.firstName);
+              this.f.initials.setValue(registration.personalData.initials);
+              this.f.prefix.setValue(registration.personalData.prefix);
+              this.f.lastName.setValue(registration.personalData.surname);
+              this.f.email.setValue(registration.personalData.email);
+              this.f.phoneNumber.setValue(registration.personalData.phoneNumber);
+              this.f.kvkNummer.setValue(registration.companyData.chamberOfCommerceNumber);
+              this.f.bigNummer.setValue(registration.companyData.jobsInIndividualHealthcareNumber);
+              this.f.ibanNummer.setValue(registration.companyData.accountNumber);
+              this.f.btwNummer.setValue(registration.fiscalData.vatNumber);
+            },
+            error: error => {
+              this.alertService.error(error);
+            }
+          });
     }
 
     get f() { return this.form.controls; }
 
     onSubmit() {
-        this.submitted = true;
+        this.submitted.set(true);
         // reset alerts on submit
         this.alertService.clear();
 
@@ -74,32 +78,36 @@ export class RegisterComponent implements OnInit {
             return;
         }
 
-        this.loading = true;
-        this.registration.personalData.phoneNumber = this.f.phoneNumber.value;
-        this.registration.personalData.email = this.f.email.value;
-        this.registration.personalData.surname = this.f.lastName.value;
-        this.registration.personalData.prefix = this.f.prefix.value;
-        this.registration.personalData.initials = this.f.initials.value;
-        this.registration.personalData.firstName = this.f.firstName.value;
-        this.registration.companyData.companyName = this.f.companyName.value;
-        this.registration.companyData.address = this.f.address.value;
-        this.registration.companyData.zipCode = this.f.zipCode.value;
-        this.registration.companyData.city = this.f.city.value;
-        this.registration.companyData.jobsInIndividualHealthcareNumber = this.f.bigNummer.value;
-        this.registration.companyData.chamberOfCommerceNumber = this.f.kvkNummer.value;
-        this.registration.fiscalData.vatNumber = this.f.btwNummer.value;
-        this.registration.companyData.accountNumber = this.f.ibanNummer.value;
-        this.registerService.updateRegistration(this.registration)
+        this.loading.set(true);
+        const reg = this.registration();
+        reg.personalData.phoneNumber = this.f.phoneNumber.value;
+        reg.personalData.email = this.f.email.value;
+        reg.personalData.surname = this.f.lastName.value;
+        reg.personalData.prefix = this.f.prefix.value;
+        reg.personalData.initials = this.f.initials.value;
+        reg.personalData.firstName = this.f.firstName.value;
+        reg.companyData.companyName = this.f.companyName.value;
+        reg.companyData.address = this.f.address.value;
+        reg.companyData.zipCode = this.f.zipCode.value;
+        reg.companyData.city = this.f.city.value;
+        reg.companyData.jobsInIndividualHealthcareNumber = this.f.bigNummer.value;
+        reg.companyData.chamberOfCommerceNumber = this.f.kvkNummer.value;
+        reg.fiscalData.vatNumber = this.f.btwNummer.value;
+        reg.companyData.accountNumber = this.f.ibanNummer.value;
+        this.registration.set({...reg});
+
+        this.registerService.updateRegistration(this.registration())
           .pipe(first())
-          .subscribe(
-            data => {
-                this.alertService.success('Gegevens gewijzigd', { keepAfterRouteChange: true });
-                this.loading = false;
+          .subscribe({
+            next: data => {
+              this.alertService.success('Gegevens gewijzigd', { keepAfterRouteChange: true });
+              this.loading.set(false);
             },
-            error => {
-                this.alertService.error(error);
-                this.loading = false;
-            });
+            error: error => {
+              this.alertService.error(error);
+              this.loading.set(false);
+            }
+          });
     }
 
     public editRegistration() {
@@ -111,12 +119,12 @@ export class RegisterComponent implements OnInit {
     }
 
     public hideChildModal():void {
-        this.acceptedTermsAndConditions = false;
+        this.acceptedTermsAndConditions.set(false);
         // this.childModal.close();
     }
 
     public accept():void {
         // this.childModal.close();
-        this.acceptedTermsAndConditions = true;
+        this.acceptedTermsAndConditions.set(true);
     }
 }

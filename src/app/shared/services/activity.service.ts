@@ -21,8 +21,7 @@ export class ActivityService {
   constructor(private http: HttpClient) {}
 
   addActivity(activity: Activity) {
-    const body = JSON.stringify(activity);
-    return this.http.post(this.baseURL + '/auth/activity', body )
+    return this.http.post(this.baseURL + '/auth/activity', activity)
       .pipe(catchError(this.handleError));
   }
 
@@ -47,9 +46,8 @@ export class ActivityService {
   }
 
   updateActivity(activity: Activity) {
-    const body = JSON.stringify(activity);
     const url = this.baseURL + '/auth/activity';
-    return this.http.put(url, body)
+    return this.http.put(url, activity)
       .pipe(catchError(this.handleError));
   }
 

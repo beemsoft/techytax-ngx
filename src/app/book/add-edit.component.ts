@@ -41,11 +41,16 @@ export class AddEditComponent implements OnInit {
     if (!this.isAddMode) {
       this.bookService.getById(this.id)
         .pipe(first())
-        .subscribe(bookValue => {
-          this.bookValue = bookValue
-          this.f.balanceType.setValue(bookValue.balanceType);
-          this.f.bookYear.setValue(bookValue.bookYear);
-          this.f.saldo.setValue(bookValue.saldo);
+        .subscribe({
+          next: bookValue => {
+            this.bookValue = bookValue
+            this.f.balanceType.setValue(bookValue.balanceType);
+            this.f.bookYear.setValue(bookValue.bookYear);
+            this.f.saldo.setValue(bookValue.saldo);
+          },
+          error: error => {
+            this.alertService.error(error);
+          }
         });
     } else {
 
@@ -87,29 +92,31 @@ export class AddEditComponent implements OnInit {
     this.form.value.costType = this.bookValue;
     this.bookService.addBookValue(this.form.value)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Toevoegen gelukt', {keepAfterRouteChange: true});
-          this.router.navigate(['.', {relativeTo: this.route}]);
+      .subscribe({
+        next: data => {
+          this.alertService.success('Toevoegen gelukt', { keepAfterRouteChange: true });
+          this.router.navigate(['.', { relativeTo: this.route }]);
         },
-        error => {
+        error: error => {
           this.alertService.error(error);
           this.loading = false;
-        });
+        }
+      });
   }
 
   private updateBookValue() {
     this.form.value.id = this.bookValue.id;
     this.bookService.updateBookValue(this.form.value)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Wijzigen gelukt', {keepAfterRouteChange: true});
-          this.router.navigate(['..', {relativeTo: this.route}]);
+      .subscribe({
+        next: data => {
+          this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
+          this.router.navigate(['..', { relativeTo: this.route }]);
         },
-        error => {
+        error: error => {
           this.alertService.error(error);
           this.loading = false;
-        });
+        }
+      });
   }
 }

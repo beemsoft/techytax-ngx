@@ -11,23 +11,30 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let customer of customers">
-            <td>{{customer.name}}</td>
-            <td>{{customer.address}}</td>
-            <td>{{customer.emailInvoice}}</td>
-            <td>{{customer.contact}}</td>
-            <td style="white-space: nowrap">
-                <a routerLink="edit/{{customer.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                <button (click)="deleteCustomer(customer.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="customer.isDeleting">
-                    <span *ngIf="customer.isDeleting" class="spinner-border spinner-border-sm"></span>
-                    <span *ngIf="!customer.isDeleting">Delete</span>
-                </button>
-            </td>
-        </tr>
-        <tr *ngIf="!customers">
-            <td colspan="4" class="text-center">
-                <span class="spinner-border spinner-border-lg align-center"></span>
-            </td>
-        </tr>
+        @for (customer of customers(); track customer.id) {
+            <tr>
+                <td>{{customer.name}}</td>
+                <td>{{customer.address}}</td>
+                <td>{{customer.contact}}</td>
+                <td style="white-space: nowrap">
+                    <a routerLink="edit/{{customer.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                    <button (click)="deleteCustomer(customer.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="customer.isDeleting">
+                        @if (customer.isDeleting) {
+                            <span class="spinner-border spinner-border-sm"></span>
+                        }
+                        @if (!customer.isDeleting) {
+                            <span>Delete</span>
+                        }
+                    </button>
+                </td>
+            </tr>
+        }
+        @if (!customers()) {
+            <tr>
+                <td colspan="4" class="text-center">
+                    <span class="spinner-border spinner-border-lg align-center"></span>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

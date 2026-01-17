@@ -1,24 +1,24 @@
 <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="user">
+<mat-toolbar color="primary" *ngIf="user$() as user">
     <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-        <a class="nav-item nav-link" (click)="logout()">Uitloggen</a>
-        <a class="nav-item nav-link" routerLink="/register" routerLinkActive="active">Mijn gegevens</a>
-        <a class="nav-item nav-link" routerLink="/customer" routerLinkActive="active">Klanten</a>
-        <a class="nav-item nav-link" routerLink="/project" routerLinkActive="active">Projecten</a>
-        <a class="nav-item nav-link" routerLink="/activity" routerLinkActive="active">Uren</a>
-        <a class="nav-item nav-link" routerLink="/invoice" routerLinkActive="active">Factuur sturen</a>
-        <a class="nav-item nav-link" routerLink="/vat" routerLinkActive="active">btw aangifte</a>
-        <a class="nav-item nav-link" routerLink="/vat-match" routerLinkActive="active">btw match</a>
-        <a class="nav-item nav-link" routerLink="/book" routerLinkActive="active">Boekwaardes</a>
-        <a class="nav-item nav-link" routerLink="/activa" routerLinkActive="active">Activa</a>
-        <a class="nav-item nav-link" routerLink="/cost" routerLinkActive="active">Kosten</a>
-        <a class="nav-item nav-link" routerLink="/fiscal-overview" routerLinkActive="active">Fiscaal overzicht</a>
+        <a mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a mat-button (click)="logout()">Uitloggen</a>
+        <a mat-button routerLink="/register" routerLinkActive="active">Mijn gegevens</a>
+        <a mat-button routerLink="/customer" routerLinkActive="active">Klanten</a>
+        <a mat-button routerLink="/project" routerLinkActive="active">Projecten</a>
+        <a mat-button routerLink="/activity" routerLinkActive="active">Uren</a>
+        <a mat-button routerLink="/invoice" routerLinkActive="active">Factuur sturen</a>
+        <a mat-button routerLink="/vat" routerLinkActive="active">btw aangifte</a>
+        <a mat-button routerLink="/vat-match" routerLinkActive="active">btw match</a>
+        <a mat-button routerLink="/book" routerLinkActive="active">Boekwaardes</a>
+        <a mat-button routerLink="/activa" routerLinkActive="active">Activa</a>
+        <a mat-button routerLink="/cost" routerLinkActive="active">Kosten</a>
+        <a mat-button routerLink="/fiscal-overview" routerLinkActive="active">Fiscaal overzicht</a>
     </div>
-</nav>
+</mat-toolbar>
 
 <!-- main app container -->
-<div class="app-container" [ngClass]="{ 'bg-light': user }">
+<div class="app-container" [ngClass]="{ 'bg-light': user$() }">
     <alert></alert>
     <router-outlet></router-outlet>
 </div>

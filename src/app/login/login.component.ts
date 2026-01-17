@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Output} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {throwError as observableThrowError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
+import {catchError, first} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
+import {AccountService} from "@app/_services";
 
 @Component({
   standalone: false,
@@ -19,27 +20,27 @@ export class LoginComponent {
   @Output() userChanged2: EventEmitter<string> = new EventEmitter<string>();
   private loggedIn = false;
 
-  constructor(private http: HttpClient, private router: Router, private location: Location) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private location: Location,
+    private accountService: AccountService
+  ) {}
 
   login(event: any, username: string, password: string) {
     event.preventDefault();
-    let body = JSON.stringify({ username, password });
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-    this.http.post(this.baseURL+'/auth', body, httpOptions)
-      .pipe(
-        catchError(this.handleError)).subscribe(
-      response => {
-            localStorage.setItem('jwt', response["token"]);
-            this.loggedIn = true;
-            this.userChanged2.emit(username);
-      }
-    );
+    this.accountService.login(username, password)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this.loggedIn = true;
+          this.userChanged2.emit(username);
+        },
+        error: error => {
+          console.error(error);
+        }
+      });
   }
 
   register() {
@@ -64,7 +65,7 @@ export class LoginComponent {
   handleUserChange2() {
     this.userChanged2.emit("niet ingelogd");
     this.loggedIn = false;
-    this.router.navigateByUrl('/')
+    this.accountService.logout();
   }
 
   private handleError(error: any) {

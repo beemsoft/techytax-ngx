@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 
 import { AlertService } from '@app/_services';
 import { ProjectService } from '@app/shared/services/project.service';
@@ -85,38 +85,44 @@ export class AddEditComponent implements OnInit {
 
   private createActivity() {
     this.projectService.getById(this.form.value.project)
-      .subscribe(project => {
-        this.form.value.project = project;
-        this.activityService.addActivity(this.form.value)
-          .pipe(first())
-          .subscribe(
-            data => {
-              this.alertService.success('Toevoegen gelukt', {keepAfterRouteChange: true});
-              this.router.navigate(['.', {relativeTo: this.route}]);
-            },
-            error => {
-              this.alertService.error(error);
-              this.loading = false;
-            });
+      .pipe(
+        first(),
+        switchMap(project => {
+          this.form.value.project = project;
+          return this.activityService.addActivity(this.form.value).pipe(first());
+        })
+      )
+      .subscribe({
+        next: data => {
+          this.alertService.success('Toevoegen gelukt', { keepAfterRouteChange: true });
+          this.router.navigate(['.', { relativeTo: this.route }]);
+        },
+        error: error => {
+          this.alertService.error(error);
+          this.loading = false;
+        }
       });
   }
 
   private updateActivity() {
     this.projectService.getById(this.form.value.project)
-      .subscribe(project => {
-        this.form.value.project = project;
-        this.form.value.id = this.id;
-        this.activityService.updateActivity(this.form.value)
-          .pipe(first())
-          .subscribe(
-            data => {
-              this.alertService.success('Wijzigen gelukt', {keepAfterRouteChange: true});
-              this.router.navigate(['..', {relativeTo: this.route}]);
-            },
-            error => {
-              this.alertService.error(error);
-              this.loading = false;
-            });
+      .pipe(
+        first(),
+        switchMap(project => {
+          this.form.value.project = project;
+          this.form.value.id = this.id;
+          return this.activityService.updateActivity(this.form.value).pipe(first());
+        })
+      )
+      .subscribe({
+        next: data => {
+          this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
+          this.router.navigate(['..', { relativeTo: this.route }]);
+        },
+        error: error => {
+          this.alertService.error(error);
+          this.loading = false;
+        }
       });
   }
 }

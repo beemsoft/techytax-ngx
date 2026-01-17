@@ -1,8 +1,8 @@
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { CostCharacter, CostType, Transaction, VatType } from './import-list.service';
 import { Injectable } from '@angular/core';
 import { Activum, ActivumService, ActivumType } from './activum.service';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { Invoice, InvoiceService } from './invoice.service';
 
 export class FiscalReport  {
@@ -160,43 +160,36 @@ export class VatCalculationService {
       }
     }
 
-    return this.activumService.getActivumCar().pipe(
-      map(
-        vatCorrectionForPrivateUsage => {
-          const vatReport = new VatReport();
+    return forkJoin({
+      vatCorrection: this.activumService.getActivumCar(),
+      invoiceData: this.invoiceService.getIncomeForLatestPeriod()
+    }).pipe(
+      map(({ vatCorrection, invoiceData }) => {
+        const vatReport = new VatReport();
+        const vatCorrectionForPrivateUsage = vatCorrection ? vatCorrection : 0;
 
-          this.invoiceService.getIncomeForLatestPeriod()
-            .subscribe(
-              invoiceData => {
-                this.invoices = invoiceData;
-                this.invoices.forEach((invoice: Invoice) => {
-                  const netIn = invoice.unitsOfWork * invoice.project.rate;
-                  vatReport.totalNetIn += netIn;
-                  vatReport.totalVatIn += netIn * .21;
-                });
-                vatReport.totalVatIn = Math.round((totalVatIn + vatReport.totalVatIn) * 100) / 100;
-                vatReport.totalNetIn = Math.round(vatReport.totalNetIn * 100) / 100;
-                vatReport.vatCorrectionForPrivateUsage = vatCorrectionForPrivateUsage ? vatCorrectionForPrivateUsage : 0;
-                vatReport.totalVatOut = Math.round(totalVatOut);
-                vatReport.vatSaldo = Math.round(vatReport.totalVatIn - vatReport.totalVatOut + vatReport.vatCorrectionForPrivateUsage);
-                vatReport.sentInvoices = Math.round((vatReport.totalNetIn > 0 ?
-                    vatReport.totalNetIn + sentInvoices : sentInvoices) * 100) / 100;
-                vatReport.totalOfficeCosts = Math.round(totalOfficeCosts * 100) / 100;
-                vatReport.totalCarCosts = Math.round(totalCarCosts * 100) / 100;
-                vatReport.totalTransportCosts = Math.round(totalTransportCosts * 100) / 100;
-                vatReport.totalFoodCosts = Math.round(totalFoodCosts * 100) / 100;
-                vatReport.totalOtherCosts = Math.round(totalOtherCosts * 100) / 100;
-                vatReport.investments = investments;
-              },
-              error => {
-                alert(error);
-                console.log(error);
-              },
-              () => console.log('Invoices retrieved')
-            );
+        invoiceData.forEach((invoice: Invoice) => {
+          const netIn = invoice.unitsOfWork * invoice.project.rate;
+          vatReport.totalNetIn += netIn;
+          vatReport.totalVatIn += netIn * .21;
+        });
 
-          return vatReport;
-        }
-      ));
+        vatReport.totalVatIn = Math.round((totalVatIn + vatReport.totalVatIn) * 100) / 100;
+        vatReport.totalNetIn = Math.round(vatReport.totalNetIn * 100) / 100;
+        vatReport.vatCorrectionForPrivateUsage = vatCorrectionForPrivateUsage;
+        vatReport.totalVatOut = Math.round(totalVatOut);
+        vatReport.vatSaldo = Math.round(vatReport.totalVatIn - vatReport.totalVatOut + vatReport.vatCorrectionForPrivateUsage);
+        vatReport.sentInvoices = Math.round((vatReport.totalNetIn > 0 ?
+          vatReport.totalNetIn + sentInvoices : sentInvoices) * 100) / 100;
+        vatReport.totalOfficeCosts = Math.round(totalOfficeCosts * 100) / 100;
+        vatReport.totalCarCosts = Math.round(totalCarCosts * 100) / 100;
+        vatReport.totalTransportCosts = Math.round(totalTransportCosts * 100) / 100;
+        vatReport.totalFoodCosts = Math.round(totalFoodCosts * 100) / 100;
+        vatReport.totalOtherCosts = Math.round(totalOtherCosts * 100) / 100;
+        vatReport.investments = investments;
+
+        return vatReport;
+      })
+    );
   }
 }

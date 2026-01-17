@@ -55,20 +55,25 @@ export class AddEditComponent implements OnInit {
     if (!this.isAddMode) {
       this.activumService.getById(this.id)
         .pipe(first())
-        .subscribe(activum => {
-          this.activum = activum
-          if (activum.balanceType) {
-            // @ts-ignore
-            this.f.balanceType.patchValue(activum.balanceType);
-            this.balanceType = activum.balanceType;
+        .subscribe({
+          next: activum => {
+            this.activum = activum
+            if (activum.balanceType) {
+              // @ts-ignore
+              this.f.balanceType.patchValue(activum.balanceType);
+              this.balanceType = activum.balanceType;
+            }
+            this.f.description.setValue(activum.description);
+            this.f.purchasePrice.setValue(activum.purchasePrice);
+            this.f.remainingValue.setValue(activum.remainingValue);
+            this.f.nofYearsForDepreciation.setValue(activum.nofYearsForDepreciation);
+            this.f.purchaseDate.setValue(activum.purchaseDate);
+            this.f.startDate.setValue(activum.startDate);
+            this.f.endDate.setValue(activum.endDate);
+          },
+          error: error => {
+            this.alertService.error(error);
           }
-          this.f.description.setValue(activum.description);
-          this.f.purchasePrice.setValue(activum.purchasePrice);
-          this.f.remainingValue.setValue(activum.remainingValue);
-          this.f.nofYearsForDepreciation.setValue(activum.nofYearsForDepreciation);
-          this.f.purchaseDate.setValue(activum.purchaseDate);
-          this.f.startDate.setValue(activum.startDate);
-          this.f.endDate.setValue(activum.endDate);
         });
     } else {
 
@@ -118,14 +123,15 @@ export class AddEditComponent implements OnInit {
     this.form.value.id = this.activum.id;
     this.activumService.updateActivum(this.form.value)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Wijzigen gelukt', {keepAfterRouteChange: true});
-          this.router.navigate(['..', {relativeTo: this.route}]);
+      .subscribe({
+        next: data => {
+          this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
+          this.router.navigate(['..', { relativeTo: this.route }]);
         },
-        error => {
+        error: error => {
           this.alertService.error(error);
           this.loading = false;
-        });
+        }
+      });
   }
 }

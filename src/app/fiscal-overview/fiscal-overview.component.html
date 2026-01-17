@@ -1,37 +1,37 @@
-<div *ngIf="fiscalOverview">
-    <h1>Fiscaal overzicht {{ fiscalOverview.jaar }}</h1>
+@if (fiscalOverview(); as fo) {
+    <h1>Fiscaal overzicht {{ fo.jaar }}</h1>
     <h2>Winst-en-verliesrekening</h2>
     <h3>Opbrengsten</h3>
     <div>
         <label>Opbrengsten uit leveringen en diensten</label>
-        {{ fiscalOverview.profitAndLoss.income.nettoOmzet }}
+        {{ fo.profitAndLoss.income.nettoOmzet }}
     </div>
     <h3>Afschrijvingen</h3>
     <div>
         <label>Gebouwen en terreinen</label>
-        {{ fiscalOverview.profitAndLoss.depreciation.settlementDepreciation }}
+        {{ fo.profitAndLoss.depreciation.settlementDepreciation }}
     </div>
     <div>
         <label>Machines en installaties</label>
-        {{ fiscalOverview.profitAndLoss.depreciation.machineryDepreciation }}
+        {{ fo.profitAndLoss.depreciation.machineryDepreciation }}
     </div>
     <div>
         <label>Overige materiële vaste activa (auto)</label>
-        {{ fiscalOverview.profitAndLoss.depreciation.afschrijvingAuto }}
+        {{ fo.profitAndLoss.depreciation.afschrijvingAuto }}
     </div>
 
     <h3>Overige bedrijfskosten</h3>
     <div>
         <label>Auto- en transportkosten</label>
-        {{ fiscalOverview.profitAndLoss.companyCosts.carAndTransportCosts }}
+        {{ fo.profitAndLoss.companyCosts.carAndTransportCosts }}
     </div>
     <div>
         <label>Huisvestingskosten</label>
-        {{ fiscalOverview.profitAndLoss.companyCosts.officeCosts }}
+        {{ fo.profitAndLoss.companyCosts.officeCosts }}
     </div>
     <div>
         <label>Andere kosten</label>
-        {{ fiscalOverview.profitAndLoss.companyCosts.otherCosts }}
+        {{ fo.profitAndLoss.companyCosts.otherCosts }}
     </div>
     <h3>Balans</h3>
     <h4>Activa</h4>
@@ -58,23 +58,23 @@
         <tr>
             <td>(Bedrijfs)gebouwen en terreinen</td>
             <td></td>
-            <td>{{ fiscalOverview.balanceMap["OFFICE"].beginSaldo }}</td>
-            <td>{{ fiscalOverview.balanceMap["OFFICE"].endSaldo }}</td>
+            <td>{{ fo.balanceMap["OFFICE"].beginSaldo }}</td>
+            <td>{{ fo.balanceMap["OFFICE"].endSaldo }}</td>
             <td></td>
         </tr>
         <tr>
             <td>Machines en installaties</td>
-            <td>{{ fiscalOverview.balanceMap["MACHINERY"].totalPurchaseCost }}</td>
-            <td>{{ fiscalOverview.balanceMap["MACHINERY"].beginSaldo }}</td>
-            <td>{{ fiscalOverview.balanceMap["MACHINERY"].endSaldo }}</td>
-            <td>{{ fiscalOverview.balanceMap["MACHINERY"].totalRemainingValue }}</td>
+            <td>{{ fo.balanceMap["MACHINERY"].totalPurchaseCost }}</td>
+            <td>{{ fo.balanceMap["MACHINERY"].beginSaldo }}</td>
+            <td>{{ fo.balanceMap["MACHINERY"].endSaldo }}</td>
+            <td>{{ fo.balanceMap["MACHINERY"].totalRemainingValue }}</td>
         </tr>
         <tr>
             <td>Overige materiële vaste activa</td>
-            <td>{{ fiscalOverview.balanceMap["CAR"].totalPurchaseCost }}</td>
-            <td>{{ fiscalOverview.balanceMap["CAR"].beginSaldo }}</td>
-            <td>{{ fiscalOverview.balanceMap["CAR"].endSaldo }}</td>
-            <td>{{ fiscalOverview.balanceMap["CAR"].totalRemainingValue }}</td>
+            <td>{{ fo.balanceMap["CAR"].totalPurchaseCost }}</td>
+            <td>{{ fo.balanceMap["CAR"].beginSaldo }}</td>
+            <td>{{ fo.balanceMap["CAR"].endSaldo }}</td>
+            <td>{{ fo.balanceMap["CAR"].totalRemainingValue }}</td>
         </tr>
     </table>
 
@@ -104,10 +104,10 @@
                 afgeschreven (met
                 bodemwaarde)
             </td>
-            <td>{{ fiscalOverview.balanceMap["OFFICE"].totalPurchaseCost }}</td>
-            <td>{{ fiscalOverview.balanceMap["OFFICE"].endSaldo }}</td>
-            <td>{{ fiscalOverview.balanceMap["OFFICE"].totalRemainingValue }}</td>
-            <td>{{ fiscalOverview.officeBottomValue }}</td>
+            <td>{{ fo.balanceMap["OFFICE"].totalPurchaseCost }}</td>
+            <td>{{ fo.balanceMap["OFFICE"].endSaldo }}</td>
+            <td>{{ fo.balanceMap["OFFICE"].totalRemainingValue }}</td>
+            <td>{{ fo.officeBottomValue }}</td>
         </tr>
     </table>
     <h5>Liquide middelen</h5>
@@ -125,8 +125,8 @@
         </tr>
         <tr>
             <td>Liquide middelen</td>
-            <td>{{ fiscalOverview.balanceMap["CURRENT_ASSETS"].beginSaldo }}</td>
-            <td>{{ fiscalOverview.balanceMap["CURRENT_ASSETS"].endSaldo }}</td>
+            <td>{{ fo.balanceMap["CURRENT_ASSETS"].beginSaldo }}</td>
+            <td>{{ fo.balanceMap["CURRENT_ASSETS"].endSaldo }}</td>
         </tr>
     </table>
 
@@ -145,13 +145,13 @@
         </tr>
         <tr>
             <td>Eigen vermogen</td>
-            <td>{{ fiscalOverview.balanceMap["NON_CURRENT_ASSETS"].beginSaldo }}</td>
-            <td>{{ fiscalOverview.balanceMap["NON_CURRENT_ASSETS"].endSaldo }}</td>
+            <td>{{ fo.balanceMap["NON_CURRENT_ASSETS"].beginSaldo }}</td>
+            <td>{{ fo.balanceMap["NON_CURRENT_ASSETS"].endSaldo }}</td>
         </tr>
         <tr>
             <td>Oudedagsreserve</td>
-            <td>{{ fiscalOverview.balanceMap["PENSION"].beginSaldo }}</td>
-            <td>{{ fiscalOverview.balanceMap["PENSION"].endSaldo }}</td>
+            <td>{{ fo.balanceMap["PENSION"].beginSaldo }}</td>
+            <td>{{ fo.balanceMap["PENSION"].endSaldo }}</td>
         </tr>
     </table>
     <h5>Kortlopende schulden</h5>
@@ -169,15 +169,15 @@
         </tr>
         <tr>
             <td>Schuld omzetbelasting</td>
-            <td>{{ fiscalOverview.balanceMap["VAT_TO_BE_PAID"].beginSaldo }}</td>
-            <td>{{ fiscalOverview.balanceMap["VAT_TO_BE_PAID"].endSaldo }}</td>
+            <td>{{ fo.balanceMap["VAT_TO_BE_PAID"].beginSaldo }}</td>
+            <td>{{ fo.balanceMap["VAT_TO_BE_PAID"].endSaldo }}</td>
         </tr>
     </table>
     <h5>Specificatie schuld omzetbelasting</h5>
     <table>
         <tr>
             <td>Schuld omzetbelasting over dit boekjaar</td>
-            <td>{{ fiscalOverview.balanceMap["VAT_TO_BE_PAID"].endSaldo }}</td>
+            <td>{{ fo.balanceMap["VAT_TO_BE_PAID"].endSaldo }}</td>
         </tr>
     </table>
     <h4>Privéonttrekkingen en -stortingen</h4>
@@ -185,7 +185,7 @@
     <table>
         <tr>
             <td>Kosten voor deze auto</td>
-            <td>{{ fiscalOverview.profitAndLoss.companyCosts.carCosts }}</td>
+            <td>{{ fo.profitAndLoss.companyCosts.carCosts }}</td>
         </tr>
     </table>
-</div>
+}

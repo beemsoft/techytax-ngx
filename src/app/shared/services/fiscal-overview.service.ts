@@ -60,8 +60,7 @@ export class FiscalOverviewService {
   }
 
   sendFiscalData(vatReport: VatReport) {
-    const body = JSON.stringify(vatReport);
-    return this.http.post(this.baseURL + '/auth/fiscal-overview', body)
+    return this.http.post(this.baseURL + '/auth/fiscal-overview', vatReport)
       .pipe(
         catchError(this.handleError));
   }

@@ -3,38 +3,54 @@
     <h1>Mijn gegevens</h1>
     TechyTax heeft je gegevens nodig om namens jou een factuur te kunnen versturen.
     <div class="checkbox">
-      <input type="checkbox" (change)="acceptedTermsAndConditions = !acceptedTermsAndConditions"> Ik geef toestemming voor het opslaan van mijn gegevens.
+      <input type="checkbox" (change)="acceptedTermsAndConditions.set(!acceptedTermsAndConditions())"> Ik geef toestemming voor het opslaan van mijn gegevens.
     </div>
-    <div *ngIf="acceptedTermsAndConditions">
+    @if (acceptedTermsAndConditions()) {
       <form (ngSubmit)="onSubmit()" [formGroup]="form">
         <div class="form-row">
           <div class="form-group col">
             <label>Bedrijfsnaam</label>
             <input type="text" class="form-control" formControlName="companyName" [ngClass]="{ 'is-invalid': f.companyName.errors }">
-            <div *ngIf="f.companyName.errors" class="invalid-feedback">
-              <div *ngIf="f.companyName.errors.required">Bedrijfsnaam is verplicht, het wordt op de factuur vermeld</div>
-            </div>
+            @if (f.companyName.errors) {
+              <div class="invalid-feedback">
+                @if (f.companyName.errors.required) {
+                  <div>Bedrijfsnaam is verplicht, het wordt op de factuur vermeld</div>
+                }
+              </div>
+            }
           </div>
           <div class="form-group col">
             <label>Adres</label>
             <input type="text" class="form-control" formControlName="address" [ngClass]="{ 'is-invalid': f.address.errors }">
-            <div *ngIf="f.address.errors" class="invalid-feedback">
-              <div *ngIf="f.address.errors.required">Adres is verplicht, het wordt op de factuur vermeld</div>
-            </div>
+            @if (f.address.errors) {
+              <div class="invalid-feedback">
+                @if (f.address.errors.required) {
+                  <div>Adres is verplicht, het wordt op de factuur vermeld</div>
+                }
+              </div>
+            }
           </div>
           <div class="form-group col">
             <label>Postcode</label>
             <input type="text" class="form-control" formControlName="zipCode" [ngClass]="{ 'is-invalid': f.zipCode.errors }">
-            <div *ngIf="f.zipCode.errors" class="invalid-feedback">
-              <div *ngIf="f.zipCode.errors.required">Postcode is verplicht, het wordt op de factuur vermeld</div>
-            </div>
+            @if (f.zipCode.errors) {
+              <div class="invalid-feedback">
+                @if (f.zipCode.errors.required) {
+                  <div>Postcode is verplicht, het wordt op de factuur vermeld</div>
+                }
+              </div>
+            }
           </div>
           <div class="form-group col">
             <label>Plaats</label>
             <input type="text" class="form-control" formControlName="city" [ngClass]="{ 'is-invalid': f.city.errors }">
-            <div *ngIf="f.city.errors" class="invalid-feedback">
-              <div *ngIf="f.city.errors.required">Plaatsnaam is verplicht, het wordt op de factuur vermeld</div>
-            </div>
+            @if (f.city.errors) {
+              <div class="invalid-feedback">
+                @if (f.city.errors.required) {
+                  <div>Plaatsnaam is verplicht, het wordt op de factuur vermeld</div>
+                }
+              </div>
+            }
           </div>
         </div>
         <div class="form-row">
@@ -42,27 +58,43 @@
             <label>KvK nummer</label>
             <input type="text" class="form-control" formControlName="kvkNummer"
                    [ngClass]="{ 'is-invalid': f.kvkNummer.errors }">
-            <div *ngIf="f.kvkNummer.errors" class="invalid-feedback">
-              <div *ngIf="f.kvkNummer.errors.required">KvK nummer is verplicht, het wordt op de factuur vermeld</div>
-              <div *ngIf="f.kvkNummer.errors.pattern">KvK nummer bestaat uit 8 cijfers</div>
-            </div>
+            @if (f.kvkNummer.errors) {
+              <div class="invalid-feedback">
+                @if (f.kvkNummer.errors.required) {
+                  <div>KvK nummer is verplicht, het wordt op de factuur vermeld</div>
+                }
+                @if (f.kvkNummer.errors.pattern) {
+                  <div>KvK nummer bestaat uit 8 cijfers</div>
+                }
+              </div>
+            }
           </div>
           <div class="form-group col">
             <label>BIG nummer</label>
             <input type="text" class="form-control" formControlName="bigNummer"
                    [ngClass]="{ 'is-invalid': f.bigNummer.errors }">
-            <div *ngIf="f.bigNummer.errors" class="invalid-feedback">
-              <div *ngIf="f.bigNummer.errors.pattern">BIG nummer bestaat uit 11 cijfers</div>
-            </div>
+            @if (f.bigNummer.errors) {
+              <div class="invalid-feedback">
+                @if (f.bigNummer.errors.pattern) {
+                  <div>BIG nummer bestaat uit 11 cijfers</div>
+                }
+              </div>
+            }
           </div>
           <div class="form-group col">
             <label>IBAN nummer</label>
             <input type="text" class="form-control" formControlName="ibanNummer"
                    [ngClass]="{ 'is-invalid': f.ibanNummer.errors }">
-            <div *ngIf="f.ibanNummer.errors" class="invalid-feedback">
-              <div *ngIf="f.ibanNummer.errors.required">IBAN nummer is verplicht, het wordt op de factuur vermeld</div>
-              <div *ngIf="f.ibanNummer.errors.pattern">IBAN nummer niet correct</div>
-            </div>
+            @if (f.ibanNummer.errors) {
+              <div class="invalid-feedback">
+                @if (f.ibanNummer.errors.required) {
+                  <div>IBAN nummer is verplicht, het wordt op de factuur vermeld</div>
+                }
+                @if (f.ibanNummer.errors.pattern) {
+                  <div>IBAN nummer niet correct</div>
+                }
+              </div>
+            }
           </div>
           <div class="form-group col">
             <label>btw nummer</label>
@@ -74,18 +106,28 @@
             <label>Voorletters</label>
             <input type="text" class="form-control" formControlName="initials"
                    [ngClass]="{ 'is-invalid': f.initials.errors }">
-            <div *ngIf="f.initials.errors" class="invalid-feedback">
-              <div *ngIf="f.initials.errors.required">Initialen zijn verplicht</div>
-              <div *ngIf="f.lastName.errors.pattern">Initialen bestaan uit hoofdletters met daarachter een punt</div>
-            </div>
+            @if (f.initials.errors) {
+              <div class="invalid-feedback">
+                @if (f.initials.errors.required) {
+                  <div>Initialen zijn verplicht</div>
+                }
+                @if (f.lastName.errors.pattern) {
+                  <div>Initialen bestaan uit hoofdletters met daarachter een punt</div>
+                }
+              </div>
+            }
           </div>
           <div class="form-group col">
             <label>Roepnaam</label>
             <input type="text" class="form-control" formControlName="firstName"
                    [ngClass]="{ 'is-invalid': f.firstName.errors }">
-            <div *ngIf="f.firstName.errors" class="invalid-feedback">
-              <div *ngIf="f.firstName.errors.required">Roepnaam is verplicht</div>
-            </div>
+            @if (f.firstName.errors) {
+              <div class="invalid-feedback">
+                @if (f.firstName.errors.required) {
+                  <div>Roepnaam is verplicht</div>
+                }
+              </div>
+            }
           </div>
           <div class="form-group col">
             <label>Tussenvoegsel(s)</label>
@@ -95,10 +137,16 @@
             <label>Achternaam</label>
             <input type="text" class="form-control" formControlName="lastName"
                    [ngClass]="{ 'is-invalid': f.lastName.errors }">
-            <div *ngIf="f.lastName.errors" class="invalid-feedback">
-              <div *ngIf="f.lastName.errors.required">Achternaam is verplicht</div>
-              <div *ngIf="f.lastName.errors.pattern">Achternaam moet uit minstens 2 letters bestaan</div>
-            </div>
+            @if (f.lastName.errors) {
+              <div class="invalid-feedback">
+                @if (f.lastName.errors.required) {
+                  <div>Achternaam is verplicht</div>
+                }
+                @if (f.lastName.errors.pattern) {
+                  <div>Achternaam moet uit minstens 2 letters bestaan</div>
+                }
+              </div>
+            }
           </div>
         </div>
 
@@ -107,19 +155,31 @@
             <label>Email</label>
             <input type="email" class="form-control" formControlName="email"
                    [ngClass]="{ 'is-invalid': f.email.errors }">
-            <div *ngIf="f.email.errors" class="invalid-feedback">
-              <div *ngIf="f.email.errors.required">Email is verplicht</div>
-              <div *ngIf="f.email.errors.pattern">Email is niet correct</div>
-            </div>
+            @if (f.email.errors) {
+              <div class="invalid-feedback">
+                @if (f.email.errors.required) {
+                  <div>Email is verplicht</div>
+                }
+                @if (f.email.errors.pattern) {
+                  <div>Email is niet correct</div>
+                }
+              </div>
+            }
           </div>
           <div class="form-group col">
             <label>Telefoonnummer</label>
             <input class="form-control" formControlName="phoneNumber"
                    [ngClass]="{ 'is-invalid': f.phoneNumber.errors }">
-            <div *ngIf="f.phoneNumber.errors" class="invalid-feedback">
-              <div *ngIf="f.phoneNumber.errors.required">Telefoonnummer is verplicht</div>
-              <div *ngIf="f.phoneNumber.errors.pattern">Telefoonnummer is niet correct</div>
-            </div>
+            @if (f.phoneNumber.errors) {
+              <div class="invalid-feedback">
+                @if (f.phoneNumber.errors.required) {
+                  <div>Telefoonnummer is verplicht</div>
+                }
+                @if (f.phoneNumber.errors.pattern) {
+                  <div>Telefoonnummer is niet correct</div>
+                }
+              </div>
+            }
           </div>
         </div>
 
@@ -133,26 +193,34 @@
             <label>Password
               <em>(Laat leeg als je het niet wilt wijzigen)</em>
             </label>
-            <input type="password" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
-            <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
-              <div *ngIf="submitted && f.password.errors.required">Wachtwoord is verplicht</div>
-              <div *ngIf="submitted && f.password.errors.minlength">Wachtwoord moet 6 karakters lang zijn, we hebben nog
-                {{f.password.errors.minlength.requiredLength - f.password.errors.minlength.actualLength}} karakters
-                nodig
+            <input type="password" class="form-control" formControlName="password" [ngClass]="{ 'is-invalid': submitted() && f.firstName.errors }">
+            @if (submitted() && f.phoneNumber.errors) {
+              <div class="invalid-feedback">
+                @if (submitted() && f.password.errors.required) {
+                  <div>Wachtwoord is verplicht</div>
+                }
+                @if (submitted() && f.password.errors.minlength) {
+                  <div>Wachtwoord moet 6 karakters lang zijn, we hebben nog
+                    {{f.password.errors.minlength.requiredLength - f.password.errors.minlength.actualLength}} karakters
+                    nodig
+                  </div>
+                }
               </div>
-            </div>
+            }
           </div>
         </div>
 
         <div class="form-group">
-          <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          <button [disabled]="loading()" class="btn btn-primary">
+            @if (loading()) {
+              <span class="spinner-border spinner-border-sm mr-1"></span>
+            }
             Opslaan
           </button>
           <a routerLink="../login" class="btn btn-link">Cancel</a>
         </div>
       </form>
-    </div>
+    }
     <p>Deze clouddienst wordt aangeboden door de eenmanszaak Beemsterboer Software, welke sinds 2006 is ingeschreven bij
       de Kamer van Koophandel te Utrecht onder nummer 30216247. Het btw nummer is NL001969552B79.</p>
   </div>

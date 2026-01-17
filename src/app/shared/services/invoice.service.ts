@@ -109,15 +109,16 @@ export class InvoiceService {
   // }
 
   sendInvoice(invoice: Invoice) {
-    this.http.post(this.baseURL+'/auth/invoice/send', invoice)
-      .subscribe(
-        response => {
+    this.http.post(this.baseURL + '/auth/invoice/send', invoice)
+      .subscribe({
+        next: response => {
+          console.log('Invoice sent successfully', response);
         },
-        error => {
+        error: error => {
           alert(error);
           console.log(error);
         }
-      );
+      });
   }
 
   // sendReminder(invoice: Invoice, htmlText: string) {

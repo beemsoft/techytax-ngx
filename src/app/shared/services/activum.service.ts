@@ -59,9 +59,8 @@ export class ActivumService {
   }
 
   updateActivum(activum: Activum) {
-    let body = JSON.stringify(activum);
     let url = this.baseURL+'/auth/activum';
-    return this.http.put(url, body)
+    return this.http.put(url, activum)
       .pipe(catchError(this.handleError));
   }
 

@@ -16,6 +16,7 @@ import { MatTableModule } from "@angular/material/table";
 import { FiscalOverviewModule } from './fiscal-overview/fiscal-overview.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { SendInvoiceModule } from './send-invoice/send-invoice.module';
 import { ErrorInterceptor, JwtInterceptor } from '@app/_helpers';
 import { AlertComponent } from '@app/_components';
@@ -29,6 +30,8 @@ import { ActivaModule } from '@app/activa/activa.module';
 import { CostModule } from '@app/cost/cost.module';
 import { BookModule } from '@app/book/book.module';
 
+import { provideZoneChangeDetection } from '@angular/core';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -37,6 +40,7 @@ import { BookModule } from '@app/book/book.module';
     HttpClientModule,
     MatButtonModule,
     MatMenuModule,
+    MatToolbarModule,
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
@@ -60,10 +64,11 @@ import { BookModule } from '@app/book/book.module';
     LoginComponent
   ],
   providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
     // provider used to create fake backend
-    fakeBackendProvider
+    // fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })

@@ -37,11 +37,16 @@ export class AddEditComponent implements OnInit {
         if (!this.isAddMode) {
             this.customerService.getCustomer(this.id)
                 .pipe(first())
-                .subscribe(x => {
-                    this.f.name.setValue(x.name);
-                    this.f.address.setValue(x.address);
-                    this.f.emailInvoice.setValue(x.emailInvoice);
-                    this.f.contact.setValue(x.contact);
+                .subscribe({
+                    next: x => {
+                        this.f.name.setValue(x.name);
+                        this.f.address.setValue(x.address);
+                        this.f.emailInvoice.setValue(x.emailInvoice);
+                        this.f.contact.setValue(x.contact);
+                    },
+                    error: error => {
+                        this.alertService.error(error);
+                    }
                 });
         }
     }
@@ -71,29 +76,31 @@ export class AddEditComponent implements OnInit {
     private createCustomer() {
         this.customerService.addCustomer(this.form.value)
             .pipe(first())
-            .subscribe(
-                data => {
+            .subscribe({
+                next: data => {
                     this.alertService.success('Toevoegen gelukt', { keepAfterRouteChange: true });
                     this.router.navigate(['.', { relativeTo: this.route }]);
                 },
-                error => {
+                error: error => {
                     this.alertService.error(error);
                     this.loading = false;
-                });
+                }
+            });
     }
 
   private updateCustomer() {
     this.form.value.id = this.id;
     this.customerService.updateCustomer(this.form.value)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Wijzigen gelukt', {keepAfterRouteChange: true});
-          this.router.navigate(['..', {relativeTo: this.route}]);
+      .subscribe({
+        next: data => {
+          this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
+          this.router.navigate(['..', { relativeTo: this.route }]);
         },
-        error => {
+        error: error => {
           this.alertService.error(error);
           this.loading = false;
-        });
+        }
+      });
   }
 }

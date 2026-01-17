@@ -1,54 +1,59 @@
 <div class="p-4">
     <div class="container">
-        <select *ngIf="projects != undefined && projects.length > 1" #sel [ngModel]="invoice"
-                (ngModelChange)="onChangeEvent($event)">
-            <option *ngFor="let item of projects" [ngValue]="item"
-                    [selected]="invoice.project && invoice.project.code == item.code">{{item.code}}
-            </option>
-        </select>
-        <div *ngIf="invoice.project">
+        @if (projects() != undefined && projects().length > 1) {
+            <select #sel [ngModel]="invoice()" (ngModelChange)="onChangeEvent($event)">
+                @for (item of projects(); track item.code) {
+                    <option [ngValue]="item" [selected]="invoice().project && invoice().project.code == item.code">
+                        {{item.code}}
+                    </option>
+                }
+            </select>
+        }
+        @if (invoice().project) {
             <table width="100%">
                 <tr>
                     <td>Project:</td>
-                    <td>{{invoice.project.projectDescription}}</td>
+                    <td>{{invoice().project.projectDescription}}</td>
                 </tr>
                 <tr>
                     <td>Factuur email:</td>
-                    <td>{{invoice.project.customer.emailInvoice}}</td>
+                    <td>{{invoice().project.customer.emailInvoice}}</td>
                 </tr>
                 <tr>
                     <td>Factuur maand:</td>
-                    <td><input [(ngModel)]="invoice.month"></td>
+                    <td><input [ngModel]="invoice().month" (ngModelChange)="invoice().month=$event; updateDescription()"></td>
                 </tr>
                 <tr>
                     <td>Factuur nummer:</td>
-                    <td><input [(ngModel)]="invoice.invoiceNumber" (change)="updateDescription()"></td>
+                    <td><input [ngModel]="invoice().invoiceNumber" (ngModelChange)="invoice().invoiceNumber=$event; updateDescription()"></td>
                 </tr>
                 <tr>
                     <td># Uren:</td>
-                    <td>{{invoice.unitsOfWork}}</td>
+                    <td>{{invoice().unitsOfWork}}</td>
                 </tr>
-                <tr *ngIf="invoice.unitsOfWork && invoice.unitsOfWork < 0">
-                    <td>Oorspronkelijke factuur nummer:</td>
-                    <td><input [(ngModel)]="invoice.originalInvoiceNumber"></td>
-                </tr>
+                @if (invoice().unitsOfWork && invoice().unitsOfWork < 0) {
+                    <tr>
+                        <td>Oorspronkelijke factuur nummer:</td>
+                        <td><input [ngModel]="invoice().originalInvoiceNumber" (ngModelChange)="invoice().originalInvoiceNumber=$event"></td>
+                    </tr>
+                }
                 <tr>
                     <td>Omzet (subtotaal):</td>
-                    <td>{{subTotal}}</td>
+                    <td>{{subTotal()}}</td>
                 </tr>
                 <tr>
                     <td>Omzet (totaal):</td>
-                    <td>{{invoice.revenue}}</td>
+                    <td>{{invoice().revenue}}</td>
                 </tr>
                 <tr>
-                    <td colspan="2"><textarea style="width: 100%;" [(ngModel)]="invoice.htmlText"></textarea></td>
+                    <td colspan="2"><textarea style="width: 100%;" [ngModel]="invoice().htmlText" (ngModelChange)="invoice().htmlText=$event"></textarea></td>
                 </tr>
             </table>
             <div class="checkbox">
-                <input type="checkbox" (change)="approveInvoice = !approveInvoice"> Ik geef toestemming voor het opslaan van mijn gegevens.
+                <input type="checkbox" (change)="approveInvoice.set(!approveInvoice())"> Ik geef toestemming voor het opslaan van mijn gegevens.
             </div>
             <button (click)="sendInvoice()" [disabled]="isButtonDisabled()">Stuur factuur</button>
-            Test email: <input [(ngModel)]="invoice.project.customer.emailInvoice">
-        </div>
+            Test email: <input [ngModel]="invoice().project.customer.emailInvoice" (ngModelChange)="invoice().project.customer.emailInvoice=$event">
+        }
     </div>
 </div>

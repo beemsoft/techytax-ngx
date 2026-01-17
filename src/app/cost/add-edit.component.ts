@@ -53,17 +53,23 @@ export class AddEditComponent implements OnInit {
     if (!this.isAddMode) {
       this.costService.getById(this.id)
         .pipe(first())
-        .subscribe(cost => {
-          this.f.date.setValue(cost.date != null ? formatDate(cost.date, 'yyyy-MM-dd', 'en') : null);
-          this.f.description.setValue(cost.description);
-          this.f.amount.setValue(cost.amount);
-          this.f.vat.setValue(cost.vat);
-          // @ts-ignore
-          this.f.costType.patchValue(cost.costType.id);
-          this.costType = cost.costType;
+        .subscribe({
+          next: cost => {
+            this.f.date.setValue(cost.date != null ? formatDate(cost.date, 'yyyy-MM-dd', 'en') : null);
+            this.f.description.setValue(cost.description);
+            this.f.amount.setValue(cost.amount);
+            this.f.vat.setValue(cost.vat);
+            // @ts-ignore
+            this.f.costType.patchValue(cost.costType.id);
+            this.costType = cost.costType;
+          },
+          error: error => {
+            this.alertService.error(error);
+          }
         });
     } else {
-      this.f.costDate.setValue(formatDate(new Date(), 'yyyy-MM-dd', 'en'));
+      // @ts-ignore
+      this.f.date.setValue(formatDate(new Date(), 'yyyy-MM-dd', 'en'));
     }
   }
 
@@ -92,15 +98,16 @@ export class AddEditComponent implements OnInit {
     this.form.value.costType = this.costType;
     this.costService.addCost(this.form.value)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Toevoegen gelukt', {keepAfterRouteChange: true});
-          this.router.navigate(['.', {relativeTo: this.route}]);
+      .subscribe({
+        next: data => {
+          this.alertService.success('Toevoegen gelukt', { keepAfterRouteChange: true });
+          this.router.navigate(['.', { relativeTo: this.route }]);
         },
-        error => {
+        error: error => {
           this.alertService.error(error);
           this.loading = false;
-        });
+        }
+      });
   }
 
   private updateCost() {
@@ -108,14 +115,15 @@ export class AddEditComponent implements OnInit {
     this.form.value.id = this.id;
     this.costService.updateCost(this.form.value)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Wijzigen gelukt', {keepAfterRouteChange: true});
-          this.router.navigate(['..', {relativeTo: this.route}]);
+      .subscribe({
+        next: data => {
+          this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
+          this.router.navigate(['..', { relativeTo: this.route }]);
         },
-        error => {
+        error: error => {
           this.alertService.error(error);
           this.loading = false;
-        });
+        }
+      });
   }
 }

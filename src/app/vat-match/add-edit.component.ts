@@ -50,14 +50,19 @@ export class AddEditComponent implements OnInit {
     if (!this.isAddMode) {
       this.costMatchService.getById(this.id)
         .pipe(first())
-        .subscribe(costMatch => {
-          this.costMatch = costMatch
-          this.f.matchString.setValue(costMatch.matchString);
-          this.f.costType.setValue(costMatch.costType['id']);
-          this.f.costCharacter.setValue(costMatch.costCharacter);
-          this.f.vatType.setValue(costMatch.vatType);
-          this.f.percentage.setValue(costMatch.percentage);
-          this.f.fixedAmount.setValue(costMatch.fixedAmount);
+        .subscribe({
+          next: costMatch => {
+            this.costMatch = costMatch
+            this.f.matchString.setValue(costMatch.matchString);
+            this.f.costType.setValue(costMatch.costType['id']);
+            this.f.costCharacter.setValue(costMatch.costCharacter);
+            this.f.vatType.setValue(costMatch.vatType);
+            this.f.percentage.setValue(costMatch.percentage);
+            this.f.fixedAmount.setValue(costMatch.fixedAmount);
+          },
+          error: error => {
+            this.alertService.error(error);
+          }
         });
     } else {
 
@@ -110,29 +115,31 @@ export class AddEditComponent implements OnInit {
     let costMatch = new CostMatch();
     this.costMatchService.addMatch(costMatch)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Toevoegen gelukt', {keepAfterRouteChange: true});
-          this.router.navigate(['.', {relativeTo: this.route}]);
+      .subscribe({
+        next: data => {
+          this.alertService.success('Toevoegen gelukt', { keepAfterRouteChange: true });
+          this.router.navigate(['.', { relativeTo: this.route }]);
         },
-        error => {
+        error: error => {
           this.alertService.error(error);
           this.loading = false;
-        });
+        }
+      });
   }
 
   private updateMatch() {
     this.form.value.id = this.costMatch.id;
     this.costMatchService.updateMatch(this.form.value)
       .pipe(first())
-      .subscribe(
-        data => {
-          this.alertService.success('Wijzigen gelukt', {keepAfterRouteChange: true});
-          this.router.navigate(['..', {relativeTo: this.route}]);
+      .subscribe({
+        next: data => {
+          this.alertService.success('Wijzigen gelukt', { keepAfterRouteChange: true });
+          this.router.navigate(['..', { relativeTo: this.route }]);
         },
-        error => {
+        error: error => {
           this.alertService.error(error);
           this.loading = false;
-        });
+        }
+      });
   }
 }

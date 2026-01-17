@@ -13,25 +13,33 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let costMatch of costMatches">
-            <td>{{costMatch.matchString}}</td>
-            <td>{{costTypes[costMatch.costType['id']]}}</td>
-            <td>{{costMatch.costCharacter}}</td>
-            <td>{{costMatch.vatType}}</td>
-            <td>{{costMatch.percentage}}</td>
-            <td>{{costMatch.fixedAmount}}</td>
-            <td style="white-space: nowrap">
-                <a routerLink="edit/{{costMatch.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                <button (click)="deleteMatch(costMatch.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="costMatch.isDeleting">
-                    <span *ngIf="costMatch.isDeleting" class="spinner-border spinner-border-sm"></span>
-                    <span *ngIf="!costMatch.isDeleting">Delete</span>
-                </button>
-            </td>
-        </tr>
-        <tr *ngIf="!costMatches">
-            <td colspan="4" class="text-center">
-                <span class="spinner-border spinner-border-lg align-center"></span>
-            </td>
-        </tr>
+        @for (costMatch of costMatches(); track costMatch.id) {
+            <tr>
+                <td>{{costMatch.matchString}}</td>
+                <td>{{costTypes[costMatch.costType['id']]}}</td>
+                <td>{{costMatch.costCharacter}}</td>
+                <td>{{costMatch.vatType}}</td>
+                <td>{{costMatch.percentage}}</td>
+                <td>{{costMatch.fixedAmount}}</td>
+                <td style="white-space: nowrap">
+                    <a routerLink="edit/{{costMatch.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                    <button (click)="deleteMatch(costMatch.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="costMatch.isDeleting">
+                        @if (costMatch.isDeleting) {
+                            <span class="spinner-border spinner-border-sm"></span>
+                        }
+                        @if (!costMatch.isDeleting) {
+                            <span>Delete</span>
+                        }
+                    </button>
+                </td>
+            </tr>
+        }
+        @if (!costMatches()) {
+            <tr>
+                <td colspan="4" class="text-center">
+                    <span class="spinner-border spinner-border-lg align-center"></span>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
