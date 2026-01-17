@@ -2,190 +2,185 @@
     <h1>Fiscaal overzicht {{ fo.jaar }}</h1>
     <h2>Winst-en-verliesrekening</h2>
     <h3>Opbrengsten</h3>
-    <div>
+    <div class="fiscal-item">
         <label>Opbrengsten uit leveringen en diensten</label>
-        {{ fo.profitAndLoss.income.nettoOmzet }}
+        <span class="value">{{ fo.profitAndLoss.income.nettoOmzet | currency:'EUR' }}</span>
     </div>
     <h3>Afschrijvingen</h3>
-    <div>
+    <div class="fiscal-item">
         <label>Gebouwen en terreinen</label>
-        {{ fo.profitAndLoss.depreciation.settlementDepreciation }}
+        <span class="value">{{ fo.profitAndLoss.depreciation.settlementDepreciation | currency:'EUR' }}</span>
     </div>
-    <div>
+    <div class="fiscal-item">
         <label>Machines en installaties</label>
-        {{ fo.profitAndLoss.depreciation.machineryDepreciation }}
+        <span class="value">{{ fo.profitAndLoss.depreciation.machineryDepreciation | currency:'EUR' }}</span>
     </div>
-    <div>
+    <div class="fiscal-item">
         <label>Overige materiële vaste activa (auto)</label>
-        {{ fo.profitAndLoss.depreciation.afschrijvingAuto }}
+        <span class="value">{{ fo.profitAndLoss.depreciation.afschrijvingAuto | currency:'EUR' }}</span>
     </div>
 
     <h3>Overige bedrijfskosten</h3>
-    <div>
+    <div class="fiscal-item">
         <label>Auto- en transportkosten</label>
-        {{ fo.profitAndLoss.companyCosts.carAndTransportCosts }}
+        <span class="value">{{ fo.profitAndLoss.companyCosts.carAndTransportCosts | currency:'EUR' }}</span>
     </div>
-    <div>
+    <div class="fiscal-item">
         <label>Huisvestingskosten</label>
-        {{ fo.profitAndLoss.companyCosts.officeCosts }}
+        <span class="value">{{ fo.profitAndLoss.companyCosts.officeCosts | currency:'EUR' }}</span>
     </div>
-    <div>
+    <div class="fiscal-item">
         <label>Andere kosten</label>
-        {{ fo.profitAndLoss.companyCosts.otherCosts }}
+        <span class="value">{{ fo.profitAndLoss.companyCosts.otherCosts | currency:'EUR' }}</span>
     </div>
     <h3>Balans</h3>
     <h4>Activa</h4>
-    <table>
-        <tr>
-            <td></td>
-            <td>
-                Kosten van
-                aanschaf of
-                voortbrenging
-            </td>
-            <td>
-                Boekwaarde
-                begin boekjaar
-            </td>
-            <td>
-                Boekwaarde
-                einde boekjaar
-            </td>
-            <td>
-                Restwaarde
-            </td>
-        </tr>
-        <tr>
-            <td>(Bedrijfs)gebouwen en terreinen</td>
-            <td></td>
-            <td>{{ fo.balanceMap["OFFICE"].beginSaldo }}</td>
-            <td>{{ fo.balanceMap["OFFICE"].endSaldo }}</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Machines en installaties</td>
-            <td>{{ fo.balanceMap["MACHINERY"].totalPurchaseCost }}</td>
-            <td>{{ fo.balanceMap["MACHINERY"].beginSaldo }}</td>
-            <td>{{ fo.balanceMap["MACHINERY"].endSaldo }}</td>
-            <td>{{ fo.balanceMap["MACHINERY"].totalRemainingValue }}</td>
-        </tr>
-        <tr>
-            <td>Overige materiële vaste activa</td>
-            <td>{{ fo.balanceMap["CAR"].totalPurchaseCost }}</td>
-            <td>{{ fo.balanceMap["CAR"].beginSaldo }}</td>
-            <td>{{ fo.balanceMap["CAR"].endSaldo }}</td>
-            <td>{{ fo.balanceMap["CAR"].totalRemainingValue }}</td>
-        </tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Kosten van aanschaf of voortbrenging</th>
+                <th>Boekwaarde begin boekjaar</th>
+                <th>Boekwaarde einde boekjaar</th>
+                <th>Restwaarde</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>(Bedrijfs)gebouwen en terreinen</td>
+                <td></td>
+                <td>{{ fo.balanceMap["OFFICE"].beginSaldo | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["OFFICE"].endSaldo | currency:'EUR' }}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Machines en installaties</td>
+                <td>{{ fo.balanceMap["MACHINERY"].totalPurchaseCost | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["MACHINERY"].beginSaldo | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["MACHINERY"].endSaldo | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["MACHINERY"].totalRemainingValue | currency:'EUR' }}</td>
+            </tr>
+            <tr>
+                <td>Overige materiële vaste activa</td>
+                <td>{{ fo.balanceMap["CAR"].totalPurchaseCost | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["CAR"].beginSaldo | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["CAR"].endSaldo | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["CAR"].totalRemainingValue | currency:'EUR' }}</td>
+            </tr>
+        </tbody>
     </table>
 
     <h5>Specificatie van (bedrijfs)gebouwen en terreinen</h5>
-    <table>
-        <tr>
-            <td></td>
-            <td>
-                Kosten van
-                aanschaf of
-                voortbrenging
-            </td>
-            <td>
-                Boekwaarde
-                einde boekjaar
-            </td>
-            <td>
-                Restwaarde
-            </td>
-            <td>
-                Bodemwaarde
-            </td>
-        </tr>
-        <tr>
-            <td>(Bedrijfs)gebouwen in eigen
-                gebruik waarop wordt
-                afgeschreven (met
-                bodemwaarde)
-            </td>
-            <td>{{ fo.balanceMap["OFFICE"].totalPurchaseCost }}</td>
-            <td>{{ fo.balanceMap["OFFICE"].endSaldo }}</td>
-            <td>{{ fo.balanceMap["OFFICE"].totalRemainingValue }}</td>
-            <td>{{ fo.officeBottomValue }}</td>
-        </tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Kosten van aanschaf of voortbrenging</th>
+                <th>Boekwaarde einde boekjaar</th>
+                <th>Restwaarde</th>
+                <th>Bodemwaarde</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>(Bedrijfs)gebouwen in eigen gebruik waarop wordt afgeschreven (met bodemwaarde)</td>
+                <td>{{ fo.balanceMap["OFFICE"].totalPurchaseCost | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["OFFICE"].endSaldo | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["OFFICE"].totalRemainingValue | currency:'EUR' }}</td>
+                <td>{{ fo.officeBottomValue | currency:'EUR' }}</td>
+            </tr>
+        </tbody>
     </table>
+
     <h5>Liquide middelen</h5>
-    <table>
-        <tr>
-            <td></td>
-            <td>
-                Boekwaarde
-                begin boekjaar
-            </td>
-            <td>
-                Boekwaarde
-                einde boekjaar
-            </td>
-        </tr>
-        <tr>
-            <td>Liquide middelen</td>
-            <td>{{ fo.balanceMap["CURRENT_ASSETS"].beginSaldo }}</td>
-            <td>{{ fo.balanceMap["CURRENT_ASSETS"].endSaldo }}</td>
-        </tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Boekwaarde begin boekjaar</th>
+                <th>Boekwaarde einde boekjaar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Liquide middelen</td>
+                <td>{{ fo.balanceMap["CURRENT_ASSETS"].beginSaldo | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["CURRENT_ASSETS"].endSaldo | currency:'EUR' }}</td>
+            </tr>
+        </tbody>
     </table>
 
     <h4>Passiva</h4>
-    <table>
-        <tr>
-            <td></td>
-            <td>
-                Boekwaarde
-                begin boekjaar
-            </td>
-            <td>
-                Boekwaarde
-                einde boekjaar
-            </td>
-        </tr>
-        <tr>
-            <td>Eigen vermogen</td>
-            <td>{{ fo.balanceMap["NON_CURRENT_ASSETS"].beginSaldo }}</td>
-            <td>{{ fo.balanceMap["NON_CURRENT_ASSETS"].endSaldo }}</td>
-        </tr>
-        <tr>
-            <td>Oudedagsreserve</td>
-            <td>{{ fo.balanceMap["PENSION"].beginSaldo }}</td>
-            <td>{{ fo.balanceMap["PENSION"].endSaldo }}</td>
-        </tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Boekwaarde begin boekjaar</th>
+                <th>Boekwaarde einde boekjaar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Eigen vermogen</td>
+                <td>{{ fo.balanceMap["NON_CURRENT_ASSETS"].beginSaldo | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["NON_CURRENT_ASSETS"].endSaldo | currency:'EUR' }}</td>
+            </tr>
+            <tr>
+                <td>Oudedagsreserve</td>
+                <td>{{ fo.balanceMap["PENSION"].beginSaldo | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["PENSION"].endSaldo | currency:'EUR' }}</td>
+            </tr>
+        </tbody>
     </table>
+
     <h5>Kortlopende schulden</h5>
-    <table>
-        <tr>
-            <td></td>
-            <td>
-                Boekwaarde
-                begin boekjaar
-            </td>
-            <td>
-                Boekwaarde
-                einde boekjaar
-            </td>
-        </tr>
-        <tr>
-            <td>Schuld omzetbelasting</td>
-            <td>{{ fo.balanceMap["VAT_TO_BE_PAID"].beginSaldo }}</td>
-            <td>{{ fo.balanceMap["VAT_TO_BE_PAID"].endSaldo }}</td>
-        </tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Boekwaarde begin boekjaar</th>
+                <th>Boekwaarde einde boekjaar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Schuld omzetbelasting</td>
+                <td>{{ fo.balanceMap["VAT_TO_BE_PAID"].beginSaldo | currency:'EUR' }}</td>
+                <td>{{ fo.balanceMap["VAT_TO_BE_PAID"].endSaldo | currency:'EUR' }}</td>
+            </tr>
+        </tbody>
     </table>
+
     <h5>Specificatie schuld omzetbelasting</h5>
-    <table>
-        <tr>
-            <td>Schuld omzetbelasting over dit boekjaar</td>
-            <td>{{ fo.balanceMap["VAT_TO_BE_PAID"].endSaldo }}</td>
-        </tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Schuld omzetbelasting over dit boekjaar</th>
+                <th>Bedrag</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Schuld omzetbelasting over dit boekjaar</td>
+                <td>{{ fo.balanceMap["VAT_TO_BE_PAID"].endSaldo | currency:'EUR' }}</td>
+            </tr>
+        </tbody>
     </table>
+
     <h4>Privéonttrekkingen en -stortingen</h4>
     <h5>Onttrekking privégebruik auto van de onderneming</h5>
-    <table>
-        <tr>
-            <td>Kosten voor deze auto</td>
-            <td>{{ fo.profitAndLoss.companyCosts.carCosts }}</td>
-        </tr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Kosten voor deze auto</th>
+                <th>Bedrag</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Kosten voor deze auto</td>
+                <td>{{ fo.profitAndLoss.companyCosts.carCosts | currency:'EUR' }}</td>
+            </tr>
+        </tbody>
     </table>
 }
