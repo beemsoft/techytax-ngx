@@ -127,7 +127,6 @@ export class AddEditComponent implements OnInit {
   }
 
   private createCost() {
-    this.form.value.costType = this.costType;
     this.costService.addCost(this.form.value, this.billFile, this.itemFile)
       .pipe(first())
       .subscribe({
@@ -143,7 +142,6 @@ export class AddEditComponent implements OnInit {
   }
 
   private updateCost() {
-    this.form.value.costType = this.costType;
     this.form.value.id = this.id;
     this.costService.updateCost(this.form.value, this.billFile, this.itemFile)
       .pipe(first())
