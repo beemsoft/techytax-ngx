@@ -11,6 +11,8 @@ import { LabelService } from '../shared/services/label.service';
 import { VatCalculationService, VatReport } from '../shared/services/vat-calculation.service';
 import { MatTableDataSource } from '@angular/material/table';
 import moment from 'moment';
+import {CostService} from "@app/shared/services/cost.service";
+import {first} from "rxjs/operators";
 
 @Component({
   standalone: false, templateUrl: 'vat.component.html'})
@@ -20,19 +22,22 @@ export class VatComponent implements OnInit {
   public vatReport = signal<VatReport>(new VatReport());
   private costMatches;
   transactionsLoaded = signal(0);
-  private transactions: Array<Transaction> = [];
+  private transactionsFromCosts: Array<Transaction> = [];
+  private transactions: Array<Transaction> = this.transactionsFromCosts;
   transactionsUnmatched = signal<Array<Transaction>>([]);
   public columnsToDisplay: string[] = ['date', 'description', 'matchString', 'costType', 'costCharacter', 'matchPercentage', 'matchFixedAmount', 'vatType', 'amount', 'amountNet', 'vatOut'];
   dataSource = signal<any>(null);
   costTypeList = [];
   costCharacterList = [];
   vatTypeList = [];
+  private costs = signal<any[] | null>(null);
 
   constructor(
     private importListService: ImportListService,
     private costMatchService: CostMatchService,
     private labelService: LabelService,
-    private vatCalculationService: VatCalculationService
+    private vatCalculationService: VatCalculationService,
+    private costService: CostService,
   ) {
     this.uploadedFile = null;
   }
@@ -64,6 +69,23 @@ export class VatComponent implements OnInit {
         this.vatTypeList.push({key: vatType, value: this.labelService.get(VatType[vatType])});
       }
     }
+    this.costService.getVatCosts()
+        .pipe(first())
+        .subscribe(costs => {
+          this.costs.set(costs as unknown as any[]);
+          console.log(this.costs);
+          for (const cost in costs) {
+            let transaction = new Transaction();
+            transaction.amountNet = costs[cost].amount;
+            transaction.amountVat = costs[cost].vat;
+            transaction.amount = transaction.amountNet + transaction.amountVat;
+            transaction.date = moment(costs[cost].date, 'YYYY-MM-DD') ;
+            transaction.costType = costs[cost].costType;
+            transaction.description = costs[cost].description;
+            this.transactionsFromCosts.push(transaction);
+            console.log(costs[cost]);
+          }
+        });
   }
 
   displayVatTypeSelector(transaction: Transaction) {

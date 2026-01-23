@@ -40,6 +40,11 @@ export class CostService {
       .pipe(catchError(this.handleError));
   }
 
+  getVatCosts(): Observable<Cost> {
+    return this.http.get<Cost>(this.baseURL + '/auth/vat-costs')
+        .pipe(catchError(this.handleError));
+  }
+
   addCost(cost: any, billImage?: File, itemImage?: File) {
     const formData = this.createFormData(cost, billImage, itemImage);
     return this.http.post(this.baseURL + '/auth/cost', formData)
