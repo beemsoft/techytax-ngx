@@ -1,6 +1,6 @@
 {
   "name": "techytax-ngx",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "@angular/platform-browser": "^21.1.0",
     "@angular/platform-browser-dynamic": "^21.1.0",
     "@angular/router": "^21.1.0",
-    "bootstrap": "^4.6.2",
+    "bootstrap": "5.3.8",
     "moment": "^2.29.4",
     "rxjs": "^7.8.1",
     "tslib": "^2.6.2",
