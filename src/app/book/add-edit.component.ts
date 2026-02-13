@@ -44,7 +44,8 @@ export class AddEditComponent implements OnInit {
         .subscribe({
           next: bookValue => {
             this.bookValue = bookValue
-            this.f.balanceType.setValue(bookValue.balanceType);
+            const balanceType = typeof bookValue.balanceType === 'string' ? BookType[bookValue.balanceType as keyof typeof BookType] : bookValue.balanceType;
+            this.f.balanceType.setValue(balanceType);
             this.f.bookYear.setValue(bookValue.bookYear);
             this.f.saldo.setValue(bookValue.saldo);
           },
@@ -59,7 +60,7 @@ export class AddEditComponent implements OnInit {
     for (let bookType in BookType) {
       let isValueProperty = parseInt(bookType, 10) >= 0;
       if (isValueProperty) {
-        this.balanceTypeList.push({key: BookType[bookType], value: this.labelService.get(BookType[bookType])});
+        this.balanceTypeList.push({key: parseInt(bookType, 10), value: this.labelService.get(BookType[bookType])});
       }
     }
   }
@@ -89,7 +90,6 @@ export class AddEditComponent implements OnInit {
   }
 
   private createBookValue() {
-    this.form.value.costType = this.bookValue;
     this.bookService.addBookValue(this.form.value)
       .pipe(first())
       .subscribe({
