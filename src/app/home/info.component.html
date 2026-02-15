@@ -1,0 +1,134 @@
+<div class="p-4">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb bg-transparent p-0">
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Informatie</li>
+            </ol>
+        </nav>
+
+        <h1>Over TechyTax</h1>
+        <p class="lead">TechyTax combineert de kracht van open source met een slim, lokaal-eerst model dat privacy en eenvoud boven alles stelt.</p>
+
+        <div class="row mt-5">
+            <div class="col-md-8">
+                <mat-card class="mb-5 shadow">
+                    <mat-card-header>
+                        <mat-card-title><mat-icon class="mr-2">settings_suggest</mat-icon> Hoe het werkt</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="pt-4 info-text-large">
+                        <h4 class="neon-text mb-3">100% Lokaal & Altijd Toegankelijk</h4>
+                        <p>In tegenstelling tot SaaS (Software as a Service) oplossingen, draait TechyTax op jouw eigen computer of NAS via Docker. Je data wordt opgeslagen in een lokale H2-database op je eigen harde schijf. Dit biedt een cruciaal voordeel: je data is <strong>altijd</strong> toegankelijk, zelfs zonder internetverbinding of als een cloudprovider besluit de stekker eruit te trekken.</p>
+
+                        <h4 class="neon-text mb-3 mt-4">Jouw Data, Jouw Database</h4>
+                        <p>Omdat we gebruik maken van de betrouwbare H2-database engine en Docker volume mapping, blijft je administratie fysiek op jouw hardware staan. Je bent niet afhankelijk van de beschikbaarheid, prijswijzigingen of het beleid van een externe cloud-dienst. Dit garandeert dat je ook over 10 of 20 jaar nog steeds bij je financiële gegevens kunt, simpelweg door het databasebestand te openen.</p>
+
+                        <h4 class="neon-text mb-3 mt-4">Privacy-Eerst (Stealth Mode)</h4>
+                        <p>TechyTax heeft geen bankkoppelingen (PSD2) die je data naar buiten sturen. Je importeert handmatig je bank-CSV's, waarna de software deze slim matcht voor je BTW-aangifte.</p>
+
+                        <h4 class="neon-text mb-3 mt-4">Open Source Kern</h4>
+                        <p>De volledige boekhoudlogica, BTW-berekeningen en PDF-generatie zijn open source. Dit zorgt voor maximale transparantie en vertrouwen: iedereen kan de broncode auditen.</p>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="mb-5 shadow">
+                    <mat-card-header>
+                        <mat-card-title><mat-icon class="mr-2">list_alt</mat-icon> Belangrijke Functies & CRM</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="pt-4 info-text-large">
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><mat-icon class="accent-text mr-2">dashboard</mat-icon> <strong>Dashboard:</strong> Direct overzicht van je financiële status.</li>
+                            <li class="mb-3"><mat-icon class="accent-text mr-2">groups</mat-icon> <strong>CRM & Relatiebeheer:</strong> Beheer al je klanten op één plek. Houd contactgegevens, projecten en specifieke afspraken centraal bij.</li>
+                            <li class="mb-3"><mat-icon class="accent-text mr-2">history_edu</mat-icon> <strong>Project- & Urenregistratie:</strong> Koppel uren en activiteiten direct aan projecten en klanten voor een sluitende administratie.</li>
+                            <li class="mb-3"><mat-icon class="accent-text mr-2">picture_as_pdf</mat-icon> <strong>Facturatie:</strong> Genereer professionele PDF-facturen op je lokale bestandssysteem. Deze kun je vervolgens zelf als bijlage toevoegen en versturen via je eigen e-mailprogramma.</li>
+                            <li class="mb-3"><mat-icon class="accent-text mr-2">calculate</mat-icon> <strong>BTW Aangifte:</strong> Automatische berekeningen op basis van je kosten en omzet.</li>
+                            <li class="mb-3"><mat-icon class="accent-text mr-2">assessment</mat-icon> <strong>Fiscaal Overzicht (Beta):</strong> Uitgebreide rapportages ter ondersteuning van je aangifte. Let op: deze functie is nog in beta en dient niet als volledige belastingaangifte.</li>
+                        </ul>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+
+            <div class="col-md-4">
+                <mat-card class="mb-5 shadow">
+                    <mat-card-header>
+                        <mat-card-title><mat-icon class="mr-2">vpn_key</mat-icon> Licentie & Support</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="pt-4 info-text-large">
+                        <p>TechyTax maakt gebruik van een "Yearly Node-Unlock" model. De licentie is gekoppeld aan de installatie (hardware), niet aan de persoon.</p>
+                        <p>Met één licentie kun je meerdere administraties beheren, wat ideaal is voor ondernemers met meerdere labels of partners.</p>
+                        <a mat-raised-button color="primary" routerLink="/shell/license" class="w-100 py-2 mt-3">
+                            <mat-icon>visibility</mat-icon> Licentie status bekijken
+                        </a>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="mb-5 shadow">
+                    <mat-card-header>
+                        <mat-card-title><mat-icon class="mr-2">speed</mat-icon> Lean & Mean Philosophy</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="pt-4 info-text-large">
+                        <p>TechyTax is gebouwd met een sterke focus op efficiëntie en eenvoud. Geen onnodige overhead, geen complexe cloud-infrastructuren, alleen wat je echt nodig hebt voor je administratie.</p>
+
+                        <h4 class="neon-text mb-3 mt-4">Geen Bloatware</h4>
+                        <p>We voegen alleen functies toe die daadwerkelijk waarde toevoegen voor de ZZP'er. Geen overbodige menu's of complexe workflows die je afleiden van je kerntaken.</p>
+
+                        <h4 class="neon-text mb-3 mt-4">Maximale Performance</h4>
+                        <p>Omdat alles lokaal draait via Docker, heb je geen last van trage API's of externe servers die offline zijn. De applicatie reageert razendsnel en verbruikt minimale resources op je systeem.</p>
+
+                        <h4 class="neon-text mb-3 mt-4">Onafhankelijkheid</h4>
+                        <p>TechyTax dwingt je niet in een ecosysteem. Je bent niet afhankelijk van een internetverbinding om bij je eigen cijfers te kunnen. Dit is de ultieme vorm van digitale soevereiniteit.</p>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="mb-5 shadow border-warning">
+                    <mat-card-header>
+                        <mat-card-title><mat-icon class="mr-2">touch_app</mat-icon> Handmatige Acties (By Design)</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="pt-4 info-text-large">
+                        <p>TechyTax kiest bewust voor een "handmatig-waar-het-moet" aanpak. Dit garandeert je privacy en voorkomt complexe, foutgevoelige koppelingen.</p>
+
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <mat-icon class="accent-text mr-2">upload_file</mat-icon>
+                                <strong>Bankimport:</strong> Je downloadt zelf de CSV bij je bank en uploadt deze in TechyTax. Geen directe koppelingen met je bankrekening.
+                            </li>
+                            <li class="mb-3">
+                                <mat-icon class="accent-text mr-2">mail</mat-icon>
+                                <strong>Facturen Versturen:</strong> Je genereert de factuur als PDF en verstuurt deze zelf via je eigen e-mailprogramma (Outlook, Gmail, etc.).
+                            </li>
+                            <li class="mb-3">
+                                <mat-icon class="accent-text mr-2">save</mat-icon>
+                                <strong>Backups:</strong> Je kopieert zelf periodiek je databasebestand naar een veilige plek buiten je computer.
+                            </li>
+                            <li class="mb-3">
+                                <mat-icon class="accent-text mr-2">system_update</mat-icon>
+                                <strong>Updates:</strong> Je voert zelf een <code>docker pull</code> uit om de nieuwste versie van de software binnen te halen.
+                            </li>
+                            <li class="mb-3">
+                                <mat-icon class="accent-text mr-2">vpn_key</mat-icon>
+                                <strong>Licentie:</strong> Bij verlenging kopieer je handmatig je Hardware ID naar de website om een nieuwe activatiecode te ontvangen.
+                            </li>
+                            <li class="mb-3">
+                                <mat-icon class="accent-text mr-2">description</mat-icon>
+                                <strong>Belastingaangifte:</strong> De BTW- en inkomstenbelastingaangifte doe je handmatig bij de Belastingdienst. TechyTax levert hiervoor zoveel mogelijk de benodigde details en overzichten aan. Je blijft echter zelf volledig verantwoordelijk voor de juistheid van je aangifte.
+                            </li>
+                        </ul>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="mb-5 shadow border-warning">
+                    <mat-card-header>
+                        <mat-card-title><mat-icon class="mr-2">security</mat-icon> Veiligheid & Backups</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="pt-4 info-text-large">
+                        <div class="alert alert-warning mb-4">
+                            <mat-icon color="warn" class="mr-2">backup</mat-icon>
+                            <strong>Vergeet niet:</strong> Omdat alles lokaal draait, ben je zelf verantwoordelijk voor backups!
+                        </div>
+                        <p>TechyTax helpt je herinneren, maar je moet zelf actie ondernemen. Voor een volledige backup hoef je enkel het <strong>database bestand</strong> uit je gemapte Docker-volume te kopiëren naar een veilige plek (bijv. een externe schijf of NAS).</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="stealth-banner" *ngIf="shellService.isStealthMode()">
+    <mat-icon>security</mat-icon>
+    <span><strong>Stealth Mode Actief:</strong> TechyTax draait 100% lokaal en stuurt GEEN data naar buiten. Trek je internetkabel eruit om het te bewijzen!</span>
+    <button mat-raised-button color="accent" (click)="shellService.activateStealthMode(false)">Begrepen</button>
+</div>
+
+<div class="license-banner trial" *ngIf="shellService.licenseStatus() === 'trial' && !shellService.isStealthMode()">
+    <mat-icon>info</mat-icon>
+    <span>Trial Mode - <a routerLink="/shell/license">Activeer je licentie</a> om updates te blijven ontvangen.</span>
+</div>
+
+<div class="license-banner expired" *ngIf="shellService.licenseStatus() === 'expired'">
+    <mat-icon>warning</mat-icon>
+    <span>Licentie verlopen - <a routerLink="/shell/license">Verleng nu</a> om toegang te behouden.</span>
+</div>

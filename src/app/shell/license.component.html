@@ -1,0 +1,166 @@
+<div class="p-4">
+    <div class="container">
+        <h1>Licentie Beheer</h1>
+
+        <mat-card class="mb-4" *ngIf="shellService.licenseStatus() === 'active'">
+            <mat-card-header>
+                <mat-card-title>Licentie Status</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="pt-3">
+                <div class="alert alert-success d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <mat-icon class="mr-2">check_circle</mat-icon>
+                        <div>
+                            <span>Je licentie is <strong>actief</strong> en geldig voor deze installatie.</span>
+                            <div class="small" *ngIf="shellService.activationDate()">
+                                Geactiveerd op: <strong>{{shellService.activationDate() | date:'dd-MM-yyyy'}}</strong>
+                            </div>
+                            <div class="small" *ngIf="shellService.licenseExpiry()">
+                                Geldig tot: <strong>{{shellService.licenseExpiry() | date:'dd-MM-yyyy'}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <button mat-stroked-button color="warn" (click)="deactivate()">Deactiveren</button>
+                </div>
+
+                <div class="mt-4 info-text-large">
+                    <h4 class="neon-text mb-2">Updates</h4>
+                    <p>Je kunt TechyTax up-to-date houden door de nieuwste Docker image te downloaden. Gebruik hiervoor het volgende commando:</p>
+                    <div class="bg-dark p-3 rounded mb-3">
+                        <code class="text-light">docker pull beemsoft/techytax:latest</code>
+                    </div>
+                    of:
+                    <div class="bg-dark p-3 rounded mb-3">
+                        <code class="text-light">docker pull beemsoft/techytax-fe:latest</code>
+                    </div>
+                    <p class="text-muted small italic">
+                        <mat-icon style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle;">info</mat-icon>
+                        Als je opnieuwe bent ingelogd, checken we even of er een update beschikbaar is in Docker Hub.
+                    </p>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mb-4" *ngIf="shellService.licenseStatus() === 'expired'">
+            <mat-card-header>
+                <mat-card-title>Licentie Status</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="pt-3">
+                <div class="alert alert-danger d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <mat-icon class="mr-2">error</mat-icon>
+                        <div>
+                            <span>Je licentie is <strong>verlopen</strong>. Verleng je licentie om TechyTax te blijven gebruiken.</span>
+                            <div class="small" *ngIf="shellService.licenseExpiry()">
+                                Verlopen op: <strong>{{shellService.licenseExpiry() | date:'dd-MM-yyyy'}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mb-4" *ngIf="shellService.licenseStatus() === 'trial'">
+            <mat-card-header>
+                <mat-card-title>Licentie Status</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="pt-3">
+                <div class="alert alert-info d-flex align-items-center">
+                    <mat-icon class="mr-2">info</mat-icon>
+                    <div>
+                        <span>Je gebruikt TechyTax momenteel in <strong>proefmodus</strong>.</span>
+                        <div class="small" *ngIf="shellService.trialEndDate()">
+                            Proefperiode eindigt op: <strong>{{shellService.trialEndDate() | date:'dd-MM-yyyy'}}</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <p>In de proefmodus heb je volledige toegang tot alle functies. Let op: de <strong>BTW-aangifte pagina</strong> blijft functioneel tot het einde van de maand volgend op het huidige kwartaal.</p>
+                    <p class="text-muted small">Dit geeft je voldoende tijd om TechyTax uit te proberen en je eerste aangifte te doen voordat een licentie vereist is.</p>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mb-4">
+            <mat-card-header>
+                <mat-card-title>Hardware Identificatie</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="pt-3">
+                <div class="mb-3">
+                    <span class="text-muted">Huidige Status:</span>
+                    <strong class="ml-2" [ngClass]="{
+                        'text-success': shellService.licenseStatus() === 'active',
+                        'text-info': shellService.licenseStatus() === 'trial',
+                        'text-danger': shellService.licenseStatus() === 'expired'
+                    }">
+                        {{ shellService.licenseStatus() === 'active' ? 'Actief' :
+                           shellService.licenseStatus() === 'trial' ? 'Proefmodus' : 'Verlopen' }}
+                    </strong>
+                </div>
+
+                <p>Deze installatie is gekoppeld aan de volgende Hardware ID:</p>
+                <div class="d-flex align-items-center mb-2">
+                    <code #hwId class="mr-2">{{shellService.hardwareId()}}</code>
+                    <button mat-icon-button (click)="copyHardwareId(hwId)" title="Kopieer Hardware ID">
+                        <mat-icon>content_copy</mat-icon>
+                    </button>
+                </div>
+                <p class="mt-2 text-muted">Dit ID is uniek voor deze machine en wordt gebruikt voor het genereren van je licentie. Kopieer dit ID en plak deze op de TechyTax website om je licentie te verlengen of te activeren.</p>
+
+                <div class="mt-4 info-text-large">
+                    <h4 class="neon-text mb-2">Waarom Hardware ID?</h4>
+                    <p>In plaats van je te vragen om persoonlijke gegevens of een KvK-nummer, gebruiken we een anoniem Hardware ID. Dit biedt belangrijke voordelen:</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><mat-icon class="accent-text mr-2">visibility_off</mat-icon> <strong>Privacy:</strong> Het ID is volledig anoniem en niet herleidbaar naar jou of je bedrijf.</li>
+                        <li class="mb-2"><mat-icon class="accent-text mr-2">account_tree</mat-icon> <strong>Flexibiliteit:</strong> Je betaalt voor de installatie. Binnen deze installatie kun je onbeperkt administraties toevoegen zonder extra kosten.</li>
+                        <li class="mb-2"><mat-icon class="accent-text mr-2">wifi_off</mat-icon> <strong>Offline Controle:</strong> Omdat het ID lokaal wordt gegenereerd, kan de licentie gecontroleerd worden zonder dat je verbonden hoeft te zijn met het internet.</li>
+                    </ul>
+                </div>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="mb-4">
+            <mat-card-header>
+                <mat-card-title>Backups & Veiligheid</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="pt-3">
+                <p>Omdat TechyTax 100% lokaal draait, ben je zelf verantwoordelijk voor je data. TechyTax helpt je met herinneringen, maar je moet zelf actie ondernemen.</p>
+                <p><strong>Backup Instructie:</strong> Kopieer enkel het database bestand (meestal <code>techytax.mv.db</code> in je gemapte volume) naar een veilige plek zoals een externe schijf of NAS.</p>
+                <div class="alert" [class.alert-warning]="!shellService.lastBackupDate()" [class.alert-info]="shellService.lastBackupDate()">
+                    <mat-icon class="mr-2">backup</mat-icon>
+                    <span *ngIf="shellService.lastBackupDate()">Laatste backup geregistreerd op: <strong>{{shellService.lastBackupDate() | date:'dd-MM-yyyy HH:mm'}}</strong></span>
+                    <span *ngIf="!shellService.lastBackupDate()">Nog geen backup geregistreerd.</span>
+                </div>
+                <button mat-raised-button color="accent" (click)="shellService.markBackupDone()">
+                    <mat-icon>check</mat-icon> Ik heb nu een backup gemaakt
+                </button>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card *ngIf="shellService.licenseStatus() !== 'active'">
+            <mat-card-header>
+                <mat-card-title>Activatie</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="pt-3">
+                <p *ngIf="shellService.licenseStatus() === 'trial'" class="mb-3">
+                    Je bent momenteel in <strong>proefmodus</strong>. Activeer je licentie om updates te blijven ontvangen.
+                </p>
+                <p *ngIf="shellService.licenseStatus() === 'expired'" class="mb-3 text-danger">
+                    Je licentie is verlopen. Voer een nieuwe activatiecode in om TechyTax te blijven gebruiken.
+                </p>
+                <form [formGroup]="licenseForm" (ngSubmit)="activate()">
+                    <mat-form-field appearance="outline" class="w-100 mb-2">
+                        <mat-label>Activatie Code</mat-label>
+                        <input matInput formControlName="code" placeholder="Voer je ontvangen code in">
+                    </mat-form-field>
+
+                    <div class="mb-3">
+                        <p>Je kunt een activatiecode aanvragen door een e-mail te sturen naar <a href="mailto:techytax{{'@'}}gmail.com">techytax{{'@'}}gmail.com</a> met vermelding van je Hardware ID.</p>
+                    </div>
+
+                    <button mat-raised-button color="primary" [disabled]="licenseForm.invalid">Activeer</button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
