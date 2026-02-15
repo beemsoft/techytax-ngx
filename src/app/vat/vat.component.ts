@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import moment from 'moment';
 import {CostService} from "@app/shared/services/cost.service";
 import {first} from "rxjs/operators";
+import { ShellService } from '@app/shell/shell.service';
 
 @Component({
   standalone: false, templateUrl: 'vat.component.html'})
@@ -38,6 +39,7 @@ export class VatComponent implements OnInit {
     private labelService: LabelService,
     private vatCalculationService: VatCalculationService,
     private costService: CostService,
+    public shellService: ShellService
   ) {
     this.uploadedFile = null;
   }
@@ -49,8 +51,7 @@ export class VatComponent implements OnInit {
           this.costMatches = costMatchData;
         },
         error: error => {
-          alert(error);
-          console.log(error);
+          console.error(error);
         },
         complete: () => console.log('Costmatches retrieved')
       });
@@ -200,7 +201,6 @@ export class VatComponent implements OnInit {
           this.dataSource.set(new MatTableDataSource(this.transactions));
         },
         error: error => {
-          alert(error);
           console.error(error);
         }
       });

@@ -15,8 +15,6 @@ export class SendInvoiceComponent implements OnInit {
   subTotal = signal<number>(0);
   registration = signal<Registration>(null);
   invoiceType = signal<string>("factuur");
-  approveInvoice = signal<boolean>(false);
-
   constructor(
     private invoiceService: InvoiceService,
     private projectService: ProjectService,
@@ -62,8 +60,7 @@ export class SendInvoiceComponent implements OnInit {
 
   isButtonDisabled() {
     const inv = this.invoice();
-    return !this.approveInvoice()
-      || inv.unitsOfWork == undefined
+    return inv.unitsOfWork == undefined
       || (this.invoiceType() == "factuur" && inv.unitsOfWork < 1)
       || (this.invoiceType() == "creditnota" && (inv.unitsOfWork > -1
        || (inv.originalInvoiceNumber == undefined || inv.originalInvoiceNumber.length < 8)));

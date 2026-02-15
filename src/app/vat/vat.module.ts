@@ -11,6 +11,8 @@ import { CostCharacterSelector } from '../shared/selectors/cost-character.select
 import {MatSortModule} from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     imports: [
@@ -19,7 +21,9 @@ import { MatIconModule } from '@angular/material/icon';
         MatTableModule,
         MatSortModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        MatCardModule,
+        MatTooltipModule
     ],
   declarations: [
     VatComponent,

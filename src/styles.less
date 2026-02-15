@@ -73,32 +73,87 @@ a {
   }
 }
 
+/* Material Button Styling */
+.mat-mdc-raised-button {
+  &.mat-accent {
+    background-color: var(--accent-color) !important;
+    color: #0d1117 !important;
+    &:hover {
+      background-color: #6ee777 !important;
+      box-shadow: 0 0 15px var(--accent-color) !important;
+    }
+  }
+  &.mat-primary {
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
+    &:hover {
+      background-color: #4096ff !important;
+      box-shadow: 0 0 15px var(--primary-color) !important;
+    }
+  }
+}
+
 .mat-mdc-button {
   color: var(--text-color) !important;
   &.active {
     color: var(--neon-blue) !important;
     border-bottom: 2px solid var(--neon-blue);
   }
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
 }
 
-.card {
+.mat-mdc-stroked-button {
+  border-color: var(--border-color) !important;
+  color: var(--text-color) !important;
+  &.mat-accent {
+    border-color: var(--accent-color) !important;
+    color: var(--accent-color) !important;
+    &:hover {
+      background-color: rgba(126, 231, 135, 0.1) !important;
+    }
+  }
+}
+
+.card, mat-card {
   background-color: var(--surface-color) !important;
   border: 1px solid var(--border-color) !important;
   color: var(--text-color) !important;
   border-radius: 8px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
 
-  .card-header {
+  .card-header, mat-card-header {
     background-color: rgba(255, 255, 255, 0.05) !important;
     border-bottom: 1px solid var(--border-color) !important;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
+    display: block; // Ensure header takes full width in mat-card
   }
 
-  .card-body {
+  .card-body, mat-card-content {
     color: var(--text-color);
   }
+
+  mat-card-title {
+    color: var(--neon-blue) !important;
+    font-size: 1.4rem !important;
+    font-weight: bold !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+.info-text-large {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.lead {
+  font-size: 1.35rem !important;
+  font-weight: 400;
+  color: var(--neon-blue);
+  margin-bottom: 2rem;
 }
 
 .accent-text {
@@ -513,4 +568,34 @@ select, input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):no
 
 .mat-sidenav-content {
   background-color: transparent !important;
+}
+
+.custom-tooltip {
+  background-color: var(--surface-color) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+  font-size: 14px !important;
+  padding: 8px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  max-width: none !important;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background-color: inherit;
+    border: inherit;
+    border-radius: inherit;
+  }
+
+  // To simulate a textarea look
+  white-space: pre-wrap !important;
+  min-width: 200px;
+  min-height: 50px;
 }

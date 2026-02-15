@@ -12,7 +12,12 @@ COPY . /app/
 # Execute the build
 RUN npm run build
 
+# Final stage
 FROM nginx:stable-alpine
+
+# Blueprint Shell Layer
+LABEL techytax.shell.version="1.0.0"
+LABEL techytax.shell.commercial="true"
 
 # FIX: Specifically copy the contents of the 'browser' folder to the html root
 # Replace 'techytax-ngx' with the "name" specified in your package.json

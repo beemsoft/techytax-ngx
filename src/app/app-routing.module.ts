@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home';
+import { InfoComponent } from './home/info.component';
 import { AuthGuard } from './_helpers';
 import { SendInvoiceComponent } from '@app/send-invoice/send-invoice.component';
 import { RegisterComponent } from '@app/register/register.component';
@@ -20,6 +21,8 @@ const fiscalOverviewModule = () => import('./fiscal-overview/fiscal-overview.mod
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'info', component: InfoComponent, canActivate: [AuthGuard] },
+  { path: 'shell', loadChildren: () => import('./shell/shell.module').then(x => x.ShellModule), canActivate: [AuthGuard] },
   { path: 'users', loadChildren: usersModule, canActivate: [AuthGuard] },
   { path: 'vat', component: VatComponent, canActivate: [AuthGuard] },
   { path: 'vat-match', loadChildren: vatMatchModule },

@@ -9,7 +9,6 @@ import { first } from 'rxjs/operators';
   standalone: false, templateUrl: 'register.component.html' })
 export class RegisterComponent implements OnInit {
     public registration = signal<Registration>(new Registration());
-    public acceptedTermsAndConditions = signal<boolean>(false);
     form: FormGroup;
     loading = signal(false);
     submitted = signal(false);
@@ -108,23 +107,5 @@ export class RegisterComponent implements OnInit {
               this.loading.set(false);
             }
           });
-    }
-
-    public editRegistration() {
-        this.router.navigateByUrl('/register-edit');
-    }
-
-    public showTermsAndConditions():void {
-        // this.childModal.open();
-    }
-
-    public hideChildModal():void {
-        this.acceptedTermsAndConditions.set(false);
-        // this.childModal.close();
-    }
-
-    public accept():void {
-        // this.childModal.close();
-        this.acceptedTermsAndConditions.set(true);
     }
 }

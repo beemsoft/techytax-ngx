@@ -1,5 +1,7 @@
 <div class="p-4">
     <div class="container">
+        <h1>Factuur</h1>
+        <p class="lead">Genereer professionele PDF-facturen direct op je lokale systeem.</p>
         @if (projects() != undefined && projects().length > 1) {
             <select #sel [ngModel]="invoice()" (ngModelChange)="onChangeEvent($event)">
                 @for (item of projects(); track item.code) {
@@ -10,12 +12,12 @@
             </select>
         }
         @if (invoice().project) {
-            <div class="card mt-4">
+            <div class="card mt-4 shadow">
                 <div class="card-header">
-                    Factuur Details
+                    <mat-icon class="mr-2">description</mat-icon> Factuur Details
                 </div>
-                <div class="card-body">
-                    <div class="row mb-3">
+                <div class="card-body info-text-large">
+                    <div class="row mb-4">
                         <div class="col-md-6">
                             <div class="fiscal-item">
                                 <label>Project</label>
@@ -30,18 +32,18 @@
                         </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row mb-4">
                         <div class="col-md-6">
                             <label class="form-label">Factuur maand</label>
-                            <input class="form-control" [ngModel]="invoice().month" (ngModelChange)="invoice().month=$event; updateDescription()">
+                            <input class="form-control form-control-lg" [ngModel]="invoice().month" (ngModelChange)="invoice().month=$event; updateDescription()">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Factuur nummer</label>
-                            <input class="form-control" [ngModel]="invoice().invoiceNumber" (ngModelChange)="invoice().invoiceNumber=$event; updateDescription()">
+                            <input class="form-control form-control-lg" [ngModel]="invoice().invoiceNumber" (ngModelChange)="invoice().invoiceNumber=$event; updateDescription()">
                         </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row mb-4">
                         <div class="col-md-4">
                             <div class="fiscal-item">
                                 <label># Uren</label>
@@ -51,12 +53,12 @@
                         @if (invoice().unitsOfWork && invoice().unitsOfWork < 0) {
                             <div class="col-md-8">
                                 <label class="form-label">Oorspronkelijke factuur nummer</label>
-                                <input class="form-control" [ngModel]="invoice().originalInvoiceNumber" (ngModelChange)="invoice().originalInvoiceNumber=$event">
+                                <input class="form-control form-control-lg" [ngModel]="invoice().originalInvoiceNumber" (ngModelChange)="invoice().originalInvoiceNumber=$event">
                             </div>
                         }
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row mb-4">
                         <div class="col-md-6">
                             <div class="fiscal-item">
                                 <label>Omzet (subtotaal)</label>
@@ -66,28 +68,25 @@
                         <div class="col-md-6">
                             <div class="fiscal-item">
                                 <label>Omzet (totaal)</label>
-                                <span class="value neon-text">{{invoice().revenue | currency:'EUR'}}</span>
+                                <span class="value neon-text" style="font-size: 1.2em;">{{invoice().revenue | currency:'EUR'}}</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-5">
                         <label class="form-label">Begeleidende tekst</label>
-                        <textarea class="form-control" rows="6" [ngModel]="invoice().htmlText" (ngModelChange)="invoice().htmlText=$event"></textarea>
+                        <textarea class="form-control info-text-large" rows="6" [ngModel]="invoice().htmlText" (ngModelChange)="invoice().htmlText=$event"></textarea>
                     </div>
 
-                    <div class="checkbox mb-4 p-2 rounded" style="background: rgba(255, 255, 255, 0.05);">
-                        <input type="checkbox" (change)="approveInvoice.set(!approveInvoice())" id="approve">
-                        <label class="ms-2 mb-0" for="approve" style="cursor: pointer;">Ik geef toestemming voor het opslaan van mijn gegevens.</label>
-                    </div>
-
-                    <div class="d-flex align-items-center justify-content-between">
-                        <button mat-raised-button color="accent" (click)="sendInvoice()" [disabled]="isButtonDisabled()">
-                            <mat-icon>send</mat-icon> Stuur factuur
+                    <div class="mt-5">
+                        <button mat-raised-button color="accent" (click)="sendInvoice()" [disabled]="isButtonDisabled()" class="w-100 py-3 mb-3" style="font-size: 1.1rem;">
+                            <mat-icon class="mr-2">picture_as_pdf</mat-icon> Factuur genereren
                         </button>
-                        <div class="d-flex align-items-center">
-                            <label class="me-2 mb-0">Test email:</label>
-                            <input class="form-control" style="width: 250px;" [ngModel]="invoice().project.customer.emailInvoice" (ngModelChange)="invoice().project.customer.emailInvoice=$event">
+                        <div class="alert alert-info d-flex align-items-start mb-0">
+                            <mat-icon class="mr-3 mt-1">info</mat-icon>
+                            <span class="info-text-large">
+                                De factuur wordt als PDF gegenereerd op het bestandssysteem. Je kunt deze daarna zelf als bijlage toevoegen in je e-mailprogramma.
+                            </span>
                         </div>
                     </div>
                 </div>

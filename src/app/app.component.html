@@ -21,7 +21,7 @@
                     <mat-icon>access_time</mat-icon> <span>Uren</span>
                 </a>
                 <a mat-list-item routerLink="/invoice" routerLinkActive="active">
-                    <mat-icon>description</mat-icon> <span>Factuur sturen</span>
+                    <mat-icon>description</mat-icon> <span>Factuur</span>
                 </a>
 
                 <div class="nav-section-title">Fiscaal</div>
@@ -43,6 +43,11 @@
                 <a mat-list-item routerLink="/fiscal-overview" routerLinkActive="active">
                     <mat-icon>summarize</mat-icon> <span>Fiscaal overzicht</span>
                 </a>
+
+                <div class="nav-section-title">Systeem</div>
+                <a mat-list-item routerLink="/shell/license" routerLinkActive="active">
+                    <mat-icon>vpn_key</mat-icon> <span>Licentie</span>
+                </a>
             </mat-nav-list>
 
             <div class="sidenav-footer">
@@ -55,18 +60,12 @@
         </mat-sidenav>
 
         <mat-sidenav-content class="sidenav-content">
+            <shell-banner></shell-banner>
             <!-- main app container -->
             <div class="app-container">
                 <alert></alert>
                 <router-outlet></router-outlet>
             </div>
-
-            <!-- footer -->
-            <footer class="footer">
-                <div class="container text-center">
-                    <em>TechyTax, a simple bookkeeping program, more info <a href="http://www.beemsoft.nl">here</a>.</em>
-                </div>
-            </footer>
         </mat-sidenav-content>
     </mat-sidenav-container>
 } @else {

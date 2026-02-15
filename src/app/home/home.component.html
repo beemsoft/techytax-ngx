@@ -2,6 +2,32 @@
     <div class="container">
         <h1>Hallo {{user.username}}!</h1>
         <p>Welkom bij TechyTax!</p>
-<!--        <p><a routerLink="/users">Manage Users</a></p>-->
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">Wat is TechyTax?</h4>
+                <p class="card-text">
+                    TechyTax is een krachtige, privacy-gerichte boekhoudoplossing speciaal ontworpen voor ZZP'ers.
+                    In tegenstelling tot traditionele cloud-oplossingen, draait TechyTax volledig op jouw eigen hardware.
+                </p>
+                <p class="card-text">
+                    Je behoudt de volledige controle over je financiële data, zonder afhankelijk te zijn van externe partijen of maandelijkse abonnementen.
+                    <a routerLink="/info">Lees meer over de werking en filosofie van TechyTax.</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="alert alert-success mt-4">
+            <h5><mat-icon>verified_user</mat-icon> Lokaal & Veilig</h5>
+            <p>TechyTax is ontworpen met jouw privacy als hoogste prioriteit. Je data verlaat nooit deze computer.</p>
+        </div>
+
+        <div class="alert alert-warning mt-4 d-flex align-items-center justify-content-between">
+            <div>
+                <h5><mat-icon>backup</mat-icon> Backup Reminder</h5>
+                <p class="mb-0">TechyTax helpt je met vriendelijke herinneringen. Voor een veilige backup volstaat het om het database bestand naar een externe schijf of NAS te kopiëren.</p>
+            </div>
+            <a mat-raised-button color="accent" routerLink="/shell/license">Status bekijken</a>
+        </div>
     </div>
 </div>

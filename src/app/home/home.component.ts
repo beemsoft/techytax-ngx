@@ -1,14 +1,21 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 
 import { User } from '@app/_models';
-import { AccountService } from '@app/_services';
+import { AccountService, DockerService } from '@app/_services';
 
 @Component({
   standalone: false, templateUrl: 'home.component.html' })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
     user: User;
 
-    constructor(private accountService: AccountService) {
+    constructor(
+        private accountService: AccountService,
+        private dockerService: DockerService
+    ) {
         this.user = this.accountService.userValue;
+    }
+
+    ngOnInit() {
+        this.dockerService.checkUpdates().subscribe();
     }
 }
