@@ -6,6 +6,7 @@ import { RegisterService, Registration } from '../shared/services/register.servi
 import { ActivityService } from '@app/shared/services/activity.service';
 import { AlertService } from '@app/_services';
 import { first, switchMap } from 'rxjs/operators';
+import { ShellService } from '@app/shell/shell.service';
 
 @Component({ standalone: false, templateUrl: 'send-invoice.component.html' })
 export class SendInvoiceComponent implements OnInit {
@@ -20,7 +21,8 @@ export class SendInvoiceComponent implements OnInit {
     private projectService: ProjectService,
     private registerService: RegisterService,
     private activityService: ActivityService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public shellService: ShellService
 ) {
     const inv = new Invoice();
     let invoiceMonth = moment().locale('nl').subtract(1, 'months');
@@ -59,11 +61,27 @@ export class SendInvoiceComponent implements OnInit {
   }
 
   isButtonDisabled() {
+    if (this.shellService.licenseStatus() === 'expired') {
+      return true;
+    }
     const inv = this.invoice();
+    if (!inv.project) {
+      return true;
+    }
     return inv.unitsOfWork == undefined
-      || (this.invoiceType() == "factuur" && inv.unitsOfWork < 1)
+      || (this.invoiceType() == "factuur" && inv.unitsOfWork < 0)
       || (this.invoiceType() == "creditnota" && (inv.unitsOfWork > -1
        || (inv.originalInvoiceNumber == undefined || inv.originalInvoiceNumber.length < 8)));
+  }
+
+  onUnitsOfWorkChange(value: number) {
+    const inv = this.invoice();
+    inv.unitsOfWork = value;
+    this.invoice.set({...inv});
+    this.checkUnitsOfWork();
+    this.subTotal.set(value * inv.project.rate);
+    inv.revenue = this.subTotal() * (inv.project.revenuePerc ? inv.project.revenuePerc / 100 : 1);
+    this.invoice.set({...inv});
   }
 
   checkUnitsOfWork() {
@@ -114,13 +132,18 @@ export class SendInvoiceComponent implements OnInit {
   }
 
   private getFullName() {
-    const personalData = this.registration().personalData;
-    return personalData.firstName.concat(' ', personalData.prefix != null ? personalData.prefix.concat(' ') : '', personalData.surname);
+    const reg = this.registration();
+    if (!reg || !reg.personalData) {
+      return '';
+    }
+    const personalData = reg.personalData;
+    return (personalData.firstName || '').concat(' ', personalData.prefix != null ? personalData.prefix.concat(' ') : '', personalData.surname || '');
   }
 
   sendInvoice() {
      console.log("Send invoice: " + JSON.stringify(this.invoice()));
      this.invoiceService.sendInvoice(this.invoice());
+     this.alertService.success('De factuur is succesvol gegenereerd.', { keepAfterRouteChange: true });
   }
 
 }

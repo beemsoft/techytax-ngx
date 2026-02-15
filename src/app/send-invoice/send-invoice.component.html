@@ -2,6 +2,17 @@
     <div class="container">
         <h1>Factuur</h1>
         <p class="lead">Genereer professionele PDF-facturen direct op je lokale systeem.</p>
+
+        @if (shellService.licenseStatus() === 'expired') {
+          <div class="alert alert-danger d-flex align-items-center mb-4">
+            <mat-icon class="mr-2">error</mat-icon>
+            <span>
+              Je licentie is <strong>verlopen</strong>. Het genereren van nieuwe facturen is daarom uitgeschakeld.
+              Bestaande gegevens blijven gewoon inzichtelijk.
+              Verleng je licentie in het <a routerLink="/shell/license">Licentie Beheer</a> om weer facturen te kunnen maken.
+            </span>
+          </div>
+        }
         @if (projects() != undefined && projects().length > 1) {
             <select #sel [ngModel]="invoice()" (ngModelChange)="onChangeEvent($event)">
                 @for (item of projects(); track item.code) {
@@ -35,25 +46,23 @@
                     <div class="row mb-4">
                         <div class="col-md-6">
                             <label class="form-label">Factuur maand</label>
-                            <input class="form-control form-control-lg" [ngModel]="invoice().month" (ngModelChange)="invoice().month=$event; updateDescription()">
+                            <input class="form-control form-control-lg" [ngModel]="invoice().month" (ngModelChange)="invoice().month=$event; updateDescription()" [disabled]="shellService.licenseStatus() === 'expired'">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Factuur nummer</label>
-                            <input class="form-control form-control-lg" [ngModel]="invoice().invoiceNumber" (ngModelChange)="invoice().invoiceNumber=$event; updateDescription()">
+                            <input class="form-control form-control-lg" [ngModel]="invoice().invoiceNumber" (ngModelChange)="invoice().invoiceNumber=$event; updateDescription()" [disabled]="shellService.licenseStatus() === 'expired'">
                         </div>
                     </div>
 
                     <div class="row mb-4">
                         <div class="col-md-4">
-                            <div class="fiscal-item">
-                                <label># Uren</label>
-                                <span class="value accent-text">{{invoice().unitsOfWork}}</span>
-                            </div>
+                            <label class="form-label"># Uren</label>
+                            <input type="number" class="form-control form-control-lg" [ngModel]="invoice().unitsOfWork" (ngModelChange)="onUnitsOfWorkChange($event)" [disabled]="shellService.licenseStatus() === 'expired'">
                         </div>
                         @if (invoice().unitsOfWork && invoice().unitsOfWork < 0) {
                             <div class="col-md-8">
                                 <label class="form-label">Oorspronkelijke factuur nummer</label>
-                                <input class="form-control form-control-lg" [ngModel]="invoice().originalInvoiceNumber" (ngModelChange)="invoice().originalInvoiceNumber=$event">
+                                <input class="form-control form-control-lg" [ngModel]="invoice().originalInvoiceNumber" (ngModelChange)="invoice().originalInvoiceNumber=$event" [disabled]="shellService.licenseStatus() === 'expired'">
                             </div>
                         }
                     </div>
@@ -75,7 +84,7 @@
 
                     <div class="mb-5">
                         <label class="form-label">Begeleidende tekst</label>
-                        <textarea class="form-control info-text-large" rows="6" [ngModel]="invoice().htmlText" (ngModelChange)="invoice().htmlText=$event"></textarea>
+                        <textarea class="form-control info-text-large" rows="6" [ngModel]="invoice().htmlText" (ngModelChange)="invoice().htmlText=$event" [disabled]="shellService.licenseStatus() === 'expired'"></textarea>
                     </div>
 
                     <div class="mt-5">

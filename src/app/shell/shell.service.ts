@@ -97,6 +97,8 @@ export class ShellService {
                     this.isHardwareLocked.set(false);
                     localStorage.removeItem('hw_locked');
                 }
+
+                this.applyTestOverride();
             },
             error: () => {
                 // Fallback to local storage if backend is unavailable or error occurs
@@ -112,8 +114,17 @@ export class ShellService {
                         this.licenseStatus.set('active');
                     }
                 }
+                this.applyTestOverride();
             }
         });
+    }
+
+    private applyTestOverride() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const testStatus = urlParams.get('testStatus');
+        if (testStatus === 'expired' || testStatus === 'trial' || testStatus === 'active') {
+            this.licenseStatus.set(testStatus as any);
+        }
     }
 
     public activateStealthMode(active: boolean) {
