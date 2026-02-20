@@ -13,7 +13,6 @@ export class ShellService {
     public licenseExpiry = signal<string | null>(localStorage.getItem('license_expiry'));
     public trialEndDate = signal<string | null>(null);
     public activationDate = signal<string | null>(null);
-    public hardwareId = signal<string>(localStorage.getItem('hw_id') || '');
     public lastBackupDate = signal<string | null>(localStorage.getItem('last_backup_date'));
     public termsAcceptedDate = signal<string | null>(localStorage.getItem('terms_accepted_date'));
 
@@ -42,8 +41,7 @@ export class ShellService {
 
     public activateLicense(code: string) {
         return this.http.post<LicenseStatusResponse>(`${environment.apiUrl}/auth/activate-license`, {
-            code,
-            hardwareId: this.hardwareId()
+            code
         });
     }
 
@@ -84,8 +82,6 @@ export class ShellService {
                 this.licenseExpiry.set(status.licenseExpiryDate || localExpiry);
                 this.trialEndDate.set(status.trialEndDate);
                 this.activationDate.set(status.licenseActivationDate);
-                this.hardwareId.set(status.hardwareId);
-                localStorage.setItem('hw_id', status.hardwareId);
 
                 if (status.valid) {
                     this.isHardwareLocked.set(true);

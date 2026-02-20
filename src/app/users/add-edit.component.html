@@ -31,6 +31,8 @@
                     @if (submitted && f.username.errors) {
                         <div class="invalid-feedback">
                             @if (f.username.errors.required) { <div>Username is required</div> }
+                            @if (f.username.errors.minlength) { <div>Username must be at least 4 characters</div> }
+                            @if (f.username.errors.maxlength) { <div>Username cannot exceed 50 characters</div> }
                         </div>
                     }
                 </div>

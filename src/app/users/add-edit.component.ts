@@ -35,7 +35,7 @@ export class AddEditComponent implements OnInit {
         this.form = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
-            username: ['', Validators.required],
+            username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
             password: ['', passwordValidators]
         });
 

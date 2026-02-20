@@ -4,5 +4,4 @@ export interface LicenseStatusResponse {
     trialEndDate: string;
     licenseActivationDate: string;
     licenseExpiryDate: string;
-    hardwareId: string;
 }

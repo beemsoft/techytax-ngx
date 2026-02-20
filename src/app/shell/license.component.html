@@ -76,14 +76,14 @@
                 </div>
                 <div class="mt-3">
                     <p>In de proefmodus heb je volledige toegang tot alle functies. Let op: de <strong>BTW-aangifte pagina</strong> blijft functioneel tot het einde van de maand volgend op het huidige kwartaal.</p>
-                    <p class="text-muted small">Dit geeft je voldoende tijd om TechyTax uit te proberen en je eerste aangifte te doen voordat een licentie vereist is.</p>
+                    <p class="text-muted">Dit geeft je voldoende tijd om TechyTax uit te proberen en je eerste aangifte te doen voordat een licentie vereist is.</p>
                 </div>
             </mat-card-content>
         </mat-card>
 
         <mat-card class="mb-4">
             <mat-card-header>
-                <mat-card-title>Hardware Identificatie</mat-card-title>
+                <mat-card-title>Licentie Informatie</mat-card-title>
             </mat-card-header>
             <mat-card-content class="pt-3">
                 <div class="mb-3">
@@ -98,22 +98,12 @@
                     </strong>
                 </div>
 
-                <p>Deze installatie is gekoppeld aan de volgende Hardware ID:</p>
-                <div class="d-flex align-items-center mb-2">
-                    <code #hwId class="mr-2">{{shellService.hardwareId()}}</code>
-                    <button mat-icon-button (click)="copyHardwareId(hwId)" title="Kopieer Hardware ID">
-                        <mat-icon>content_copy</mat-icon>
-                    </button>
-                </div>
-                <p class="mt-2 text-muted">Dit ID is uniek voor deze machine en wordt gebruikt voor het genereren van je licentie. Kopieer dit ID en plak deze op de TechyTax website om je licentie te verlengen of te activeren.</p>
-
                 <div class="mt-4 info-text-large">
-                    <h4 class="neon-text mb-2">Waarom Hardware ID?</h4>
-                    <p>In plaats van je te vragen om persoonlijke gegevens of een KvK-nummer, gebruiken we een anoniem Hardware ID. Dit biedt belangrijke voordelen:</p>
+                    <h4 class="neon-text mb-2">Licentie op basis van KVK-nummer</h4>
+                    <p>Je TechyTax licentie is gekoppeld aan je zakelijke identiteit (KVK-nummer). Dit biedt belangrijke voordelen:</p>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><mat-icon class="accent-text mr-2">visibility_off</mat-icon> <strong>Privacy:</strong> Het ID is volledig anoniem en niet herleidbaar naar jou of je bedrijf.</li>
-                        <li class="mb-2"><mat-icon class="accent-text mr-2">account_tree</mat-icon> <strong>Flexibiliteit:</strong> Je betaalt voor de installatie. Binnen deze installatie kun je onbeperkt administraties toevoegen zonder extra kosten.</li>
-                        <li class="mb-2"><mat-icon class="accent-text mr-2">wifi_off</mat-icon> <strong>Offline Controle:</strong> Omdat het ID lokaal wordt gegenereerd, kan de licentie gecontroleerd worden zonder dat je verbonden hoeft te zijn met het internet.</li>
+                        <li class="mb-2"><mat-icon class="accent-text mr-2">devices</mat-icon> <strong>Portabiliteit:</strong> Je kunt TechyTax op verschillende apparaten gebruiken met dezelfde licentie.</li>
+                        <li class="mb-2"><mat-icon class="accent-text mr-2">account_tree</mat-icon> <strong>Flexibiliteit:</strong> Je betaalt voor je zakelijke identiteit. Binnen je account kun je onbeperkt administraties toevoegen zonder extra kosten.</li>
                     </ul>
                 </div>
             </mat-card-content>
@@ -155,7 +145,7 @@
                     </mat-form-field>
 
                     <div class="mb-3">
-                        <p>Je kunt een activatiecode aanvragen door een e-mail te sturen naar <a href="mailto:techytax{{'@'}}gmail.com">techytax{{'@'}}gmail.com</a> met vermelding van je Hardware ID.</p>
+                        <p>Je kunt een activatiecode aanvragen door een e-mail te sturen naar <a href="mailto:techytax{{'@'}}gmail.com">techytax{{'@'}}gmail.com</a> met vermelding van je KVK nummer.</p>
                     </div>
 
                     <button mat-raised-button color="primary" [disabled]="licenseForm.invalid">Activeer</button>

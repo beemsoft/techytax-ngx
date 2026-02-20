@@ -54,8 +54,8 @@
                         <mat-card-title><mat-icon class="mr-2">vpn_key</mat-icon> Licentie & Support</mat-card-title>
                     </mat-card-header>
                     <mat-card-content class="pt-4 info-text-large">
-                        <p>TechyTax maakt gebruik van een "Yearly Node-Unlock" model. De licentie is gekoppeld aan de installatie (hardware), niet aan de persoon.</p>
-                        <p>Met één licentie kun je meerdere administraties beheren, wat ideaal is voor ondernemers met meerdere labels of partners.</p>
+                        <p>TechyTax-licenties zijn gekoppeld aan je <strong>KVK-nummer</strong> (identity-locked). Je kunt TechyTax op meerdere apparaten gebruiken met dezelfde licentie.</p>
+                        <p>Binnen je account kun je <strong>onbeperkt administraties</strong> toevoegen zonder extra kosten.</p>
                         <a mat-raised-button color="primary" routerLink="/shell/license" class="w-100 py-2 mt-3">
                             <mat-icon>visibility</mat-icon> Licentie status bekijken
                         </a>
@@ -79,7 +79,11 @@
                         <p>TechyTax dwingt je niet in een ecosysteem. Je bent niet afhankelijk van een internetverbinding om bij je eigen cijfers te kunnen. Dit is de ultieme vorm van digitale soevereiniteit.</p>
                     </mat-card-content>
                 </mat-card>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-12">
                 <mat-card class="mb-5 shadow border-warning">
                     <mat-card-header>
                         <mat-card-title><mat-icon class="mr-2">touch_app</mat-icon> Handmatige Acties (By Design)</mat-card-title>
@@ -87,35 +91,57 @@
                     <mat-card-content class="pt-4 info-text-large">
                         <p>TechyTax kiest bewust voor een "handmatig-waar-het-moet" aanpak. Dit garandeert je privacy en voorkomt complexe, foutgevoelige koppelingen.</p>
 
-                        <ul class="list-unstyled">
-                            <li class="mb-3">
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            <div class="col d-flex">
                                 <mat-icon class="accent-text mr-2">upload_file</mat-icon>
-                                <strong>Bankimport:</strong> Je downloadt zelf de CSV bij je bank en uploadt deze in TechyTax. Geen directe koppelingen met je bankrekening.
-                            </li>
-                            <li class="mb-3">
+                                <div>
+                                    <strong>Bankimport</strong><br>
+                                    Je downloadt zelf de CSV bij je bank en uploadt deze in TechyTax.
+                                </div>
+                            </div>
+                            <div class="col d-flex">
                                 <mat-icon class="accent-text mr-2">mail</mat-icon>
-                                <strong>Facturen Versturen:</strong> Je genereert de factuur als PDF en verstuurt deze zelf via je eigen e-mailprogramma (Outlook, Gmail, etc.).
-                            </li>
-                            <li class="mb-3">
+                                <div>
+                                    <strong>Facturen versturen</strong><br>
+                                    Genereer de PDF en verstuur via je eigen e-mailprogramma.
+                                </div>
+                            </div>
+                            <div class="col d-flex">
                                 <mat-icon class="accent-text mr-2">save</mat-icon>
-                                <strong>Backups:</strong> Je kopieert zelf periodiek je databasebestand naar een veilige plek buiten je computer.
-                            </li>
-                            <li class="mb-3">
+                                <div>
+                                    <strong>Backups</strong><br>
+                                    Kopieer periodiek je databasebestand naar een veilige plek.
+                                </div>
+                            </div>
+                            <div class="col d-flex">
                                 <mat-icon class="accent-text mr-2">system_update</mat-icon>
-                                <strong>Updates:</strong> Je voert zelf een <code>docker pull</code> uit om de nieuwste versie van de software binnen te halen.
-                            </li>
-                            <li class="mb-3">
+                                <div>
+                                    <strong>Updates</strong><br>
+                                    Voer zelf een <code>docker pull</code> uit voor de nieuwste versie.
+                                </div>
+                            </div>
+                            <div class="col d-flex">
                                 <mat-icon class="accent-text mr-2">vpn_key</mat-icon>
-                                <strong>Licentie:</strong> Bij verlenging kopieer je handmatig je Hardware ID naar de website om een nieuwe activatiecode te ontvangen.
-                            </li>
-                            <li class="mb-3">
+                                <div>
+                                    <strong>Licentie</strong><br>
+                                    Vraag een activatiecode aan op de website; deze is gekoppeld aan je KVK-nummer.
+                                </div>
+                            </div>
+                            <div class="col d-flex">
                                 <mat-icon class="accent-text mr-2">description</mat-icon>
-                                <strong>Belastingaangifte:</strong> De BTW- en inkomstenbelastingaangifte doe je handmatig bij de Belastingdienst. TechyTax levert hiervoor zoveel mogelijk de benodigde details en overzichten aan. Je blijft echter zelf volledig verantwoordelijk voor de juistheid van je aangifte.
-                            </li>
-                        </ul>
+                                <div>
+                                    <strong>Belastingaangifte</strong><br>
+                                    BTW- en IB-aangifte doe je handmatig bij de Belastingdienst.
+                                </div>
+                            </div>
+                        </div>
                     </mat-card-content>
                 </mat-card>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-12">
                 <mat-card class="mb-5 shadow border-warning">
                     <mat-card-header>
                         <mat-card-title><mat-icon class="mr-2">security</mat-icon> Veiligheid & Backups</mat-card-title>

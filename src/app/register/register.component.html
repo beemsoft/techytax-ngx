@@ -58,22 +58,25 @@
         </div>
         <div class="row mb-3">
           <div class="col-md-3">
-            <label class="form-label">KvK nummer</label>
+            <label class="form-label">KVK nummer</label>
             <input type="text" class="form-control" formControlName="kvkNummer"
                    [ngClass]="{ 'is-invalid': f.kvkNummer.errors }">
             @if (f.kvkNummer.errors) {
               <div class="invalid-feedback">
                 @if (f.kvkNummer.errors.required) {
-                  <div>KvK nummer is verplicht, het wordt op de factuur vermeld</div>
+                  <div>KVK nummer is verplicht, het wordt op de factuur vermeld</div>
                 }
                 @if (f.kvkNummer.errors.pattern) {
-                  <div>KvK nummer bestaat uit 8 cijfers</div>
+                  <div>KVK nummer bestaat uit 8 cijfers</div>
                 }
               </div>
             }
           </div>
           <div class="col-md-3">
-            <label class="form-label">BIG nummer</label>
+            <label class="form-label">
+              BIG nummer
+              <mat-icon style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle; cursor: help;" title="Het BIG-nummer is een uniek persoonsgebonden nummer voor zorgverleners die ingeschreven staan in het BIG-register.">info</mat-icon>
+            </label>
             <input type="text" class="form-control" formControlName="bigNummer"
                    [ngClass]="{ 'is-invalid': f.bigNummer.errors }">
             @if (f.bigNummer.errors) {

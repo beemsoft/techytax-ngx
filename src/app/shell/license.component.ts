@@ -29,7 +29,7 @@ export class LicenseComponent implements OnInit {
         if (this.licenseForm.invalid) return;
 
         const code = this.licenseForm.value.code;
-        
+
         this.shellService.activateLicense(code).subscribe({
             next: (status) => {
                 if (status.valid) {
@@ -40,7 +40,7 @@ export class LicenseComponent implements OnInit {
                     }
                     localStorage.setItem('hw_locked', 'true');
                     this.shellService.isHardwareLocked.set(true);
-                    
+
                     // The backend might return 'active' or 'SAAS' mode, let checkLicense handle the mapping
                     this.shellService.checkLicense();
 
@@ -63,10 +63,7 @@ export class LicenseComponent implements OnInit {
     }
 
     copyHardwareId(element: HTMLElement) {
-        const text = element.innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            this.alertService.success('Hardware ID gekopieerd naar klembord!');
-        });
+        // Method kept for backward compatibility if needed in template, but functionality removed
     }
 
     deactivate() {

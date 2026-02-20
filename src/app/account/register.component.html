@@ -33,6 +33,26 @@
                         @if (f.username.errors.required) {
                             <div>Gebruikersnaam is verplicht</div>
                         }
+                        @if (f.username.errors.minlength) {
+                            <div>Gebruikersnaam moet minstens 4 karakters bevatten</div>
+                        }
+                        @if (f.username.errors.maxlength) {
+                            <div>Gebruikersnaam mag maximaal 50 karakters bevatten</div>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label" for="chamberOfCommerceNumber">KvK-nummer</label>
+                <input type="number" formControlName="chamberOfCommerceNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.chamberOfCommerceNumber.errors }" />
+                @if (submitted && f.chamberOfCommerceNumber.errors) {
+                    <div class="invalid-feedback">
+                        @if (f.chamberOfCommerceNumber.errors.required) {
+                            <div>KVK-nummer is verplicht</div>
+                        }
+                        @if (f.chamberOfCommerceNumber.errors.pattern) {
+                            <div>KVK-nummer moet precies 8 cijfers zijn</div>
+                        }
                     </div>
                 }
             </div>
